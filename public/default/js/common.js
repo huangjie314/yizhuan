@@ -763,7 +763,7 @@ window.Util = {
         Util.ajax({
             url: '/api/user/logout',
             certificate: true,
-            type: 'PUT',
+            type: 'POST',
             success: function (res) {
                 if (res.status === 1) {
                     Util.setCookie('token', null);

@@ -10,6 +10,7 @@ router.get('/', async (ctx) => {
     await ctx.render('admin/user/list');
 })
 
+// 用户注册
 router.post('/register', async (ctx) => {
     const {
         platform_type,
@@ -75,7 +76,7 @@ router.post('/register', async (ctx) => {
     }
 })
 
-
+// 用户登录
 router.post('/login', async (ctx) => {
 
     let username = ctx.request.body.username;
@@ -84,7 +85,7 @@ router.post('/login', async (ctx) => {
 
     var result = await DB.find('yizhuan', { "mobile": username, "password": tools.md5(password) });
     if (result.length > 0) {
-        var token = tools.signToken({ username, password });
+        var token = tools.signToken({ "mobile": username, "password": tools.md5(password), "type": result[0].type });
         ctx.cookies.set('token', token, {
             maxAge: 60 * 1000 * 60,
             httpOnly: true
@@ -105,6 +106,19 @@ router.post('/login', async (ctx) => {
         }
     }
 
+})
+
+// 用户退出
+router.post('/logout', async (ctx) => {
+    ctx.cookies.set('token', ctx.cookies.get('token'), {
+        maxAge: -1,
+        httpOnly: true
+    });
+    return ctx.body = {
+        status: 1,
+        message: '退出成功',
+        data: {}
+    }
 })
 
 router.get('/edit', async (ctx) => {

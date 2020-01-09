@@ -9,6 +9,8 @@ const buyer = require('./default/buyer');
 const seller = require('./default/seller');
 const login = require('./default/login');
 
+let verifyResult = null;
+
 
 //配置中间件 获取url的地址
 router.use(async (ctx, next) => {
@@ -18,7 +20,10 @@ router.use(async (ctx, next) => {
     //权限判断
     // let token = ctx.headers.authorization;
     let token = ctx.cookies.get('token');
-    const verifyResult = tools.verifyToken(token);
+    verifyResult = tools.verifyToken(token);
+    ctx.state.userInfo = {
+        username: verifyResult && verifyResult.mobile
+    }
 
     if (verifyResult) {
         await next();
@@ -34,8 +39,10 @@ router.use(async (ctx, next) => {
 
 
 router.get('/', async (ctx) => {
-
-    await ctx.render('default/user/center/index');
+    await ctx.render('default/user/center/index', {
+        title: verifyResult.type == '0' ? '会员中心' : '商家中心',
+        userType: verifyResult.type
+    });
 
 })
 
