@@ -1,0 +1,633 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>自费VIP服务 - 易赚</title>
+    <meta name="keywords" content="易赚-接单平台,免费爆款,打造爆款,补单平台,免费排名优化，刷放单平台手机赚钱" />
+    <meta name="description" content="易赚是一家专注电商打造优质品牌及爆款平台，刷补单平台专业优化淘宝排名，和销量提升平台。" />
+    <link href="../../templates/main/css/style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../scripts/artdialog/ui-dialog.css" />
+    <script type="text/javascript" charset="utf-8" src="../../scripts/jquery/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../../scripts/artdialog/dialog-plus-min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../../templates/main/js/common.js"></script>
+    <script src="../../templates/main/js/vue.js"></script>
+</head>
+
+<body>
+
+    <!--Header-->
+<div id="topbar" class="topbar">
+    <div id="topbarWrap">
+        <div class="g-doc top_nav">
+            <p class="loginInfo">
+                您好
+                <span class="red">{{username}}</span> &nbsp; 欢迎您回来！
+                <a href="/p/user/message/system.html" target="_blank">短消息
+                    <template v-if="total_msg != 0">
+                        <span class="red">({{total_msg}})</span>
+                    </template>
+                    <template v-else>
+                        ({{total_msg}})
+                    </template>
+                </a>
+                &nbsp;&nbsp;
+                <a href="/p/user/center/index.html">会员中心</a>&nbsp;&nbsp;
+                <a class="logout" href="javascript:;">退出</a>
+            </p>
+            <div class="fr">
+                <div class="top-nav-other">
+                    <a href="/p/user/center/index.html">会员首页</a>
+                    <a href="/p/user/userspread/spread.html" target="_blank"
+                        style="position: relative;text-align: left;width: 85px;padding: 0 23px 0 2px;background: url(../../templates/main/images/site_top_merge.gif) no-repeat scroll 50px 3px;display: inline-block;">邀请好友</a>
+                    <span class="sk-app">
+                        手机版
+                        <div class="sk-app-code">
+                            <a target="_blank" href="#" class="sk-app-img"></a>
+                        </div>
+                        <i></i>
+                    </span>
+                    <a target="_blank" href="/p/service.html">帮助中心</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="header">
+    <!--会员中心导航栏-->
+    <div class="main-nav">
+        <div class="wrap-nav">
+            <div class="main-nav-logo left">
+                <a href="../center/index.html"><img src="../../templates/main/images/logo_buyer.png" alt="会员中心logo"></a>
+            </div>
+            <div class="m-nav left">
+                <ul>
+                    <li class="nav-item"><a href="../userspread/spread.html">推广赚钱</a></li>
+					
+                    <!--<li class="nav-item"><a href="../../service.html" target="_blank">帮助中心</a></li>-->
+                </ul>
+            </div>
+            <div class="m-nav right">
+                <ul>
+                    <li class="nav-item m_SubMenuHover"><a href="../center/proinfo.html">账户设置</a>
+                        <div class="nav-sub">
+                            <div class="nav-arr"></div>
+                            <dl class="nav-sub-col1">
+                                <dt>安全设置</dt>
+                                <dd>
+                                    <p><a href="../center/password.html">修改登录/二级密码</a></p>
+                                    <p><a href="../center/proinfo.html">修改个人资料</a></p>
+                                    <p><a href="../center/question.html">密保问题设置</a></p>
+                                    <p><a href="../auth/index.html"><span class="red">安全认证中心</span></a></p>
+                                </dd>
+                            </dl>
+                            <dl class="nav-sub-col2">
+                                <dt>其他服务</dt>
+                                <dd>
+                                    
+                                    <p><a href="../../service.html" target="_blank">帮助中心</a></p>
+                                    
+                                    <p><a href="../exchange/index.html">兑换资金</a></p>
+                                </dd>
+                            </dl>
+                            <dl class="nav-sub-col3">
+                                <dt>充值提现</dt>
+                                <dd>
+                                    <p><a href="../amount/recharge.html">账户充值</a></p>
+                                    <p><a href="../tixian/apply.html">余额提现</a></p>
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+                    
+                    <li class="nav-item"><a href="../../task/index.html">任务大厅</a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--/会员中心导航栏-->
+</div>
+<script type="text/javascript">
+    //$(window).scroll(function () {
+    //    if ($(window).scrollTop() >= 30) {
+    //        $(".main-nav").css("box-shadow", "1px 1px 8px rgba(0,0,0,.20)");
+    //    } else {
+    //        $(".main-nav").css("box-shadow", "");
+    //    }
+    //});
+    $(function () {
+        //顶部网站导航下拉菜单
+        $("#j_topNavMenuHover").hover(function () {
+            $(this).addClass("top-nm-hover");
+        },
+            function () {
+                $(this).removeClass("top-nm-hover");
+            }
+        );
+        //账户设置子导航
+        $(".m_SubMenuHover").hover(function () {
+            $(this).find(".nav-sub").show().stop().animate({ opacity: 1, marginTop: "5px"}, 300);
+        },
+            function () {
+                $(this).find(".nav-sub").stop().animate({ opacity: 0, marginTop: "-15px" }, 300, null , function () {
+                    $(this).hide();
+                });
+            }
+        );
+    });
+</script>
+    <!--/Header-->
+
+    <div class="section clearfix">
+        <div class="line30"></div>
+        <div class="info-wrap">
+            <!--左侧导航-->
+            <div class="side-nav">
+    <div class="m-inner">
+        <div class="m-userinfo">
+            <div class="u-img">
+                <a href="../center/avatar.html" class="u-mask">
+              
+                <img src="../../upload/users/17805/201911/19/201911190043290387.png" />
+              
+                </a>
+            </div>
+            <p class="u-name">您好！
+                
+                黄杰
+                <img src='../../style/images/new.gif' align='absmiddle' title='新手' />
+            </p>
+            <div class="u-money">
+                
+                <p class="u-mooney-t">会员组：<span title="">
+                普通会员 </span></p>
+                <p class="u-mooney-t">账户余额：<span>0.00</span> 元</p>
+            </div>
+            <div class="u-security">
+                
+                <img src="../../style/images/mobile_1.gif" title="已通过手机认证" /> &nbsp;
+                
+                <a href="../auth/video.html"><img src="../../style/images/video_2.gif" title="尚未通过视频认证，点击现在去认证" /> &nbsp;</a>
+                
+                <img src="../../style/images/shiming.gif" title="已通过实名认证" /> &nbsp;
+                
+            </div>
+        </div>
+
+        <div class="m-sidecont">
+            
+            <dl>
+                <dt><b class="m-icon icon-r"></b>红包任务<i></i></dt>
+                <dd>
+                    
+                    <a href="../../task/index.html" class="s-item">任务大厅</a>
+                    <a href="../../task/jie.html" class="s-item">已参与任务</a>
+                    <a href="../bind_account/add.html" class="s-item"><span class="orange rough">绑定买号</span></a>
+                    <a href="../pingjia/1.html" class="s-item">信用评价</a>
+                    
+                    <a href="../appeal/apply.html" class="s-item">我要申诉</a>
+                    <a href="../clientunbind/index.html" class="s-item">解绑客户端</a>
+                </dd>
+            </dl>
+            
+            <dl>
+                <dt><b class="m-icon icon-m"></b>财政中心<i></i></dt>
+                <dd>
+                    <a href="../amount/recharge.html" class="s-item"><strong class="red">账户充值</strong></a>
+                    <a href="../tixian/apply.html" class="s-item">余额提现</a>
+                      
+                    <!--<a href="/user/score/convert.html" class="s-item">购买积分</a>-->
+                    <a href="../exchange/index.html" class="s-item">兑换资金</a>
+                </dd>
+            </dl>
+            <dl>
+                <dt><b class="m-icon icon-d"></b>财务明细<i></i></dt>
+                <dd style="display:none">
+                    <a href="../amount/list.html" class="s-item">资金明细</a>
+                    <a href="../commissions/list.html" class="s-item">佣金明细</a>
+                    <a href="../point/list.html" class="s-item">发布点明细</a>
+                    <a href="../score/list.html" class="s-item">积分明细</a>
+                    <a href="../userspread/list.html" class="s-item">推广明细</a>
+                    <a href="../tixian/list.html" class="s-item">提现记录</a>
+                </dd>
+            </dl>
+            
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        //记录点击菜单展开或收缩状态
+        $(".m-sidecont dt").click(function () {
+            var dd = $(this).siblings("dd");
+            if (dd.is(":hidden")) {
+                dd.show("fast");
+                $(this).find("i").removeClass("ihide");
+                addCookie("member_center_menu_" + $(".m-sidecont dt").index(this), "black", 72);
+            }
+            else {
+                dd.hide("fast");
+                $(this).find("i").addClass("ihide");
+                addCookie("member_center_menu_" + $(".m-sidecont dt").index(this), "none", 72);
+            }
+        });
+    });
+    //根据cookie记录的菜单展开或收缩的状态遍历设置一次
+    $(".m-sidecont dt").each(function(index, element) {
+        var _display = getCookie("member_center_menu_" + index);
+        if (_display == "none") {
+            $(this).siblings("dd").hide();
+            $(this).find("i").addClass("ihide");
+        }
+        else {
+            $(this).siblings("dd").show();
+        }
+    });
+</script>
+            <!--/左侧导航-->
+            <!--右侧内容-->
+            <div class="home-box">
+
+                
+                <!--/加入商保-->
+                <div class="u-tab-head">
+                    <p>
+                        <a class="selected" href=''>自费VIP服务</a>
+                    </p>
+                </div>
+                <div class="u-tab-content">
+                    <div class="title-div"><strong>自费VIP服务</strong></div>
+                    <div class="form-box">
+                        <script language="JavaScript">
+                            var User_isShangbao = "False" == "True";
+                            var User_JoinShangbaoMoney = new Number("0.00");
+                            var User_amount = new Number("0.00");
+                            function CheckForm() {
+                                if (!$("#isRead").prop("checked")) {
+                                    alert("请先阅读商保协议再提交！");
+                                    $("#isRead").focus();
+                                    return false;
+                                }
+                                if (parseFloat($("#sbMoney").html()) > User_amount) {
+                                    alert("您当前余额不足，请先充值后再来操作！");
+                                    return false;
+                                }
+                                if ($("#SecurityCode").val() == '') {
+                                    alert("请先输入二级密码！");
+                                    $("#SecurityCode").focus();
+                                    return false;
+                                }
+                                if (User_isShangbao && parseFloat($("#ShangbaoMoney").val()) <= User_JoinShangbaoMoney) {
+                                    alert("抱歉！你已经加入商保服务了，只可以补差价升级，不可降级哦！");
+                                    return false;
+                                }
+                                var result = false;
+                                if (User_isShangbao) {
+                                    result = confirm('您现在已经加入商保服务了，你确定要升级了吗？')
+                                } else {
+                                    result = confirm('您确定要加入商保了吗？');
+                                }
+                                if (result) {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "/tools/submit_ajax.ashx?action=user_shangbao_join&site=main",
+                                        data: { 'ShangbaoMoney': $("#ShangbaoMoney").val(), 'SecurityCode': $("#SecurityCode").val() },
+                                        dataType: "json",
+                                        timeout: 20000,
+                                        success: function (data, textStatus) {
+                                            if (data.status == 1) {
+                                                var d = dialog({ content: data.msg }).show();
+                                                setTimeout(function () {
+                                                    d.close().remove();
+                                                    location.reload();
+                                                }, 2000);
+                                            } else {
+                                                dialog({ title: '提示', content: data.msg, okValue: '确定', ok: function () { } }).showModal();
+                                            }
+                                        },
+                                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                            dialog({ title: '提示', content: "状态：" + textStatus + "；出错提示：" + errorThrown, okValue: '确定', ok: function () { } }).showModal();
+                                        }
+                                    });
+                                }
+                                return false;
+                            }
+
+                            function changeSelect(n) {
+                                if (User_isShangbao) {
+                                    if (n > User_JoinShangbaoMoney) {
+                                        $('#sbMoney').html(n - User_JoinShangbaoMoney);
+                                    }
+                                    else {
+                                        $('#sbMoney').html(n);
+                                        alert("温馨提示：\n\n你已经加入商保服务了，只可以补差价升级，不可降级哦！");
+                                    }
+                                } else {
+                                    $('#sbMoney').html(n);
+                                }
+                            }
+
+                            function exitShangbao()
+                            {
+                                if ($("#SecurityCode").val() == '') {
+                                    alert("请先输入二级密码！");
+                                    $("#SecurityCode").focus();
+                                    return false;
+                                }
+                                if (confirm('您确定要退出商保服务吗？')) {
+                                    clickSubmit('/tools/submit_ajax.ashx?action=user_shangbao_exit&site=main&SecurityCode=' + $("#SecurityCode").val());
+                                }
+                            }
+                        </script>
+
+                        <table width="100%" border="0" align="center" cellpadding="0" cellspacing="1" class="border">
+                            <tr>
+                                <td height="50" align="left">
+                                    <div id="tips" style="border:1px #A7DDFE solid; width:auto; height:auto; line-height:30px; padding:4px; margin:10px 0; background:url(/style/images/xiaobao-img.gif) #ECF8FF no-repeat 15px center; padding-left: 90px; color:#666">
+                                        1、缴纳保证金后即成为VIP(商保)会员，保障发布人权益同时你可以赚取更多发布点；<br />
+                                        2、接手方才需要交纳保证金成为VIP，发布方可以不加入商保服务；<br />
+                                        3、加入商保的会员，将遵守“不维权，不差评，不用信用卡，不用淘宝客”的基本准则；<br />
+                                        <strong style="color:#F60">
+                                            4、您所交纳的商保金，在所有任务完成后30天，可退出商保并返还金额。
+                                        </strong>
+                                    </div>
+                                </td>
+                            </tr>
+                            <form name="shangbao_join_from" method="post" onsubmit="return CheckForm();">
+                                <tr class="title">
+                                    <td height="50" align="center"><strong>请先阅读并同意协议，然后只需要交纳保证金即完成加入</strong></td>
+                                </tr>
+                                <tr class="tdbg">
+                                    <td align="center">
+                                        <table align="center" width="70%" border="0" cellspacing="5" cellpadding="5">
+                                            <tr>
+                                                <td height="10"></td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td align="left">
+                                                    <div style="border:1px solid #FC3; background:url(/templates/main/images/note.gif) no-repeat 10px center #FFFFF4; color:red; padding-left:35px; margin-bottom:20px; height:50px; line-height:50px">
+                                                        <strong>对不起，您尚未加入"商家保障服务"，请在下面阅读协议后缴费加入</strong>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td align="left" height="40"><img src="../../templates/main/images/money_img.png" width="32" height="32" align="absmiddle" /> &nbsp;<strong style="font-size:15px; color:#F60">缴纳保证金</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td align="left" height="40">
+                                                    您当前账户余额：
+                                                    <font color="#FF6600">0.00</font> 元 &nbsp;
+                                                    <a href='../amount/recharge.html' target="_blank"><font color="green">我要充值>></font></a>
+                                                </td>
+                                            </tr>
+                                            
+                                            
+                                            <tr>
+                                                <td align="left" height="40"><strong>本次加入商保服务需要缴纳：<font color="#FF6600"><span id="sbMoney">299</span></font> 元保证金</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td align="left" height="40" style="border-bottom:1px dashed #999;">
+                                                    <strong>
+                                                        选择加入商保等级：
+                                                        <select class="select" name="ShangbaoMoney" id="ShangbaoMoney" onchange="changeSelect(this.options[this.selectedIndex].value)" title="注：非商保任务和已完成的任务不计在总额内">
+                                                            <option value="299">299元 （限制接手未完成的商保任务总额不超过2000元）</option>
+
+                                                        </select>
+                                                    </strong><br /><br />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td height="40"><input name="isRead" id="isRead" type="checkbox" value="1" /> <strong>同意并接受《<a href="javascript:void();" title="点击查看协议内容" onclick="$('#xieyi').toggle();">易赚商家保障基础协议</a>》</strong></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="xieyi" style="display:none; overflow:scroll; height:250px; border:1px #CCC solid; padding:5px;">
+                                            <p>《易赚商家保障基础协议》</p>
+                                            <p>本协议由您与易赚共同缔结，本协议具有合同效力。</p>
+                                            <p>本协议中协议双方合称协议方，易赚在本协议中亦称为&quot;易赚&quot;</p>
+                                            <p>一、协议内容及生效</p>
+                                            <p>1、本协议内容包括协议正文及所有易赚已经发布或将来可能发布的与&quot;商家保障服务&quot;相关的规则。前述规则为本协议不可分割的组成部分，与协议正文具有同等法律效力。</p>
+                                            <p>2、您应当在实际向其他易赚会员（以下简称&quot;买家&quot;）提供商家保障服务之前认真阅读全部协议内容，对于协议中以加粗字体显示的内容，您应重点阅读。如您对本协议有任何疑问，应向易赚咨询。但无论您事实上是否在向任务发布方提供商家保障服务之前认真阅读了本协议内容，只要您在线点击签署了本协议，则本协议即对您产生约束，届时您不应以未阅读本协议的内容或者未获得易赚对您问询的解答等理由，主张本协议无效，或要求撤销本协议。</p>
+                                            <p>3、您承诺接受并遵守本协议的约定。如果您不同意本协议的约定，您应立即结束接手任务流程或停止一切接手易赚任务活动。</p>
+                                            <p>4、易赚有权根据需要不时地制订、修改本协议及/或与&quot;商家保障服务&quot;相关的规则，并以网站公示的方式进行公告，不再单独通知您。变更后的协议和规则一经在易赚网站公布后，立即自动生效。如您不同意相关变更，应当立即停止接手易赚任务活动。您继续进行任何接手易赚任务活动，包括但不限于维持所接手的任务信息，或继续接手新的任务，使用商家保障服务标识，即表示您接受经修订的协议。</p>
+                                            <p> </p>
+                                            <p>二、定义</p>
+                                            <p>1、商家保障服务：指您根据本协议约定的条款和条件及易赚其他公示规则的规定，通过易赚接手除&quot;流量任务&quot;&quot;收藏任务&quot;以外的互动区中商保信誉任务（以下简称&quot;商保任务&quot;），应履行任务规定要求（留言提醒除外），在任务指定好评时限完成任务要求的来路进店方式，交易好评、动态评分、好评内容、指定收货地址、旺旺聊天 等任务内容；保障发布方在任务结束但未获得任务要求好评、接手方恶意维权、因接手人使用信用卡付款导致发布人被淘宝扣除手续费、任务交易导致发布方额外被扣除淘宝客佣金、因接手人问题交易遇到淘宝自查等情形下的权益。</p>
+                                            <p>2、保证金：指您根据本协议约定的条款和条件及易赚其他公示规则的规定缴存并冻结于您的易赚账户内相应存款，在您未履行商家保障服务承诺时用于对商保任务发布方进行赔付的资金。</p>
+                                            <p>3、先行赔付：指您与发布方通过易赚产生商保任务关系后，如因您未履行商家保障服务承诺而导致商保任务发布方权益或经济受损，且在发布方直接要求与您协商处理未果的情况下，易赚有权以易赚客服业务标准，根据相关证据材料和规则判定您是否应履行赔付义务。如是，则易赚有权自您的易赚账户直接扣除相应金额保证金款项赔付给发布方。</p>
+                                            <p> </p>
+                                            <p>三、商家保障服务内容</p>
+                                            <p>在您向商保任务发布人提供商家保障任务服务过程中，您承诺遵守以下约定：</p>
+                                            <p>1、您同意遵守本协议、《易赚规章制度》、以及所有公示于易赚与&quot;商家保障服务&quot;相关的规则。</p>
+                                            <p>2、您拥有的权利和资格在易赚相关任务大厅接手商保任务。如因您的行为导致易赚遭受任何第三方提起的索赔、诉讼或行政责任，您应承担相应责任并使易赚免责。</p>
+                                            <p>3、您应在通过易赚接手商保任务过程中，应履行任务描述要求（留言提醒除外），在任务指定好评时限完成任务要求的来路进店方式，交易好评、动态评分、好评内容、指定收货地址、旺旺聊天 等任务内容；保障发布方在任务结束但未获得任务要求好评，接手方恶意维权、接手方使用淘宝客导致商家被扣佣金、接手人使用信用卡支付导致商家被扣手续费、或因接手人问题交易遇到淘宝自查等情形下的权益。</p>
+                                            <p>4、您明确了解并同意您是商家保障服务的责任主体，易赚仅向您提供相关技术支持及任务交互服务，不对您向商保任务发布方提供的商家保障服务内容承担任何保证责任。当发生上述的发布人权益受损情况下，您应保保证发布方的权益。积极配合处理上述问题。</p>
+                                            <p>5、您同意当易赚受理发布方提出的商家保障服务维权和赔付申请时，您应积极配合，在易赚要求的时间期限内提供相关证据材料，以证明任务交易过程与结果不存在发布方提出的问题或符合双方的任务约定（任务留言要求除外），并保证所提交的证据材料真实有效。如易赚以易赚客服标准，对您和/或发布方提供的证据材料进行审核后，以其独立判断您未全面履行商家保障服务内容的，则易赚有权根据本协议及其它公示规则的规定，对因此遭受权益损失的发布方进行先行赔付。</p>
+                                            <p>6、您同意当易赚使用冻结保证金向发布方进行先行赔付时即视为您违规，易赚有权给予您相应处罚，包括但不限于将清退出商保用户，以及限制使用易赚账户。</p>
+                                            <p> </p>
+                                            <p>四、保证金</p>
+                                            <p>您应根据以下条款之约定缴存，并不可撤销地授权易赚有权根据以下条款及易赚其他公示规则的规定冻结、使用、处置保证金。本条款之约定不适用于非易赚商保会员。</p>
+                                            <p>1、保证金的缴存</p>
+                                            <p>1.1 除平台发生过严重违规的用户外，您可在&quot;会员中心&quot;等相关页面自由选择主动缴纳或不缴纳商保保证金。</p>
+                                            <p>1.2 如您未根据上述1.1款之约定选择主动缴纳保证金，则出现以下任一情形时，您必须缴纳相应金额的保证金：</p>
+                                            <p>1.2.1 您违反《易赚规章制度》中的规定，包括但不限于因发生违规行为之&quot;辱骂会员或客服&quot;，&quot;欺骗恐吓会员，恶意退款维权&quot;，&quot;接手任务曾发生淘宝客佣金&quot;，&quot;使用信用卡支付任务交易&quot;，&quot;旺旺恶意提及敏感词汇&quot;，&quot;中评，乱写评语，恶意评语，广告评语&quot;任意一项，则易赚有权强制要求您三日内足额缴纳相应金额的保证金。否则易赚有权冻结账号，结算账户存款后终止您的一切服务；</p>
+                                            <p> </p>
+                                            <p>1.3 尽管有上述约定，本协议有效期内，易赚有权根据您业务变化及实际赔付情况以书面方式通知您调整保证金金额。您应使保证金余额始终保持不低于本条款约定之金额，如发生赔付事件导致您需补缴保证金的，则易赚有权继续冻结您易赚帐户中的余额以补足保证金，如您的易赚账户余款不足，则您应在赔付事件发生之日起三日内补足。保证金不足期间，易赚有权暂停或终止向您提供全部或部分易赚服务。</p>
+                                            <p>1.4 不论前述何种情形，只要您事实上缴纳了保证金，保证金余额为足额时，您易赚账号的相关页面将出现&quot;已交商户保证金&quot;或类似文案之标识。</p>
+                                            <p>2、保证金的冻结</p>
+                                            <p>您不可撤销地授权易赚，将您根据本协议之约定缴存的保证金款项冻结于您的易赚账户中。</p>
+                                            <p>3、保证金的解冻</p>
+                                            <p>3.1 您需同时符合如下条件，方可申请解冻您根据本条1.1款之约定主动缴纳的保证金：</p>
+                                            <p> </p>
+                                            <p>3.1.1 自您主动缴纳保证金之日起已满三个月； </p>
+                                            <p>3.1.2 距离最后一个接手的&quot;商保任务&quot;完成时间超过30天；</p>
+                                            <p>3.1.3 进行中已接手任务包括但不限于任务产生的纠纷均已处理完毕。</p>
+                                            <p> </p>
+                                            <p>4、保证金的管理与使用</p>
+                                            <p>4.1 您同意，易赚有权在包括但不限于以下情况发生时，处置您的保证金：</p>
+                                            <p>4.1.1 如您在易赚接手商保任务、履行任务相关义务过程中，违反易赚任何规则或违反您对发布方的任务承诺，或被发布方申请索赔时，易赚有权根据其独立的判断，无须承担责任地，直接使用保证金对发布方进行先行赔付。</p>
+                                            <p>4.1.2 如您违反本协议和/或易赚任何规则，给易赚造成任何损失（包括但不限于诉讼赔偿、诉讼费用、律师费用等）的，易赚有权根据其独立的判断，无须承担责任地，直接从保证金中扣除相当于易赚的损失的金额，以补偿易赚所遭受的损失。如您的保证金余额不足以赔偿的，易赚有权继续向您追偿。在损失金额不明确之前，易赚有权继续无限期冻结您的账户保证金，直至损失金额明确后予以结算。</p>
+                                            <p>上述4.1.1项规定的赔付程序将按易赚不时公布的规则进行。</p>
+                                            <p> </p>
+                                            <p>4.2 易赚如使用保证金进行任何赔付，将以书面方式（包括但不限于电子邮件、传真等）通知您。在向您出具的书面通知中，将说明赔付原因及赔付金额。</p>
+                                            <p>4.3 如您的保证金余额不足以赔付时，您应自行支付额外的赔付金额。在您保证金余额不足时，易赚没有使用自有资金向商保任务发布方或者任何第三方支付赔偿金、补偿金或其它任何款项的义务，您仍应对发布方或者其他权利人承担赔付、补偿义务。您明确同意如您的保证金余额不足以赔付，且您未自行向买家支付额外的赔付金额时，您不可撤销地委托易赚使用自有资金代您向买家进行赔付。不论是在本协议项下，易赚基于您的委托而代为赔付的合计总金额以400元人民币为上限。此等情形下，易赚有权向您追偿赔付金，包括但不限于采用以下两种方式：</p>
+                                            <p>4.3.1 要求您在易赚赔付后三日内向易赚偿还与赔付金数额相同的资金，以补偿易赚所遭受的损失，并向买家赔付您实际需赔付金额中的剩余部分（如有），且在指定时间内补足保证金；</p>
+                                            <p>4.3.2 如易赚的损失通过上述方式仍无法弥补，则易赚有权单方面终止向您提供易赚网服务，而且继续要求您承担赔偿责任。</p>
+                                            <p>4.4 您对发布方、任何第三方以及易赚的赔付责任不以您已缴纳的保证金数额或400元人民币（取二者较高者）为限。易赚不对发布方或者任何第三方承担任何赔付、赔偿义务，但有权根据本协议的规定将您的保证金用于保障对发布方家或其他权利人的利益。</p>
+                                            <p> </p>
+                                            <p>五、有限责任</p>
+                                            <p>1、您了解并同意，易赚及其关联公司并非司法机构，仅能以普通或非专业人员的知识水平标准对您提交的证据材料进行鉴别，易赚及其关联公司对交易纠纷的调处完全是基于您的委托，易赚及其关联公司无法保证交易纠纷处理结果符合您的期望，也不对交易纠纷调处结果及保证金赔付决定承担任何责任。您应保证您提交的证据材料的真实性、合法性，并承担您或买家提供的信息、数据不实的风险和责任。如您因此遭受损失，您同意自行向受益人索赔。</p>
+                                            <p>2、您了解并同意，易赚对与本协议相关的以及由于本协议的签订、履行导致的所有的、全部的责任，不管是否与违约、侵权相关，也不管由于故意还是过失，也不管您是否向易赚支付过任何费用，在任何情况下，都不应超过400元人民币，这并不影响易赚根据本协议、易赚与您签署的其它协议、易赚规则享有的免责、责任限制的权利。</p>
+                                            <p> </p>
+                                            <p>六、协议终止</p>
+                                            <p>1、出现以下情况时，本协议终止。本协议终止后，您将无法继续进行任何任务互动活动：</p>
+                                            <p>1.1 自然终止：如您在线签署的《易赚服务条款》因任何原因终止，则本协议将同时终止。</p>
+                                            <p>1.2 通知解除：易赚有权提前十五（15）天以书面通知的方式终止本协议。</p>
+                                            <p>1.3 易赚单方解除权：如您违反本协议中的任何承诺与保证或易赚的任何规则，易赚有权立即终止本协议，且按有关规则对您进行处罚。</p>
+                                            <p>1.4 本协议（含规则）变更时，您明示并通知易赚不愿接受新的商家保障服务协议，则本协议自易赚收到您通知之日起自动终止。</p>
+                                            <p>1.5 本协议规定的其他协议终止条件发生或实现，导致本协议终止。</p>
+                                            <p>2、无论本协议因何原因终止，在协议终止前的行为所导致的任何赔偿和责任，您必须完全且独立地承担责任。即使本协议终止，易赚及其关联公司仍有权根据本协议的规定处理，包括但不限于使用您的保证金来处理因本协议有效期内发生的交易所导致的买家索赔。</p>
+                                            <p>3、本协议第五条及第七条的效力不因本协议的终止而终止。</p>
+                                            <p>&nbsp;</p>
+                                            <p>七、争议解决</p>
+                                            <p>本协议之解释与适用，以及与本协议有关的争议，均应依照中华人民共和国法律予以处理，并以易赚所在地人民法院为第一审管辖法院。</p>
+                                            <p> </p>
+                                            <p>八、其他</p>
+                                            <p>1、如本协议的任何条款被视作无效或无法执行，则上述条款可被分离，其余部份则仍具有法律效力。</p>
+                                            <p>2、易赚于您过失或违约时放弃本协议约定的权利的，不得视为易赚对您的其他或以后同类之过失或违约行为弃权。</p>
+                                            <p>
+                                                3、易赚基于本协议享有的权利以及获得的授权，均可以全部或部分转移、转让、许可、分授权、转授权给任何第三方。未经易赚事先书面同意，您不得将本协议项下的权利义务转让给任何第三方。<br />
+                                            </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="tdbg">
+                                    <td height="40" align="center">
+                                    二级密码：<input class="input txt" type="password" id="SecurityCode" maxlength="30" name="SecurityCode" value="" title="二级密码主要用于资金流转、账户安全二层保护作用。&#13;&#10;注：二级密码不是登录密码。" /> &nbsp; 
+                                    <a href="../center/twopassword.html" target="_blank" title="找回二级密码，请不要设置过于简单，以免被暴力破解"><font color="#999999">（忘记？点我找回）</font></a></td>
+                                </tr>
+                                <tr>
+                                    <td height="15"> </td>
+                                </tr>
+                                <tr class="tdbg">
+                                    <td height="50" align="center">
+                                        <input class="btn" name="Submit" type="submit" value=" 确定缴纳 " /> &nbsp; &nbsp; &nbsp;
+                                        <input class="btn btn-error" name="Exitsb" type="button" value=" 退出商保服务 " onclick="exitShangbao()" disabled="disabled" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="15"></td>
+                                </tr>
+                                <tr>
+                                    <td height="20" align="center"><img src="../../templates/main/images/shangbao-banner.jpg" width="719" height="473" /></td>
+                                </tr>
+                            </form>
+                        </table>
+                    </div>
+
+                </div>
+                <input id="turl" type="hidden" value="/user/amount/list.html" /><!--存放跳转的URL值-->
+                <!--/加入商保-->
+                
+            </div>
+        </div>
+
+    </div>
+    <!--Footer-->
+    <div class="footer clearfix">
+  <div class="foot-nav">
+    <a target="_blank" href="../../contents/about.html">关于我们</a>|
+    <a target="_blank" href="../../service.html">帮助中心</a>|
+    <a target="_blank" href="../../feedback.html">留言反馈</a>|
+    <a target="_blank" href="../../service/show-33.html">产品中心</a>|
+    <a target="_blank" href="../../contents/contact.html">联系我们</a>
+  </div>
+  <div class="copyright">
+    <p>Copyright &copy; 2018-2019 易赚</p>
+    <p><a href="http://www.beian.miit.cn/">工业和信息化部备案号</a>：渝ICP备19003396号-1</p>
+    <p></p>
+  </div>
+</div>
+<!--右侧客服QQ-->
+<!--右侧客服QQ/联系方式等-->
+<link rel="stylesheet" type="text/css" href="../../templates/main/css/contact.css" />
+<script type="text/javascript" src="../../templates/main/js/online_qq.js"></script>
+<div class="fixd-right">
+    <ul class="icon-all" id="icon-all">
+        <li>
+            <a href="javascript:;" class="icon-all-1"><span id="kefuqq">QQ<br>咨询</span></a>
+            <div class="kefu onright" id="kefu">
+                <div class="close"><img src="../../templates/main/images/close.png" width="18" alt="关闭右侧栏"></div>
+                <p class="fixd-right-top"><span class="big">QQ在线咨询</span><span>服务时间：7 * 12小时</span></p>
+                <p class="kefu-tit" style="margin-top: 20px;"> 客服团队：</p>
+                <ul class="zixun">
+                    <li><span>买手客服：</span><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=1409444757&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:1409444757:51" align="absmiddle" title="点击这里给我发消息" /></a></li>
+                    <li><span>商家客服：</span><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=1635873999&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:1635873999:51" align="absmiddle" title="点击这里给我发消息" /></a></li>
+                    <li><span>充值提现：</span><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2709177641&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:2709177641:51" align="absmiddle" title="点击这里给我发消息" /></a></li>
+                    <li><span>技术支持：</span><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=284849937&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:284849937:51" align="absmiddle" title="点击这里给我发消息" /></a></li>
+                    <li><span>投诉建议：</span><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=1635873999&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:1635873999:51" align="absmiddle" title="点击这里给我发消息" /></a></li>
+                </ul>
+                <p class="kefu-tit"> 合作渠道：</p>
+                <ul class="zixun">
+                    <li><span>合作渠道：</span><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=1635873999&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:1635873999:51" align="absmiddle" title="点击这里给我发消息" /></a></li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <a href="javascript:;" class="icon-all-2"><span id="kefutell">电话</span></a>
+            <div class="onright" id="tell">
+                <div class="close"><img src="../../templates/main/images/close.png" width="18" alt="关闭右侧栏"></div>
+                <p class="fixd-right-top"><span class="big">联系电话</span><span>7×24小时服务热线</span></p>
+                <div class="hotline pf_lcon ">
+                    <p style="font-size:26px; margin-bottom:30px; color:#f50; line-height:0;">13102330723</p>
+                    <p>客服热线：13102330723</p>
+                </div>
+                <dl>
+                    <dt class="kefu-tit">服务准则：</dt>
+                    <dd>专业的团队，丰富的经验</dd>
+                    <dd>完善的售后，优质的服务</dd>
+                    <dd>快速的响应，辉煌的成就</dd>
+                    <dd>六年的品牌，行业的领先</dd>
+                </dl>
+            </div>
+        </li>
+        <li>
+            <a href="javascript:;" class="icon-all-6"><span id="kefugonggao">公告</span><!--<i>2</i>--></a>
+            <div class="onright">
+                <div class="close"><img src="../../templates/main/images/close.png" width="18" alt="关闭右侧栏"></div>
+                <p class="fixd-right-top"><span class="big">网站公告</span><span>网站公告</span></p>
+                <div class="pf_lcon">
+                    <ul>
+                        
+                        <li>
+                            <a href="../../service/show-35.html" target="_blank"  title="接单必读">接单必读</a>
+                        </li>
+                        
+                        <li>
+                            <a href="../../service/show-34.html" target="_blank"  title="提现公告">提现公告</a>
+                        </li>
+                        
+                        <li>
+                            <a href="../../service/show-36.html" target="_blank"  title="平台联系方式说明">平台联系方式说明</a>
+                        </li>
+                        
+                        <li>
+                            <a href="../../service/show-38.html" target="_blank"  title="完成任务后自己审核到账说明">完成任务后自己审核到账说明</a>
+                        </li>
+                        
+                        <li>
+                            <a href="../../service/show-25.html" target="_blank"  title="平台最常见问题与解答">平台最常见问题与解答</a>
+                        </li>
+                        
+                        <li>
+                            <a href="../../service/show-33.html" target="_blank"  title="产品服务">产品服务</a>
+                        </li>
+                        
+                        <li>
+                            <a href="../../service/show-40.html" target="_blank"  title="抢单说明">抢单说明</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </li>
+ 
+    </ul>
+    <ul class="icon-all2">
+        <li><a href="javascript:;" class="icon-all-4" style="display: none;"><span>TOP</span></a></li>
+        <li><a href="javascript:;" class="icon-all-5"><span>关闭</span></a></li>
+        <i></i>
+    </ul>
+</div>
+<div class="yincang"></div>
+<!--/右侧联系方式-->
+<!--/右侧客服QQ-->
+    <!--/Footer-->
+</body>
+</html>

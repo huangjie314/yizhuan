@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>绑定店铺/买号 - 易赚</title>
+    <meta name="keywords" content="易赚-接单平台,免费爆款,打造爆款,补单平台,免费排名优化，刷放单平台手机赚钱" />
+    <meta name="description" content="易赚是一家专注电商打造优质品牌及爆款平台，刷补单平台专业优化淘宝排名，和销量提升平台。" />
+    <link href="../../templates/main/css/style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../scripts/artdialog/ui-dialog.css" />
+    <link rel="stylesheet" href="../../css/pagination.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/validate.css" />
+    <link rel="stylesheet" type="text/css" href="../../scripts/jquery-lightbox/css/jquery.lightbox-0.5.css" />
+    <script type="text/javascript" charset="utf-8" src="../../scripts/jquery/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../../templates/main/js/common.js"></script>
+    <script src="../../templates/main/js/vue.js"></script>
+    <style type="text/css">
+        .form-box dl dt { width: 190px; font-size: 15px; }
+        .u-tab-content { min-height: 353px; }
+        .tips { line-height: 30px; padding: 15px 25px; background-color: #ebf8ff; border: 1px solid #c8e6ff; }
+        .upload-box-wrap { width: 250px; float: left; }
+        .webuploader-pick { width: 100px; }
+        select { width: 166px; }
+        #randomCode { width: 120px; height: 35px; background: #ebf8ff; display: inline-block; text-align: center; line-height: 35px; border: 1px solid #c8e6ff; }
+        .product-url_dl .Validform_right { display: none; }
+        .product-url_dl .Validform_right.check_right { display: inline; }
+    </style>
+</head>
+
+<body>
+
+<!--Header-->
+<div id="topbar" class="topbar">
+    <div id="topbarWrap">
+        <div class="g-doc top_nav">
+            <p class="loginInfo">
+                您好
+                <span class="red">{{username}}</span> &nbsp; 欢迎您回来！
+                <a href="/p/user/message/system.html" target="_blank">短消息
+                    <template v-if="total_msg != 0">
+                        <span class="red">({{total_msg}})</span>
+                    </template>
+                    <template v-else>
+                        ({{total_msg}})
+                    </template>
+                </a>
+                &nbsp;&nbsp;
+                <a href="/p/user/center/index.html">会员中心</a>&nbsp;&nbsp;
+                <a class="logout" href="javascript:;">退出</a>
+            </p>
+            <div class="fr">
+                <div class="top-nav-other">
+                    <a href="/p/user/center/index.html">会员首页</a>
+                    <a href="/p/user/userspread/spread.html" target="_blank"
+                        style="position: relative;text-align: left;width: 85px;padding: 0 23px 0 2px;background: url(../../templates/main/images/site_top_merge.gif) no-repeat scroll 50px 3px;display: inline-block;">邀请好友</a>
+                    <span class="sk-app">
+                        手机版
+                        <div class="sk-app-code">
+                            <a target="_blank" href="#" class="sk-app-img"></a>
+                        </div>
+                        <i></i>
+                    </span>
+                    <a target="_blank" href="/p/service.html">帮助中心</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="header">
+    <!--会员中心导航栏-->
+    <div class="main-nav">
+        <div class="wrap-nav">
+            <div class="main-nav-logo left">
+                <a href="../center/index.html"><img src="../../templates/main/images/logo_buyer.png" alt="会员中心logo"></a>
+            </div>
+            <div class="m-nav left">
+                <ul>
+                    <li class="nav-item"><a href="../userspread/spread.html">推广赚钱</a></li>
+					
+                    <!--<li class="nav-item"><a href="../../service.html" target="_blank">帮助中心</a></li>-->
+                </ul>
+            </div>
+            <div class="m-nav right">
+                <ul>
+                    <li class="nav-item m_SubMenuHover"><a href="../center/proinfo.html">账户设置</a>
+                        <div class="nav-sub">
+                            <div class="nav-arr"></div>
+                            <dl class="nav-sub-col1">
+                                <dt>安全设置</dt>
+                                <dd>
+                                    <p><a href="../center/password.html">修改登录/二级密码</a></p>
+                                    <p><a href="../center/proinfo.html">修改个人资料</a></p>
+                                    <p><a href="../center/question.html">密保问题设置</a></p>
+                                    <p><a href="../auth/index.html"><span class="red">安全认证中心</span></a></p>
+                                </dd>
+                            </dl>
+                            <dl class="nav-sub-col2">
+                                <dt>其他服务</dt>
+                                <dd>
+                                    
+                                    <p><a href="../../service.html" target="_blank">帮助中心</a></p>
+                                    
+                                    <p><a href="../exchange/index.html">兑换资金</a></p>
+                                </dd>
+                            </dl>
+                            <dl class="nav-sub-col3">
+                                <dt>充值提现</dt>
+                                <dd>
+                                    <p><a href="../amount/recharge.html">账户充值</a></p>
+                                    <p><a href="../tixian/apply.html">余额提现</a></p>
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+                    
+                    <li class="nav-item"><a href="../../task/index.html">任务大厅</a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--/会员中心导航栏-->
+</div>
+
+<!--/Header-->
+
+
+<div class="section clearfix" id="avatarApp">
+  <div class="line30"></div>
+
+  <div class="info-wrap">
+    <!--左侧导航-->
+    <div class="side-nav">
+    <div class="m-inner">
+        <div class="m-userinfo">
+            <div class="u-img">
+                <a href="../center/avatar.html" class="u-mask">
+                    <img :src="avatar" />
+                </a>
+            </div>
+            <p class="u-name">您好！
+                {{username}}
+            </p>
+            <div class="u-money">
+                <p class="u-mooney-t">会员组：<span title="">
+                        {{userLevel}} </span></p>
+                <p class="u-mooney-t">账户余额：<span>{{money}}</span> 元</p>
+            </div>
+            <div class="u-security">
+                <template v-if="mobile_authentication == 1">
+                    <img src="../../style/images/mobile_1.gif" title="已通过手机认证" /> &nbsp;
+                </template>
+                <template v-else>
+                    <img src="../../style/images/mobile.gif" title="未通过手机认证" /> &nbsp;
+                </template>
+        
+                <template v-if="video_authentication == 0">
+                    <a href="../auth/video.html">
+                        <img src="../../style/images/video_2.gif" title="尚未通过视频认证，点击现在去认证" /> &nbsp;
+                    </a>
+                </template>
+                <template v-else-if="video_authentication == 1">
+                    <img src="../../style/images/video_2.gif" title="已经视频认证" /> &nbsp;
+                </template>
+        
+                <template v-if="real_name_authentication == 0">
+                    <a href="../auth/realname.html">
+                        <img src="../../style/images/shiming_2.gif" title="尚未通过实名认证，点击现在去认证" /> &nbsp;
+                    </a>
+                </template>
+                <template v-else>
+                    <img src="../../style/images/ShiMing.gif" title="已实名认证" /> &nbsp;
+                </template>
+            </div>
+        </div>
+
+        <div class="m-sidecont">
+            
+            <dl>
+                <dt><b class="m-icon icon-r"></b>红包任务<i></i></dt>
+                <dd>
+                    
+                    <a href="../../task/index.html" class="s-item">任务大厅</a>
+                    <a href="../../task/jie.html" class="s-item">已参与任务</a>
+                    <a href="add.html" class="s-item"><span class="orange rough">绑定买号</span></a>
+                    <a href="../pingjia/1.html" class="s-item">信用评价</a>
+                    
+                    <a href="../appeal/apply.html" class="s-item">我要申诉</a>
+                    <a href="../clientunbind/index.html" class="s-item">解绑客户端</a>
+                </dd>
+            </dl>
+            
+            <dl>
+                <dt><b class="m-icon icon-m"></b>财政中心<i></i></dt>
+                <dd>
+                    <a href="../amount/recharge.html" class="s-item"><strong class="red">账户充值</strong></a>
+                    <a href="../tixian/apply.html" class="s-item">余额提现</a>
+                      
+                    <!--<a href="/user/score/convert.html" class="s-item">购买积分</a>-->
+                    <a href="../exchange/index.html" class="s-item">兑换资金</a>
+                </dd>
+            </dl>
+            <dl>
+                <dt><b class="m-icon icon-d"></b>财务明细<i></i></dt>
+                <dd style="display:none">
+                    <a href="../amount/list.html" class="s-item">资金明细</a>
+                    <a href="../commissions/list.html" class="s-item">佣金明细</a>
+                    <a href="../point/list.html" class="s-item">发布点明细</a>
+                    <a href="../score/list.html" class="s-item">积分明细</a>
+                    <a href="../userspread/list.html" class="s-item">推广明细</a>
+                    <a href="../tixian/list.html" class="s-item">提现记录</a>
+                </dd>
+            </dl>
+            
+        </div>
+    </div>
+</div>
+
+    <!--/左侧导航-->
+    
+    <!--右侧内容-->
+    <div class="home-box">
+    
+      <div class="u-tab-head">
+        <p>
+          <a class="selected" href="add.html">绑定买号</a>
+          <a  href="list.html">买号列表</a>
+        </p>
+      </div>
+      
+      <div class="u-tab-content">
+        <div class="title-div">
+          <strong class="red">【亲，绑定的买号名务必真实哦，一旦发现虚假，冻结账号处理】</strong>
+        </div>
+        <form name="bindForm" id="bindForm" url="/api/account/bind">
+            <div class="form-box">
+                <dl>
+                    <dt>电商平台类型：</dt>
+                    <dd>
+                        <select name="ddlShopSite" id="ddlShopSite" class="select" v-model="platformType">
+                            <option v-for="(option,idx) in platform_type" :value="idx">{{option}}</option>
+                        </select>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>下单的买号名：</dt>
+                    <dd><input name="txtShopName" id="txtShopName" type="text" class="input txt" value="" datatype="*" nullmsg="请填写买号" sucmsg=" " /></dd>
+                </dl>
+                <dl>
+                    <dt>性别：</dt>
+                    <dd>
+                        <label><input type="radio" name="sex" value="1" checked="checked" /> 男</label>　&nbsp;
+                        <label><input type="radio" name="sex" value="2" /> 女</label>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>年龄：</dt>
+                    <dd>
+                        <select name="age" id="age" class="select">
+                            <option v-for="(item, idx) in age" :value="idx">{{item}}</option>
+                        </select>
+                    </dd>
+                </dl>
+                <dl id="xinyu_dl">
+                    
+                </dl>
+                <dl id="xinyu_dl">
+                    <template v-if="platformType == 1">
+                        <dt id="grade">会员等级：</dt>
+                        <dd>
+                            <select name="xinyu" id="xinyu" class="select" disabled>
+                                <option value="">自动采集识别</option>
+                                <option v-for="(item, idx) in jd_grade" :value="idx">{{item}}</option>
+                            </select>
+                        </dd>
+                    </template>
+                    <template v-else>
+                        <dt id="grade">信用积分等级：</dt>
+                        <dd>
+                            <select name="xinyu" id="xinyu" class="select" disabled>
+                                <option value="">自动采集识别</option>
+                                <option v-for="(item, idx) in tb_grade" :value="idx">{{item}}</option>
+                            </select>
+                        </dd>
+                    </template>
+                </dl>
+                
+                <dl id="realname_dl">
+                    <dt>是否已实名认证：</dt>
+                    <dd>
+                        <select name="isRealname" id="isRealname" class="select" disabled>
+                            <option value="">自动采集识别</option>
+                            <option value="1">已通过实名认证</option>
+                            <option value="0">未通过实名认证</option>
+                        </select>
+                    </dd>
+                </dl>
+                    <template v-if="platformType == 1">
+                        <dl>
+                            <dt>京享值：</dt>
+                            <dd>
+                                <input name="taoqizhi" id="taoqizhi" type="text" class="input small150" value="" datatype="n" nullmsg="请填写京享值"
+                                    sucmsg=" ">
+                                <span class="Validform_checktip"></span></dd>
+                        </dl>
+                    </template>
+                    <template v-else>
+                        <dl v-if="platformType == 0">
+                            <dt>淘气值：</dt>
+                            <dd>
+                                <input name="taoqizhi" id="taoqizhi" type="text" class="input small150" value="" datatype="n" nullmsg="请填写淘气值"
+                                    sucmsg=" " />
+                            </dd>
+                        </dl>
+                    </template>
+
+                    
+                                    
+                    <dl>
+                        <dt v-if="platformType == 0" id="huabei_baitiao">是否已开通花呗：</dt>
+                        <dt v-else id="huabei_baitiao">是否已开通白条：</dt>
+                        <dd>
+                            <div class="upload-box-wrap" style="width: 400px;">
+                                <select name="is_huabei" id="is_huabei" class="select" datatype="/[01]/" nullmsg="请选择是否已开通花呗" sucmsg=" ">
+                                    <option value="">请选择</option>
+                                    <option value="1">已开通</option>
+                                    <option value="0">未开通</option>
+                                </select>
+                                <span class="Validform_checktip"></span>
+                            </div>
+                        </dd>
+                    </dl>
+                    
+                    <dl>
+                        <dt v-if="platformType == 0">花呗截图：</dt>
+                        <dt v-else>实名认证截图：</dt>
+                        <dd>
+                            <div class="upload-box-wrap">
+                                <input name="verify_photo2" id="verify_photo2" type="hidden" class="upload-path" value="" nullmsg="请先上传截图" sucmsg=" " />
+                                <div class="upload-box">
+                                    <div class="upload-btn webuploader-container">
+                                        <div class="webuploader-pick">上传截图</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="upload-box-wrap">
+                                <template v-if="platformType == 0">
+                                    <a :href="hb_image" target="_blank" title="点击看大图">
+                                        <img :src="hb_image" height="186" alt="没有示例图，请自己截图上传" />
+                                    </a>
+                                </template>
+                                <template v-else>
+                                    <a :href="jd_real_name_image" target="_blank" title="点击看大图">
+                                        <img :src="jd_real_name_image" height="186" alt="没有示例图，请自己截图上传" />
+                                    </a>
+                                </template>
+                                
+                            </div>
+                        </dd>
+                    </dl>
+                    
+                    <dl>
+                        <dt v-if="platformType == 0">支付宝实名截图：</dt>
+                        <dt v-else>京享值截图：</dt>
+                        <dd>
+                            <div class="upload-box-wrap">
+                                <input name="verify_photo4" id="verify_photo4" type="hidden" class="upload-path" value="" datatype="*" nullmsg="请先上传截图" sucmsg=" " />
+                                <div class="upload-box">
+                                    <div class="upload-btn webuploader-container">
+                                        <div class="webuploader-pick">上传截图</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="upload-box-wrap">
+                                <template v-if="platformType == 0">
+                                    <a :href="zfb_real_name_image" target="_blank" title="点击看大图">
+                                        <img :src="zfb_real_name_image" height="186" alt="没有示例图，请自己截图上传" />
+                                    </a>
+                                </template>
+                                <template v-else>
+                                    <a :href="jd_jsz_image" target="_blank" title="点击看大图">
+                                        <img :src="jd_jsz_image" height="186" alt="没有示例图，请自己截图上传" />
+                                    </a>
+                                </template>
+                            </div>
+                        </dd>
+                    </dl>
+                    
+                <dl>
+                    <dt v-if="platformType == 0">支付宝与淘宝会员名截图：</dt>
+                    <dt v-else>京东白条截图：</dt>
+                    <dd>
+                        <div class="upload-box-wrap">
+                            <input name="verify_photo5" id="verify_photo5" type="hidden" class="upload-path" value="" datatype="*" nullmsg="请先上传截图" sucmsg=" " />
+                            <div class="upload-box">
+                                <div class="upload-btn webuploader-container">
+                                    <div class="webuploader-pick">上传截图</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="upload-box-wrap">
+                            <template v-if="platformType == 0">
+                                <a :href="zfb_name_and_tb_name_image" target="_blank" title="点击看大图">
+                                    <img :src="zfb_name_and_tb_name_image" height="186" alt="没有示例图，请自己截图上传" />
+                                </a>
+                            </template>
+                            <template v-else>
+                                <a :href="jd_bt_image" target="_blank" title="点击看大图">
+                                    <img :src="jd_bt_image" height="186" alt="没有示例图，请自己截图上传" />
+                                </a>
+                            </template>
+                            
+                        </div>
+                    </dd>
+                </dl>
+                
+                <!-- <dl>
+                    <dt>检验方式：</dt>
+                    <dd>
+                        <span title="账号信息检验方式">
+                            <label><input type="radio" name="rblPort" value="0" disabled /> 默认</label> &nbsp;
+                            <label><input type="radio" name="rblPort" value="1" checked="checked" /> 接口采集</label>
+                        </span>
+                    </dd>
+                </dl> -->
+                
+                <dl>
+                    <dt></dt>
+                    <dd>
+                        <input name="btnSubmit" id="btnSubmit" type="button" class="btn btn-success size16" value=" 确定提交 " />
+                    </dd>
+                </dl>
+            </div>
+        </form>
+      </div>
+        <div class="tips">
+        <span class="orange size15 rough">注：绑定后账号名将无法修改，同时删除后也无法再重新添加！</span><br />
+            <span class="blue">姓别和年龄的作用：例如商家发布的活动要求只能18-25岁的女性用户接手，若你想参与此活动，你的买号必需符合这个条件才可以申请，所以请如实选择该买号的性别与年龄。</span><br />
+            提示：您所在用户组每个试用区可以绑定<span class="blue">{{max_account}}</span>个买号，想要绑定更多，请升级为更高级别会员！<br />
+            建议：请尽量绑定多个备用买号，申请试用时轮换使用，试用通过率会更高！<br />
+        </div>
+      
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="mtable" style="margin-top:20px;">
+            <tr>
+                <th align="center">活动区</th>
+                <th align="center">买号名</th>
+                <th align="center">性别/年龄</th>
+                <th align="center">买号等级</th>
+                <th align="center">今/周试用数</th>
+                <th align="center">绑定时间</th>
+                <th align="center">状态</th>
+                <th align="center">操作</th>
+            </tr>
+            
+            <template v-if="accounts.length">
+                <tr v-for="(item, idx) in accounts">
+                    <td align="center">
+                        <template v-if="item.type==1">
+                            <img src="../../style/images/website_ico3.png" align="absmiddle" />
+                            京东
+                        </template>
+                        <template v-else>
+                            <img src="../../style/images/website_ico1.png" align="absmiddle" />
+                            淘宝天猫
+                        </template>
+                    </td>
+                    <td align="center">{{item.name}}
+                        <img v-if="item.is_real_name == 1" src="../../style/images/ShiMing.gif" height="18" align="absmiddle"
+                            title="已通过支付宝实名认证" />
+                        <img v-else src="../../style/images/shiming_2.gif" height="18" align="absmiddle" title="买号未通过实名认证" />
+                    </td>
+                    <td align="center">{{ item.sex | filterSex }}/{{item.age | filterAge}}</td>
+                    <td align="center">
+                        <!-- <span class="orange">{{item.level}}</span>  -->
+                        <template v-if="item.type == 1">
+                            <template v-if="item.level == 0">
+                                <img src='../../style/images/jd_v0.png' align='absmiddle' />
+                            </template>
+                            <template v-else-if="item.level == 1">
+                                <img src='../../style/images/jd_v1.png' align='absmiddle' />
+                            </template>
+                            <template v-else-if="item.level == 2">
+                                <img src='../../style/images/jd_v2.png' align='absmiddle' />
+                            </template>
+                            <template v-else-if="item.level == 3">
+                                <img src='../../style/images/jd_v3.png' align='absmiddle' />
+                            </template>
+                            <template v-else-if="item.level == 4">
+                                <img src='../../style/images/jd_v4.png' align='absmiddle' />
+                            </template>
+                        </template>
+                        <template v-else>
+                            <template v-if="item.level == 0">
+                                <img src='../../style/images/new.gif' align='absmiddle' />
+                            </template>
+                            <template v-else-if="item.level == 1">
+                                <img src='../../style/images/score_1.gif' align='absmiddle' />
+                            </template>
+                            <template v-else-if="item.level == 2">
+                                <img src='../../style/images/score_2.gif' align='absmiddle' />
+                            </template>
+                            <template v-else-if="item.level == 3">
+                                <img src='../../style/images/score_3.gif' align='absmiddle' />
+                            </template>
+                            <template v-else-if="item.level == 4">
+                                <img src='../../style/images/score_4.gif' align='absmiddle' />
+                            </template>
+                        </template>
+                    </td>
+                    <td align="center">{{item.total_today_orders}} / {{item.total_week_orders}}</td>
+                    <td align="center">{{item.created_at}}</td>
+                    <td align="center"><span class="red">{{item.status | filterStatus}}</span></td>
+                    <td align="center">
+                        <a class="link_btn btnUpdate" href="javascript:;" @click="handleUpdate(idx)">更新</a>
+                        &nbsp;
+                        <a class="link_btn red btnDelete" @click="handelDel(idx)" href="javascript:;">删除</a>
+                    </td>
+                </tr>
+            </template>
+                                    
+        </table>
+      
+    </div>
+    <!--/右侧内容-->
+  </div>
+</div>
+<script type="text/javascript" charset="utf-8" src="../../scripts/artdialog/dialog-plus-min.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../scripts/jquery/jquery.form.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../scripts/jquery/Validform_v5.3.2_min.js"></script>
+<!-- <script type="text/javascript" src="../../scripts/webuploader/webuploader.min.js"></script>
+<script type="text/javascript" src="../../scripts/webuploader/uploader.js"></script> -->
+<script type="text/javascript" src="../../scripts/jquery-lightbox/js/jquery.lightbox-0.5.min.js"></script>
+<script src="../../templates/main/js/scripts/bindBuyerAccount.js"></script>
+
+<!--Footer-->
+<div class="footer clearfix">
+  <div class="foot-nav">
+    <a target="_blank" href="../../contents/about.html">关于我们</a>|
+    <a target="_blank" href="../../service.html">帮助中心</a>|
+    <a target="_blank" href="../../feedback.html">留言反馈</a>|
+    <a target="_blank" href="../../service/show-33.html">产品中心</a>|
+    <a target="_blank" href="../../contents/contact.html">联系我们</a>
+  </div>
+  <div class="copyright">
+    <p>Copyright &copy; 2018-2019 易赚</p>
+    <p><a href="http://www.beian.miit.cn/">工业和信息化部备案号</a>：渝ICP备19003396号-1</p>
+    <p></p>
+  </div>
+</div>
+<!--右侧客服QQ-->
+<!--右侧客服QQ/联系方式等-->
+<link rel="stylesheet" type="text/css" href="../../templates/main/css/contact.css" />
+<script type="text/javascript" src="../../templates/main/js/online_qq.js"></script>
+<div class="fixd-right">
+    <ul class="icon-all" id="icon-all">
+        <li>
+            <a href="javascript:;" class="icon-all-1"><span id="kefuqq">QQ<br>咨询</span></a>
+            <div class="kefu onright" id="kefu">
+                <div class="close"><img src="../../templates/main/images/close.png" width="18" alt="关闭右侧栏"></div>
+                <p class="fixd-right-top"><span class="big">QQ在线咨询</span><span>服务时间：7 * 12小时</span></p>
+                <p class="kefu-tit" style="margin-top: 20px;"> 客服团队：</p>
+                <ul class="zixun">
+                    <li><span>买手客服：</span><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=1409444757&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:1409444757:51" align="absmiddle" title="点击这里给我发消息" /></a></li>
+                    <li><span>商家客服：</span><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=1635873999&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:1635873999:51" align="absmiddle" title="点击这里给我发消息" /></a></li>
+                    <li><span>充值提现：</span><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2709177641&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:2709177641:51" align="absmiddle" title="点击这里给我发消息" /></a></li>
+                    <li><span>技术支持：</span><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=284849937&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:284849937:51" align="absmiddle" title="点击这里给我发消息" /></a></li>
+                    <li><span>投诉建议：</span><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=1635873999&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:1635873999:51" align="absmiddle" title="点击这里给我发消息" /></a></li>
+                </ul>
+                <p class="kefu-tit"> 合作渠道：</p>
+                <ul class="zixun">
+                    <li><span>合作渠道：</span><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=1635873999&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:1635873999:51" align="absmiddle" title="点击这里给我发消息" /></a></li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <a href="javascript:;" class="icon-all-2"><span id="kefutell">电话</span></a>
+            <div class="onright" id="tell">
+                <div class="close"><img src="../../templates/main/images/close.png" width="18" alt="关闭右侧栏"></div>
+                <p class="fixd-right-top"><span class="big">联系电话</span><span>7×24小时服务热线</span></p>
+                <div class="hotline pf_lcon ">
+                    <p style="font-size:26px; margin-bottom:30px; color:#f50; line-height:0;">13102330723</p>
+                    <p>客服热线：13102330723</p>
+                </div>
+                <dl>
+                    <dt class="kefu-tit">服务准则：</dt>
+                    <dd>专业的团队，丰富的经验</dd>
+                    <dd>完善的售后，优质的服务</dd>
+                    <dd>快速的响应，辉煌的成就</dd>
+                    <dd>六年的品牌，行业的领先</dd>
+                </dl>
+            </div>
+        </li>
+        <li>
+            <a href="javascript:;" class="icon-all-6"><span id="kefugonggao">公告</span><!--<i>2</i>--></a>
+            <div class="onright">
+                <div class="close"><img src="../../templates/main/images/close.png" width="18" alt="关闭右侧栏"></div>
+                <p class="fixd-right-top"><span class="big">网站公告</span><span>网站公告</span></p>
+                <div class="pf_lcon">
+                    <ul>
+                        
+                        <li>
+                            <a href="../../service/show-35.html" target="_blank"  title="接单必读">接单必读</a>
+                        </li>
+                        
+                        <li>
+                            <a href="../../service/show-34.html" target="_blank"  title="提现公告">提现公告</a>
+                        </li>
+                        
+                        <li>
+                            <a href="../../service/show-36.html" target="_blank"  title="平台联系方式说明">平台联系方式说明</a>
+                        </li>
+                        
+                        <li>
+                            <a href="../../service/show-38.html" target="_blank"  title="完成任务后自己审核到账说明">完成任务后自己审核到账说明</a>
+                        </li>
+                        
+                        <li>
+                            <a href="../../service/show-25.html" target="_blank"  title="平台最常见问题与解答">平台最常见问题与解答</a>
+                        </li>
+                        
+                        <li>
+                            <a href="../../service/show-33.html" target="_blank"  title="产品服务">产品服务</a>
+                        </li>
+                        
+                        <li>
+                            <a href="../../service/show-40.html" target="_blank"  title="抢单说明">抢单说明</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </li>
+ 
+    </ul>
+    <ul class="icon-all2">
+        <li><a href="javascript:;" class="icon-all-4" style="display: none;"><span>TOP</span></a></li>
+        <li><a href="javascript:;" class="icon-all-5"><span>关闭</span></a></li>
+        <i></i>
+    </ul>
+</div>
+<div class="yincang"></div>
+<!--/右侧联系方式-->
+<!--/右侧客服QQ-->
+<!--/Footer-->
+</body>
+</html>

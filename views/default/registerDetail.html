@@ -1,0 +1,253 @@
+{{include 'default/public/header.html'}}
+<style type="text/css">
+    .footer {
+        margin: 0;
+    }
+
+    .main-tit p {
+        font-size: 20px;
+        width: 200px;
+        padding-right: 0;
+        margin-bottom: -30px;
+        line-height: 45px;
+        border-left: 1px solid #f0f0f0;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        text-align: center;
+    }
+
+    .main-tit p.buyer {
+        color: #fff1f1;
+        background-color: #ea544a;
+    }
+
+    .main-tit p.seller {
+        color: #f1f7ff;
+        background-color: #2e8df3;
+    }
+
+    .btn.buyer {
+        border: 0;
+        font-size: 18px;
+        width: 240px;
+        height: 46px;
+        background-image: -webkit-linear-gradient(left, #ff6f06 0, #ee4e43 100%);
+        background-image: -o-linear-gradient(left, #ff6f06 0, #ee4e43 100%);
+        background-image: linear-gradient(to right, #ff6f06 0, #ee4e43 100%);
+    }
+
+    .btn.seller {
+        border: 0;
+        font-size: 18px;
+        width: 240px;
+        height: 46px;
+        background-image: -webkit-linear-gradient(left, #00b8ff 0, #2388f5 100%);
+        background-image: -o-linear-gradient(left, #00b8ff 0, #2388f5 100%);
+        background-image: linear-gradient(to right, #00b8ff 0, #2388f5 100%);
+    }
+
+    .main-nav {
+        background: #fff;
+    }
+
+    .main-nav .main-nav-logo a {
+        margin: 12px 0 0 10px;
+        padding: 0;
+        border-radius: 0;
+    }
+
+    .main-nav .nav-item>a {
+        color: #666;
+    }
+
+    .main-nav .nav-item>a:hover {
+        color: #f50;
+    }
+</style>
+
+<body>
+
+    <div class="header">
+        <!--导航栏-->
+        <div class="main-nav">
+            <div class="wrap-nav">
+                <div class="main-nav-logo left">
+                    <a href="#"><img src="/default/images/logo_reg.png" alt="会员注册logo" /></a>
+                </div>
+                <div class="m-nav right">
+                    <ul>
+                        <li class="nav-item"><a href="/login">登 录</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--/导航栏-->
+    </div>
+    <!--/Header-->
+
+    <div class="main-box">
+        <div class="section clearfix">
+            <!--用户注册-->
+            <div class="main-tit">
+                {{if type === 'buyer'}}
+                <p class="buyer">用户注册</p>
+                {{else}}
+                <p class="seller">商家注册</p>
+                {{/if}}
+            </div>
+            <div class="inner-box">
+                <form id="regform" name="regform">
+                    <input id="txtType" name="type" type="hidden" value="1" />
+                    <input id="platform_type" name="platform_type" type="hidden" value="web" />
+                    <input id="type" type="hidden" value="{{type === 'buyer' ? 0 : 1}}" />
+                    <div class="dl-list" style="width: 790px; float: left; border-right: dashed 1px #ddd;">
+                        <dl>
+                            <dt>手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机：</dt>
+                            <dd>
+                                <input id="txtMobile" name="mobile" type="text" class="input txt" placeholder="输入手机号码"
+                                    datatype="m" nullmsg="请输入手机号码" sucmsg=" " />
+                                <a id="sendSMSCode" class="send" href="javascript:;"
+                                    onclick="sendSMS(this, '#txtMobile', '/');" title="免费发送手机验证码">发送验证码</a>
+                                <span class="Validform_checktip"> </span>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>验 证 码：</dt>
+                            <dd>
+                                <input id="txtCode" name="code" type="text" class="input txt" placeholder="输入手机收到的验证码"
+                                    datatype="s4-6" nullmsg="请输入手机收到的验证码" sucmsg=" " />
+                                <span class="Validform_checktip"> </span>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>登录密码：</dt>
+                            <dd>
+                                <input id="txtPassword" name="password" type="password" class="input txt"
+                                    placeholder="输入登录密码" datatype="*6-30" nullmsg="请输入登录密码"
+                                    errormsg="密码范围在6-20位之间，建议字母+数字组合" sucmsg=" " />
+                                <span class="Validform_checktip">建议字母+数字组合</span>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>确认密码：</dt>
+                            <dd>
+                                <input id="txtPassword1" name="confirm_password" type="password" class="input txt"
+                                    placeholder="再次输入登录密码" datatype="*6-30" recheck="password" nullmsg="请再输入一次密码"
+                                    errormsg="两次输入的密码不一致" sucmsg=" " />
+                                <span class="Validform_checktip"> </span>
+                            </dd>
+                        </dl>
+
+                        <dl>
+                            <dt>二级密码<span class="red">（也称支付密码）</span>：</dt>
+                            <dd>
+                                <input id="txtPayPassword" name="pay_password" type="password" class="input txt"
+                                    placeholder="输入二级密码" datatype="*6-30" nullmsg="请输入二级密码(也称支付密码)"
+                                    errormsg="密码范围在6-20位之间，建议字母+数字组合" sucmsg=" " />
+                                <span class="Validform_checktip">建议字母+数字组合</span>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>确认二级密码：</dt>
+                            <dd>
+                                <input id="txtPayPassword1" name="confirm_pay_password" type="password"
+                                    class="input txt" placeholder="再次输入二级密码" datatype="*6-30" recheck="pay_password"
+                                    nullmsg="请再输入一次二级密码" errormsg="两次输入的二级密码不一致" sucmsg=" " />
+                                <span class="Validform_checktip"> </span>
+                            </dd>
+                        </dl>
+
+                        <dl>
+                            <dt>Q Q：</dt>
+                            <dd>
+                                <input id="txtQQ" name="qq" type="text" class="input txt" placeholder="输入你常用的QQ号"
+                                    datatype="n5-13" nullmsg="输入你常用的QQ号，方便联系你" sucmsg=" " />
+                                <span class="Validform_checktip">交易时方便对方或客服联系到你</span>
+                            </dd>
+                        </dl>
+
+                        <!--开放注册及邮箱邀请注册-->
+                        <dl style="display:none">
+                            <dt>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱：</dt>
+                            <dd>
+                                <input id="txtEmail" name="txtEmail" type="text" class="input txt" placeholder="输入邮箱账号"
+                                    datatype="e" nullmsg="请输入电子邮箱账号" sucmsg=" " />
+                                <span class="Validform_checktip">忘记密码找回时需要验证</span>
+                            </dd>
+                        </dl>
+                        <!--/开放注册及邮箱邀请注册-->
+
+                        <!--开启邀请注册-->
+                        <dl>
+                            <dt>推 荐 人：</dt>
+                            <dd>
+                                <input id="txtAllianceUser" name="p_name" type="text" class="input txt" value=""
+                                    placeholder="输入推荐人账号" datatype="s3-50" ignore="ignore" nullmsg="输入推荐人账号"
+                                    sucmsg=" " />
+                                <span class="Validform_checktip">对推荐人无任何损失反而有奖， 可留空</span>
+                            </dd>
+                        </dl>
+                        <!--/开启邀请注册-->
+
+                        <!--开启注册协议-->
+                        <dl>
+                            <dt></dt>
+                            <dd>
+                                <input id="chkAgree" name="chkAgree" type="checkbox" value="1" checked />
+                                <label for="chkAgree">注册即表示同意 <a href="javascript:;"
+                                        onclick="showWindow('#regrules');">《注册许可协议》</a></label>
+                                <div id="regrules" title="注册许可协议" style="display:none;">
+                                    1、在本站注册的会员，必须遵守《互联网电子公告服务管理规定》，不得在本站发表诽谤他人，侵犯他人隐私，侵犯他人知识产权，传播病毒，政治言论，商业讯息等信息。<br />
+                                    2、在所有在本站发表的文章，本站都具有最终编辑权，并且保留用于印刷或向第三方发表的权利，如果你的资料不齐全，我们将有权不作任何通知使用你在本站发布的作品。
+                                    <br />
+                                    3、在登记过程中，您将选择注册名和密码。注册名的选择应遵守法律法规及社会公德。您必须对您的密码保密，您将对您注册名和密码下发生的所有活动承担责任。</div>
+
+                            </dd>
+                        </dl>
+                        <!--开启注册协议-->
+
+
+                        <dl>
+                            <dt></dt>
+                            <dd>
+
+                                <script>var regrules = 1;</script>
+                                <input id="btnSubmit" name="btnSubmit" type="submit" value="确 定 注 册"
+                                    class="btn {{type === 'buyer' ? 'buyer' : 'seller'}}" />
+                            </dd>
+                        </dl>
+                    </div>
+                    <!--右侧-->
+                    <div class="dl-list_right">
+                        <span class="haveaccount">已经有会员账号？</span><br /><br />
+                        <a class="btn" href="/login"><span>我要登录</span></a>
+                        <a class="btn btn-error" href="/repassword"><span>忘记密码</span></a>
+                        <div class="ad">
+                            <a href="#" target="_blank">
+
+                                <img src="/default/images/reg_ad2.gif" width="288" height="294" />
+
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--用户注册-->
+        </div>
+    </div>
+
+    <script type="text/javascript" charset="utf-8" src="/default/scripts/jquery/jquery.form.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/default/scripts/jquery/Validform_v5.3.2_min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/default/js/register-validate.js"></script>
+    <div class="login_footer_warp">
+        <div class="login_footer">
+            <ul class="clearfix">
+                <li><span class="h01"></span>海量会员，随时接放</li>
+                <li><span class="h02"></span>实时查号，拒绝降权</li>
+                <li><span class="h03"></span>品类齐全，轻松申请</li>
+                <li><span class="h04"></span>贴心服务，资金保障</li>
+            </ul>
+        </div>
+    </div>
+    <!--Footer-->
+    {{include 'default/public/footer.html'}}

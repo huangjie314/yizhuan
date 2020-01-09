@@ -1,0 +1,124 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>会员登录 - 易赚</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="renderer" content="webkit" />
+    <meta name="keywords" content="易赚-接单平台,免费爆款,打造爆款,补单平台,免费排名优化，刷放单平台手机赚钱" />
+    <meta name="description" content="易赚是一家专注电商打造优质品牌及爆款平台，刷补单平台专业优化淘宝排名，和销量提升平台。" />
+    <link href="/default/scripts/artdialog/ui-dialog.css" rel="stylesheet" type="text/css" />
+    <link href="/default/css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" charset="utf-8" src="/default/scripts/jquery/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/default/scripts/artdialog/dialog-plus-min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/default/js/common.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/default/js/gVerify.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/default/js/login-validate.js"></script>
+    <style type="text/css">
+        .footer {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!--Header-->
+    <style>
+        .main-nav {
+            background: #fff;
+        }
+
+        .main-nav .main-nav-logo a {
+            margin: 12px 0 0 10px;
+            padding: 0;
+            border-radius: 0;
+        }
+
+        .main-nav .nav-item>a {
+            color: #666;
+        }
+
+        .main-nav .nav-item>a:hover {
+            color: #f50;
+        }
+    </style>
+    <div class="header">
+        <!--导航栏-->
+        <div class="main-nav">
+            <div class="wrap-nav">
+                <div class="main-nav-logo left">
+                    <a href="#">
+                        <img src="/default/images/logo_login.png" alt="会员通行证logo" />
+                    </a>
+                </div>
+                <div class="m-nav right">
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--/导航栏-->
+    </div>
+    <!--/Header-->
+
+    <div class="login-box">
+        <div class="section clearfix">
+            <!--页面左边-->
+            <!--<div class="login-left"></div>-->
+            <!--/页面左边-->
+
+            <!--页面右边-->
+            <div class="login-right">
+                <h1>会员登录</h1>
+                <form id="loginform" name="loginform">
+                    <ul>
+                        <li>
+                            <label>用户名：</label>
+                            <input id="txtUserName" name="username" type="text" placeholder="用户名/手机/邮箱" />
+                        </li>
+                        <li>
+                            <label>密&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
+                            <input id="txtPassword" name="password" type="password" placeholder="输入登录密码" />
+                        </li>
+
+                        <li>
+                            <label>验证码：</label>
+                            <input id="txtCode" name="txtCode" type="text" class="input code" placeholder="输入验证码" />
+                            <a class="send" title="点击切换验证码" href="javascript:;">
+                                <div id="captcha_img" style="width: 100%; height: 100%;"></div>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="btn-box">
+                        <div class="col">
+                            <input id="btnSubmit" name="btnSubmit" class="submit" type="button" value=" 登 录">
+                        </div>
+                        <div id="msgtips" class="col tips"></div>
+                        <div class="clearfix">
+                            <span class="left">
+                                <label>
+                                    <input id="chkRemember" name="chkRemember" type="checkbox" checked> 保持登录
+                                </label>
+                            </span>
+                            <a class="right" href="/repassword">忘记密码？</a>
+                        </div>
+                    </div>
+                </form>
+                <!--第三方登录-->
+                <div class="oauth-box">
+                    <h3>还没注册会员？ <a href="/register">点击注册</a></h3>
+                    <p>
+                        <!--取得一个DataTable-->
+                    </p>
+                </div>
+                <!--/第三方登录-->
+            </div>
+            <!--页面右边-->
+        </div>
+    </div>
+
+    {{include 'default/public/footer.html'}}

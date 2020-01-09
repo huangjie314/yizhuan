@@ -1,0 +1,51 @@
+﻿@charset "utf-8";
+/*右侧栏联系*/
+.fixd-right { background: #444; font: 13px/1.5 "Microsoft YaHei", "微软雅黑", "黑体", Tahoma, Helvetica, Arial, sans-serif; width: 40px; height: 100%; position: fixed; top: 0; right: 0; z-index: 100000; min-height: 500px; transition: 0.5s; }
+.icon-all { width: 40px; height: auto; overflow: hidden; padding-top: 160px; }
+.icon-all > li > a { padding: 10px 0; display: block; color: #fff; text-align: center; text-decoration: none; background: url("../images/icon-alll.png") no-repeat; position: relative; -webkit-transition: none; transition: none; }
+.icon-all a span { padding-top: 33px; display: block; }
+.icon-all > li > div { transition: 0.5s; right: -250px; width: 250px; background: #f7f7f7; height: 100%; position: absolute; top: 0; z-index: -999; }
+/*底部top关闭*/
+.icon-all2 { position: absolute; bottom: 85px; left: 0; width: 40px; }
+.icon-all2 i { width: 40px; height: 1900px; overflow: hidden; position: absolute; right: 0px; bottom: -100px; background: #444; z-index: -99; }
+.icon-all2 a { padding: 10px 0; text-align: center; display: block; color: #fff; text-decoration: none; background: url("../images/icon-alll.png") no-repeat; overflow: hidden; -webkit-transition: none; transition: none; }
+.icon-all2 a span { padding-top: 30px; display: block; width: 100%; }
+/*图标*/
+.icon-all a.icon-all-1 { background-position: -48px -32px; }
+.icon-all a.icon-all-2 { background-position: -47px -113px; }
+.icon-all a.icon-all-3 { background-position: -46px -195px; }
+.icon-all a.icon-all-6 { background-position: -47px -422px; }
+.icon-all2 a.icon-all-4 { background-position: -47px -272px; }
+.icon-all2 a.icon-all-5 { background-position: -47px -354px; }
+.icon-all .fixd-right-top { height: 100px; background-color: #e8e8e8; width: 100%; text-align: left; }
+.icon-all .fixd-right-top span.big { color: #f40; font-size: 26px; padding-top: 20px; }
+.icon-all .fixd-right-top span { color: #999; font-size: 14px; display: block; line-height: normal; padding-top: 5px; padding-left: 20px; }
+.icon-all .icon-all-6 i { display: block; border-radius: 10px; height: 20px; line-height: 20px; text-align: center; color: #fff; position: absolute; top: 6px; right: 2px; z-index: 0; width: 20px; background: #00113a; font-style: normal; }
+.icon-all a.icon-all-1:hover { background-position: -8px -32px; background-color: #fff; color: #444; }
+.icon-all a.icon-all-2:hover { background-position: -11px -113px; background-color: #fff; color: #444; }
+.icon-all a.icon-all-3:hover { background-position: -10px -195px; background-color: #fff; color: #444; }
+.icon-all a.icon-all-6:hover { background-position: -12px -422px; background-color: #fff; color: #444; }
+.icon-all2 a.icon-all-4:hover { background-position: -12px -272px; background-color: #fff; color: #444; }
+.icon-all2 a.icon-all-5:hover { background-position: -10px -354px; background-color: #fff; color: #444; }
+.icon-all .kefu .kefu-tit { width: 110px; font-size: 16px; text-align: center; color: #fff; height: 34px; line-height: 34px; }
+/*QQ咨询*/
+.icon-all .zixun li { color: #666; font-size: 14px; line-height: 45px; overflow: hidden; }
+.icon-all .zixun li a { margin-left: 6px; margin-top: 10px; height: 25px; line-height: 25px; display: block; float: left; }
+.icon-all .zixun li span { width: 45%; text-align: right; display: block; float: left; }
+/*咨询，电话，内容*/
+.icon-all .pf_lcon { padding: 10px; margin-top: 15px; }
+.icon-all .pf_lcon p:hover { color: #444; }
+.icon-all .hotline { text-align: left; font-size: 14px; color: #666; line-height: 40px; padding-left: 20px; }
+.icon-all .onright { box-shadow: -1px 0px 6px rgba(0,0,0,.2); }
+.icon-all .onright .kefu-tit { width: 110px; background-color: #555; font-size: 16px; text-align: center; color: #fff; height: 34px; line-height: 34px; }
+.icon-all .onright > dl > dd { font-size: 14px; margin-left: 50px; margin-top: 20px; float: left; color: #666 }
+.icon-all .onright > dl { position: absolute; bottom: 80px; left: 0px; }
+.icon-all .pf_lcon li { border-bottom: 1px dotted #ececec; width: 100%; height: 40px; }
+.icon-all .pf_lcon li:nth-child(1) a, .pf_lcon li:nth-child(2) a { color: #f40; }
+.icon-all .pf_lcon li a { overflow: hidden; line-height: 40px; font-size: 13px; color: #444; display: block; width: 210px; height: 40px; text-align: left; padding: 0; margin: 0; white-space: nowrap; text-overflow: ellipsis; padding: 0 10px; }
+.icon-all .pf_lcon li a:hover { text-decoration: underline; }
+.icon-all .close { position: absolute; top: 5px; right: 8px; cursor: pointer; }
+.icon-all .close img { transition: 0.4s all; -webkit-transition: 0.4s all; }
+.icon-all .close:hover img { transform: rotate(180deg); -webkit-transform: rotate(180deg); }
+/*点出展开/收缩侧边框*/
+.yincang { width: 0px; background-image: url("../images/peeg.png"); height: 56px; background-repeat: no-repeat; position: fixed; right: 0; bottom: 100px; z-index: 2222; cursor: pointer; transition: 0.5s; }

@@ -1,0 +1,212 @@
+{{include 'default/public/header.html'}}
+
+<body>
+    {{include 'default/public/topbar.html'}}
+
+    <div class="section clearfix" id="indexApp">
+        <div class="line30"></div>
+        <div class="info-wrap">
+
+            {{include 'default/public/leftnav.html'}}
+            <!--右侧内容-->
+            <div class="home-box">
+                <div class="u-tab-content">
+                    <!--内框-->
+                    <div class="usercenter-box">
+                        <div class="m-message">
+                            <em class="ico"></em>
+                            <p class="last_login">您上次登陆的时间是：{{last_login_time}} &nbsp; ip:{{last_login_ip}}</p>
+                            <p class="login_city">开启异地登录限制 <input name="checkLoginCity" id="checkLoginCity"
+                                    type="checkbox" title="打勾表示启用，账号异地登录时需要你手机验证" /></p>
+                        </div>
+                        <!--会员到期提醒-->
+
+                        <!--/会员到期提醒-->
+
+                        <div class="m-myasset">
+                            <div class="my-money-box">
+                                <div class="my-big-font">
+                                    <div class="my-money">
+                                        <h2>账户余额</h2>
+                                        <span class="orange">￥{{money}} 元</span>
+                                    </div>
+                                    <div class="my-money">
+                                        <h2>发布点</h2>
+                                        <span>{{publishing_point}} 点</span>
+                                    </div>
+                                    <div class="my-money">
+                                        <h2>收藏点</h2>
+                                        <span>{{collection_point}} 点</span>
+                                    </div>
+                                    <div class="my-money">
+                                        <h2>流量点</h2>
+                                        <span>{{flow_point}} 点</span>
+                                    </div>
+                                    <div class="my-money">
+                                        <h2>可用积分</h2>
+                                        <span>{{integral}} 分</span>
+                                    </div>
+                                </div>
+
+                                <div class="my-btn">
+                                    <a href="../amount/recharge.html">账户充值</a>
+                                    <a href="../tixian/apply.html">余额提现</a>
+
+                                    <a href="../../service.html" target="_blank">帮助中心</a>
+                                    <a href="../exchange/index.html">兑换资金</a>
+
+                                </div>
+                            </div>
+                            <!--我的任务-->
+                            <div class="count_panel pink">
+                                <h3 class="pink">我的任务</h3>
+                                <div class="inner_box">
+                                    <dl>
+                                        <dt>已参与任务：</dt>
+                                        <dd>
+                                            <a href="../../task/jie.html">
+
+                                                <b class="orange"></b>
+                                            </a>
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>待商家发货：</dt>
+                                        <dd>
+                                            <a href="../../task/jie-0-5.html">
+
+                                                <b class="orange"></b>
+                                            </a>
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>待收货好评：</dt>
+                                        <dd>
+                                            <a href="../../task/jie-0-6.html">
+
+                                                <b class="orange"></b></a>
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>待审核返款：</dt>
+                                        <dd>
+                                            <a href="../../task/jie-0-7.html">
+
+                                                <b class="orange"></b></a>
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>我发起的未解决申诉：</dt>
+                                        <dd>
+                                            <b class="blue">
+                                                <a href="../appeal/apply_list.html">
+
+                                                </a>
+                                            </b>
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>我被申诉的未解决申诉：</dt>
+                                        <dd>
+                                            <b class="blue">
+                                                <a href="../appeal/recive_list.html">
+
+                                                </a>
+                                            </b>
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt></dt>
+                                        <dd> &nbsp;
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>已完成：</dt>
+                                        <dd>
+                                            <a href="../../task/jie-0-8.html">
+                                                <b class="orange">
+
+                                                </b>
+                                            </a>
+                                        </dd>
+                                    </dl>
+                                    <div class="clear"></div>
+                                    <div class="tips">
+                                        我已被：<strong class="red">
+
+                                        </strong> 人拉入黑名单（达到20人系统禁止接任务）
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--/推荐任务-->
+
+
+                        </div>
+                    </div>
+                    <!--/内框-->
+                </div>
+                <!--/会员中心-->
+
+            </div>
+            <!--/右侧内容-->
+        </div>
+    </div>
+
+    <!-- <script src="/default/js/scripts/index.js"></script> -->
+    <!--会员中心-->
+    <script type="text/javascript">
+        $(function () {
+            //绑定开启异地登录限制点击事件
+            $("#checkLoginCity").click(function () {
+                var obj = this;
+                $.ajax({
+                    type: "get",
+                    url: "/tools/submit_ajax.ashx",
+                    data: { action: "check_login_city", value: $(this).prop("checked") },
+                    dataType: "json",
+                    cache: false,
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        dialog({
+                            title: '提示',
+                            content: '设置超时，请稍候再试！错误信息：' + XMLHttpRequest + "  = " + errorThrown,
+                            align: 'left',
+                            okValue: '确定',
+                            ok: function () { }
+                        }).show(obj);
+                    },
+                    success: function (data, textStatus) {
+                        if (data.status == 1) {
+                            var d = dialog({ content: data.msg, align: 'left' }).show(obj);
+                            setTimeout(function () {
+                                d.close().remove();
+                            }, 1500);
+                        } else {
+                            dialog({
+                                title: '提示',
+                                content: '错误提示：' + data.msg,
+                                align: 'left',
+                                okValue: '确定',
+                                ok: function () { }
+                            }).show(obj);
+                        }
+                    }
+                });
+            });
+
+            if (getCookie("member_tips") == '') {
+                addCookie("member_tips", "1", 24)
+                dialog({
+                    title: '新手会员提醒信息',
+                    url: '../../html/member_tips.html',
+                    okValue: ' 关 闭 ',
+                    ok: function () { }
+                }).show();
+            }
+
+        });
+    </script>
+</body>
+
+
+{{include 'default/public/footer.html'}}

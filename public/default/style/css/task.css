@@ -1,0 +1,300 @@
+﻿@charset "utf-8";
+/*通用*/
+body { background: #ffffff; font: 14px/20px "Microsoft YaHei",Arial,Verdana,Tahoma,"宋体"; margin: 0 auto; }
+* { padding: 0px; margin: 0px; }
+* li { list-style: none; }
+a img { border: none; }
+em { font-weight: normal; font-style: normal; }
+.clear { clear: both; height: 0px; display: block; *display: inline; }
+a { text-decoration: none; color: #20537A; -webkit-transition: .3s; transition: .3s; }
+a:hover { color: #f00; }
+h3 { font-size: 14px; }
+select, input, textarea { vertical-align: middle; }
+select { height: 26px; }
+select[disabled] { background-color: #F0F0F0; }
+input[type="checkbox"], input[type="radio"] { width: 16px; height: 16px; }
+/*高亮色彩/字大定义*/
+.rough { font-weight: bold; }
+.color { color: #406899; }
+.color2 { color: #20537A; }
+.color3 { color: #106899; }
+.red { color: red; }
+.blue { color: #0076FC; }
+.orange, .orange a { color: #FF5500; }
+.green { color: green; }
+.size12 { font-size: 12px; }
+.size14 { font-size: 14px; }
+.size15 { font-size: 15px; }
+.size16 { font-size: 16px; }
+.thread { text-decoration: underline; }
+/* 按钮定义 */
+.button { cursor: pointer; height: 23px; border: 1px solid #cccccc; background: url(../images/button_bg.gif) left repeat-x; }
+
+/*任务里的按钮样式 颜色：蓝、橙、红、绿、禁止*/
+.link_btn { display: inline-block; padding: 3px 10px; margin: 2px auto; line-height: 24px; text-align: center; white-space: nowrap; vertical-align: middle; color: #FFF; cursor: pointer; border: 1px solid #0076FC; background: #0082f6; border-radius: 4px; text-shadow: 0 -1px 0 rgba(0,0,0,.2); -webkit-transition: .3s; transition: .3s; }
+.link_btn:hover { color: #0076FC; background: #fff; text-decoration: none; text-shadow: none; }
+.link_btn.radius-large { border-radius: 20px; padding: 4px 20px; }
+.link_btn.orange { border: 1px solid #F07700; background: #FF7E00; }
+.link_btn.orange:hover { color: #F07700; background: #fff; }
+.link_btn.red { border: 1px solid #e75033; background: #ea544a; }
+.link_btn.red:hover { color: #ea544a; background: #fff; }
+.link_btn.green { border: 1px solid #238629; background: #2e9134; }
+.link_btn.green:hover { color: #2e9134; background: #fff; }
+.link_btn.disabled, .link_btn[disabled] { color: #999; border: 1px solid #BDBDBD; background: #ddd; cursor: not-allowed; pointer-events: none; text-shadow: 0 -1px 0 rgba(255,255,255,.4); }
+.link_btn.disabled:hover, .link_btn[disabled]:hover { color: #999; background: #ddd; }
+.link_btn.pad1 { padding: 1px 10px; }
+.link_btn.pad2 { padding: 2px 10px; }
+.link_btn.pad4 { padding: 4px 10px; }
+
+/*圆角按钮*/
+.radius_btn { display: inline-block; padding: 0 15px; line-height: 24px; text-align: center; white-space: nowrap; color: #0089CD; cursor: pointer; border: 1px solid #007AB6; background: #fff; border-radius: 20px; }
+.radius_btn.orange { border: 1px solid #F07700; color: #FF7E00; }
+.radius_btn.red { border: 1px solid #e75033; color: #ea544a; }
+.radius_btn.green { border: 1px solid #238629; color: #179B16; }
+
+/*------------------顶LOGO----------------------------*/
+.clearfix:after { content: "\0020"; display: block; height: 0; clear: both; }
+.clearfix { _zoom: 1; }
+* + html .clearfix { overflow: auto; }
+
+/* 任务大厅中部会员信息 */
+.menber_tab { margin: 0 auto; color: #106899; text-align: left; background-color: #eef9ff; width: 1200px; margin-top: 25px; border: 1px solid #ACDAFF; border-radius: 5px; position: relative; }
+.menber_tab .dh { width: 100%; height: 40px; }
+.menber_tab .dh .top { height: 30px; width: 220px; font-size: 14px; padding-top: 10px; font-size: 15px; color: #20537a; padding-left: 10px; font-weight: bold; float: left; }
+.menber_tab .dh .center { width: 600px; height: 16px; float: left; margin-top: 7px; border: 1px solid #FFC045; background: url(../images/horn.gif) no-repeat 8px 5px #FDF7C7; padding: 5px 10px 4px 30px; display: none; }
+.menber_tab .dh .center li { height: 14px; line-height: 14px; display: block; }
+.menber_tab .dh .dianji { width: 120px; height: 21px; float: right; padding-top: 9px; padding-right: 10px; }
+.menber_tab .options { background-color: #fff; border: 1px solid #c7e5fa; margin-left: 10px; margin-right: 10px; *margin-top: 0px; margin-bottom: 10px; height: 190px; }
+.menber_tab .options .left { width: 400px; float: left; height: 166px; margin-top: 10px; }
+.menber_tab .options .left .d2h { height: 20px; margin-left: 15px; font-size: 15px; color: #20537a; background-repeat: no-repeat; font-weight: bold; text-indent: 2px; }
+.menber_tab .options .left .nr { background: url(../images/manber_bg3.gif) no-repeat left center; margin: 10px 0px 0px 15px; clear: both; }
+.menber_tab .options .left .nr img { vertical-align: middle; }
+.menber_tab .options .left .nr p { line-height: 20px; margin-left: 50px; font-size: 14px; color: #406899; height: 21px; }
+.menber_tab .options .left .nr em { color: #20537a; font-size: 12px; font-weight: bold; }
+.menber_tab .options .left .nr p.one { margin-top: 10px; }
+.menber_tab .options .right { width: 360px; float: right; margin-top: 10px; }
+.menber_tab .options .right2 { width: 400px; float: right; margin-top: 10px; }
+
+.dianji img { display: block; }
+.dianji .showpic { display: none; }
+.collapsed_yes img { display: none; }
+.collapsed_yes .showpic { display: block; }
+/* end */
+
+/* 新手帮助等 */
+.task_content { width: 1200px; padding-top: 25px; margin: 0 auto; color: #406899; text-align: left; }
+.gg_box_1, .gg_box_2 { border: 1px solid #BFE3FF; width: 360px; height: 180px; border-bottom: 0px; }
+.gg_box_1 ul, .gg_box_2 .tabcon1 ul { float: left; padding-left: 10px; padding-top: 5px; width: 330px; }
+.gg_box_l li, .gg_box_2 .tabcon1 li, .gg_box_2 .tabcon1 { width: 100%; }
+.gg_box_1 li span, .gg_box_2 .tabcon1 li a span { color: #ccc; font-size: 12px; margin-left: 3px; }
+
+.gg_box_2 { }
+.gg_box_2 .tabcon1 li a { color: #20537A; line-height: 27px; }
+.gg_box_2 .tabcon1 li a:hover { color: red; }
+.gg_box_2 #gg_m1 li, .gg_box_2 #gg_m2 li { width: 100%; height: 22px; overflow: hidden; }
+.gg_box_2 .menu li { width: 50%; background: url(../images/gg_menu.gif) repeat-x; border-bottom: 1px solid #BFE3FF; float: left; display: block; color: #406899; }
+.gg_box_2 .menu li a { text-decoration: none; display: block; width: 100%; color: #406899; }
+.gg_box_2 .menu li span { padding-left: 30px; height: 29px; line-height: 29px; font-size: 14px; font-weight: bold; display: block; CURSOR: pointer; }
+.gg_box_2 .menu #gg_m1 { border-right: 1px solid #BFE3FF; width: 49.6%; }
+.gg_box_2 .menu li#gg_m1 span { background: url(../images/zhong.gif) no-repeat 10px center; }
+.gg_box_2 .menu li#gg_m2 span { background: url(../images/problem.gif) no-repeat 10px center; }
+.gg_box_2 li.currently { background: #fff; border-color: #fff; }
+.gg_box_2 li.currently a { color: #FF6000; }
+
+.title1, .title2 { height: 23px; border: 1px solid #ACDAFF; border-bottom: 1px solid #EBF8FF; font-size: 14px; font-weight: bold; color: #406899; padding: 3px 12px 0px 12px; margin-left: 10px; float: left; display: block; position: relative; top: 1px; }
+.we { border-bottom: 1px solid #c7e5fa; width: 100%; height: 28px; }
+.title1 { border: 1px solid #c7e5fa; border-bottom: 1px solid #FFF; }
+.title2 { font-weight: normal; color: #406899; border: 1px solid #c7e5fa; background-color: #eef9ff; }
+.bbsbox { height: 152px; overflow: hidden; border-left: 1px solid #c7e5fa; }
+.bbsbox ul { padding: 5px; }
+.bbsbox li { background: url(../images/h5_bg.gif) no-repeat 2px center; padding-left: 14px; line-height: 27px; border-bottom: #D9F1FF 1px dotted; }
+.bbsbox li:hover { background: url(../images/title_bg.gif) no-repeat 2px center; }
+.bbsbox li a:hover { color: red; }
+/*  end  */
+
+/*  任务列表头 */
+.taskHall { margin: 0; color: #406899; }
+.taskHall ul.task_tab { float: left; display: block; border-bottom: 4px solid #FF8902; width: 100%; }
+.taskHall ul.task_tab li { float: left; margin-right: 10px; display: inline; bottom: -3px; position: relative; }
+.taskHall ul.task_tab li a { float: left; background: url(../images/task_tab_l.gif) no-repeat left center; padding-left: 4px; text-align: center; font-weight: bold; color: #406899; margin: 0; text-decoration: none; cursor: pointer; }
+.taskHall ul.task_tab li a span { float: left; padding: 0px 8px; height: 39px; line-height: 39px; background-image: url(../images/task_tab_r.gif); background-repeat: no-repeat; background-position: right; width: 90px; }
+.taskHall ul.task_tab li#tab_m1 span { width: 90px; line-height: 42px; }
+.taskHall ul.task_tab li a:hover { color: #152231; text-decoration: underline; }
+.taskHall ul.task_tab li.current, .taskHall ul.task_tab li.currently { bottom: 0px; }
+.taskHall ul.task_tab li.current a, .taskHall ul.task_tab li.currently a { background: url(../images/task_tab_current_l.gif) no-repeat left center; text-decoration: none; font-size: 16px; color: #fff; float: left; padding-left: 3px; height: 42px; line-height: 42px; }
+.taskHall ul.task_tab li.current a:hover, .taskHall ul.task_tab li.currently a:hover { text-decoration: none; color: #fff; }
+.taskHall ul.task_tab li.current a span, .taskHall ul.task_tab li.currently a span { display: block; float: left; padding: 0px 14px; height: 42px; background-image: url(../images/task_tab_current_r.gif); background-repeat: no-repeat; background-position: right; }
+.taskHall .t_list { border: 1px solid #ACDAFF; border-top: none; background: #fff; width: 1178px; height: auto; overflow: hidden; padding: 10px 10px 4px 10px; }
+
+/* 搜索任务 */
+.taskHall .search { background: #EBF5FF; padding: 5px 20px; border-left: 1px solid #ACDAFF; border-right: 1px solid #ACDAFF; border-bottom: 1px dashed #ACDAFF; height: 36px; line-height: 34px; display: block; position: relative; }
+.taskHall .search li { float: left; }
+.taskHall .search li .text { height: 24px; line-height: 24px; width: 180px; border: solid 1px #ACDAFF; margin: 0 8px; border-radius: 3px; padding: 0 4px; }
+.taskHall .search .task_refresh_button { float: right; width: 156px; }
+
+.taskHall .category-tab li { display: block; float: left; margin-right: 12px; margin-left: 4px; text-align: center; }
+.taskHall .category-tab li a { padding: 0 12px; }
+.taskHall .category-tab li:hover a, .taskHall .category-tab li.curr a { height: 20px; background-color: #ff6802; color: #fff; padding: 3px 12px 4px; border-radius: 3px; }
+
+/* 筛选方式 */
+.taskHall .screening { background: #EBF5FF; padding: 5px 20px 0px; border-left: 1px solid #ACDAFF; border-right: 1px solid #ACDAFF; border-bottom: 1px solid #ACDAFF; line-height: 34px; }
+.taskHall .screening li a.reward, .taskHall .screening li a.publisher_credit, .taskHall .screening li a.reward2, .taskHall .screening li a.publisher_credit2 { border: 1px solid #E5E5E5; padding: 5px 15px 3px 5px; margin: 0px 2px; }
+.taskHall .screening li a.reward { background: #fff url(../images/up_icon.gif) no-repeat; background-position: right center; }
+.taskHall .screening li a.reward2 { background: #fff url(../images/up_icon2.gif) no-repeat; background-position: right center; }
+.taskHall .screening li a.publisher_credit { background: #fff url(../images/down_icon.gif) no-repeat; background-position: right center; }
+.taskHall .screening li a.publisher_credit2 { background: #fff url(../images/down_icon2.gif) no-repeat; background-position: right center; }
+.taskHall .screening li a.reward:hover { background: #fff url(../images/up_icon2.gif) no-repeat; background-position: right center; border: 1px solid #BFDFFF; }
+.taskHall .screening li a.publisher_credit:hover { background: #fff url(../images/down_icon2.gif) no-repeat; background-position: right center; border: 1px solid #BFDFFF; }
+.taskHall select { height: 26px; min-width: 100px; border: 1px solid #ACDAFF; color: #444; border-radius: 3px; padding: 0 3px; }
+.taskHall .orderSub a { *display: inline; *zoom: 1; height: 27px; line-height: 27px; padding: 0 11px; font-weight: normal; color: #3E689A; }
+.taskHall .orderSub .active { position: relative; display: inline-block; height: 33px; bottom: -1px; border: 1px solid #ACDAFF; border-bottom: 0; background: #fff url(../images/arrow_down.png) no-repeat bottom center; font-weight: bold; }
+.taskHall .orderSub a:hover { color: #f00; text-decoration: underline; }
+
+/*收藏流量任务内容表格*/
+.list_tbl td { border-bottom: 1px solid #E5F0FF; line-height: 22px; height: 70px; clear: both; }
+.list_tbl tr:hover td { background-color: #EBF5FF; }
+.list_tbl img { vertical-align: middle; margin: 2px 0; }
+
+/*分页*/
+.multipage { padding: 10px 20px 10px; font-size: 12px; height: auto; }
+.multipage .flickr { margin: 10px 0; }
+
+/*任务大厅内容表格*/
+#task_list_wrap { width: 1200px; margin: 0 auto; padding-top: 10px; clear: both; zoom: 1; color: #406899; }
+.list_content { display: block; margin: 12px auto 0; position: relative; border: 1px solid #ACDAFF; border-radius: 3px; }
+.list_content:hover { -webkit-box-shadow: 0 0 6px #57a0ff; -moz-box-shadow: 0 0 6px #57a0ff; box-shadow: 0 0 6px #57a0ff; }
+.list_content .top { background-color: #EBF5FF; /*border-bottom: 1px solid #ACDAFF;*/ height: 36px; line-height: 36px; }
+.list_content .top.line { border-bottom: 1px solid #ACDAFF; }
+.list_content .top img { vertical-align: text-top; }
+.list_content .top_title { display: block; padding: 5px 20px; color: #187DFF; font-size: 12px; height: 26px; line-height: 26px; }
+.list_content .top_title a { color: #187DFF; }
+.list_content .top_title a:hover { color: #f00; }
+.list_content .top_title .left { float: left; }
+.list_content .top_title .userinfo { float: left; padding-left: 140px; font-size: 14px; }
+.list_content .top_title .addtime { float: right; }
+.task_list table ul { overflow: hidden; }
+.task_list table ul li { float: left; line-height: 32px; margin-right: 32px; }
+.task_list table .td_left { width: 80px; padding: 15px 20px; }
+.task_list table .td_left_jf { width: 80px; padding: 15px 5px 15px 15px; }
+.task_list table .td_left2_jf { width: 130px; padding: 10px; line-height: 22px; }
+.task_list table .td_left2_jf .shopname { margin-top: 5px; display: block; }
+.task_list table .td_left img, .td_left_jf img { width: 80px; height: 80px; vertical-align: middle; }
+.task_list table .td_center { width: 780px; border-right: 1px dashed #ACDAFF; padding: 10px 30px; }
+.task_list table .td_center_jf { /*width: 579px;*/ border-right: 1px dashed #ACDAFF; padding: 10px 15px; }
+.task_list table .td_right { text-align: center; }
+.task_list table .dashed_line { border-right: 1px dashed #ACDAFF; }
+.task_list table .view_and_set { padding-top: 10px; }
+.task_list .gold { padding-left: 14px; background-image: url(../images/gold_ico.gif); background-repeat: no-repeat; background-position: left center; }
+.task_list .ico_msg { line-height: 28px; }
+.task_list .ico_msg img { border: 0; margin-right: 4px; }
+.task_list .trade_no{ display:inline; width:200px; margin-right:5px; padding:7px; height:20px; line-height:20px; background:#fff; color:#666; border:1px solid #ddd; border-radius:3px; }
+.task_list .remark { border-top: 1px dashed #ACDAFF; border-right: 1px dashed #ACDAFF; text-align: left; color: green; padding: 8px 15px; }
+.task_content .count_moneypoint { padding-top: 20px; width: 100%; margin: 0 auto; text-align: center; }
+/*任务大厅内容表格 end*/
+/*批量操作按钮*/
+.batch_action { position: fixed; left: 1584px; top: 442px; width: 110px; }
+.batch_action h3 { font-size: 15px; display: block; line-height: 34px; height: 34px; width: 100%; background-color: #406899; border-radius: 15px; text-align: center; color: #fff; }
+.batch_action h3, .batch_action li { margin-top: 1px; }
+.batch_action h3#export_task { background-color: #ea544a; cursor:pointer; }
+.batch_action h3#export_task:hover { background-color: #e93529 }
+.batch_action li a { font-size: 14px; display: block; line-height: 34px; height: 34px; width: 100%; background-color: #008ae5; border-radius: 15px; text-align: center; color: #fff; }
+.batch_action li a:hover { background: #406899; }
+/*end*/
+
+/*页脚 copyright */
+/*.footer { width: 100%; height: auto; overflow: hidden; margin: 40px 0 0 0; padding: 30px 0 20px; color: #666; font-size: 13px; text-align: center; background: url(../images/bottom-line.png) repeat-x center top; background-color: #f6f6f6; }
+.footer .foot-nav { margin: 0 auto; display: block; letter-spacing: 3px; color: #ccc; line-height: 30px; }
+.footer .foot-nav a { margin-right: 10px; color: #666; letter-spacing: 1px; }
+.footer .foot-nav a:hover { color: #f00; }
+.footer .copyright { padding-top: 5px; color: #888; }
+.footer .copyright p { line-height: 28px; vertical-align: middle; }*/
+
+
+/* 绑定买卖号 */
+.BingDing { margin: 0 auto; color: #106899; background-color: #FFFEEE; width: 1192px; border: 4px solid #FF8902; border-top: 0; position: relative; }
+.BingDing .title { margin-left: 20px; height: 30px; color: #F60; font-weight: bold; padding-top: 10px; display: block; font-size: 15px; background-image: url(../images/add.gif); background-repeat: no-repeat; background-position: left center; padding-left: 20px; }
+.BingDing .center { background-color: #fff; border: 1px solid #FFDEB9; margin-left: 10px; margin-right: 10px; margin-bottom: 10px; height: 370px; }
+.BingDing .left { background-color: #fff; height: 370px; float: left; width: 520px; }
+.BingDing .right { background-color: #fff; height: 350px; float: left; width: 605px; border-left: 1px solid #FFDEB9; padding: 10px 20px; line-height: 26px; }
+.BingDing #rblAccountType span, #rblPort label { margin-right: 15px; }
+.BingDing #rblAccountType input, #rblPort input { margin-right: 3px; }
+.BingDing select, .BingDing input[type="text"] { border: 1px solid #ccc; color: #444; border-radius: 3px; }
+.BingDing input[type="radio"] { width: 16px; height: 16px; }
+.BingDing select { height: 26px; min-width: 100px; }
+.BingDing #txtAccount { height: 24px; width: 160px; }
+/* 绑定买卖号 END */
+
+
+/* 发布任务页的样式 */
+.AddTask { margin: 0 auto; color: #106899; width: 1192px; border: 4px solid #FF8902; border-top: 0; position: relative; padding-top: 10px; }
+.AddTask select { height: 32px; }
+.AddTask select.small { width: 105px; }
+.AddTask select, .AddTask textarea { border: 1px solid #ccc; color: #444; border-radius: 3px; padding: 4px; }
+.AddTask textarea.w350 { width: 350px; height: 60px; }
+.AddTask input[type="image"] { border: 0; }
+.AddTask input[type="text"], .AddTask input[type="password"] { height: 22px; line-height: 22px; padding: 4px; border: 1px solid #ccc; color: #444; border-radius: 3px; }
+.AddTask input[type="checkbox"], .AddTask input[type="radio"] { width: 16px; height: 16px; }
+.AddTask input[type="checkbox"] { margin-right: 4px; }
+.AddTask input.w80 { width: 80px; }
+.AddTask input.w120 { width: 120px; }
+.AddTask input.w150 { width: 150px; }
+.AddTask input.w200 { width: 200px; }
+.AddTask input.w400 { width: 400px; }
+.AddTask input.w500 { width: 500px; }
+
+.AddTask .newRadio .radioCurr { background: url("../images/testse.gif") no-repeat scroll right bottom #FFFFD0; border: 1px solid #FF6701; border-image: initial; color: #FF6701; cursor: pointer; }
+.AddTask .newRadio .radioCurr:hover { border: 1px solid #FF6701; }
+.AddTask .newRadio a { background-color: white; border: 1px solid #C8C9CD; color: #444; display: block; float: left; height: 30px; line-height: 30px; margin: 5px 12px 4px 0; padding: 1px 10px; text-align: center; white-space: nowrap; border-image: initial; cursor: pointer; text-decoration: none; border-radius: 3px; -webkit-transition: none; transition: none; }
+.AddTask .newRadio a:hover { color: #FF6701; border: 1px solid #FF6701; }
+.AddTask .newRadio a input { display: none; width: 1px; height: 1px; }
+.AddTask .newRadio a img { vertical-align: text-top; }
+
+.AddTask .center_tbl td { /*border-bottom: 1px solid #E5F5FF;*/ line-height: 48px; height: 48px; clear: both; background-color: #FFF; padding: 3px 0 3px 10px; }
+.AddTask .center_tbl tr:hover td { background-color: #EBF5FF; }
+.AddTask .center_tbl2 td { border-bottom: 1px dashed #E0F0FF; line-height: 48px; height: 48px; clear: both; /*background-color: #F2FCFF;*/ padding: 3px 0 3px 10px; }
+.AddTask .center_tbl2 tr:hover td { background-color: #FFFEEE; }
+.AddTask .center_tbl .Lailu { border: 1pt #71BBFF solid; }
+.AddTask .center_tbl .Lailu td { line-height: 30px; height: 40px; }
+.AddTask .center_tbl .Lailu tr:hover td { background-color: #D7EBFF; }
+
+.AddTask .title { height: 42px !important; line-height: 42px !important; color: #F60; font-weight: bold; font-size: 18px; background-color: #39F; background-image: url(../images/w_b.gif); background-size: 100% 100%; }
+.AddTask .function_title { height: 50px !important; line-height: 50px !important; color: #F60; font-weight: bold; font-size: 16px; background-color: #39F; background-image: url(../images/w_b_2.gif); background-size: 100% 100%; margin: 20px 0 0; padding: 0 30px 0 20px; cursor: pointer; }
+.AddTask .center { background-color: #fff; margin-bottom: 10px; vertical-align: middle; }
+.AddTask #rblShopName label { margin: 0 20px 0 4px; }
+.AddTask .Example { background: url(../images/ModAddress_Example.gif) no-repeat #FFF; background-position-y: 4px; }
+.AddTask .getpwd { color: #B9B9B9; text-decoration: none; }
+.AddTask .getpwd:hover { color: #F00; text-decoration: underline; }
+.AddTask .tips, .try_form-box dl dd .tips { /*color: blue;*/ display: none; }
+.try_form-box .keyword_box { padding: 5px 0; width: 97.5%; margin: 0 auto; background: #f4fbff; border: 1pt #bcdfff solid }
+.try_form-box .search_key_box:nth-child(odd) { background: #fff; border-top: 1px dashed #bcdfff; border-bottom: 1px dashed #bcdfff; }
+.try_form-box dl dt, .try_form-box dl dd { color: #106899; }
+	
+
+/*底部浮动样式*/
+#bottomBar { display: none; position: fixed; left: 0; width: 100%; bottom: 0; height: 100px; background-color: #333333; background-color: rgba(0,0,0,.8); z-index: 99999; filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#00000000', EndColorStr='#00000000'); filter: Alpha(opacity=85); }
+:root #bottomBar { filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#00000000', EndColorStr='#00000000'); }
+#bottomBar .bottomBar-wrap { width: 960px; margin: 0 auto; padding-top: 20px; }
+#bottomBar .d-signin { display: block; float: left; width: 460px; height: 34px; padding-left: 20px; font-size: 18px; font-weight: bold; color: #ffff00; letter-spacing: 0.1em; }
+#closeBottomBar { display: block; overflow: hidden; position: absolute; right: 80px; top: 30px; width: 27px; height: 27px; background: url(../images/close.png) no-repeat; cursor: pointer; }
+/* 发布任务页的样式 End */
+
+
+/*任务大厅-任务流程图片*/
+.fajie_task_flow { width: 1138px; margin: 0 auto; text-align: left; padding: 10px 30px 30px; overflow: hidden; border: 1px dashed #ACDAFF; border-radius: 3px; background: #fff; }
+    .fajie_task_flow .jie { margin-top: 10px; }
+    .fajie_task_flow p { height: 50px; line-height: 50px; font-size: 18px; color: #666 }
+
+/*以下部分是WebUploader必须的 暂时发布任务页用
+----------------------------------------------*/
+.webuploader-container { position: relative; }
+.webuploader-element-invisible { position: absolute !important; clip: rect(1px 1px 1px 1px); /* IE6, IE7 */ clip: rect(1px,1px,1px,1px); }
+.webuploader-pick { position: relative; display: inline-block; padding: 0 20px; line-height: 24px; height: 24px; border: 1px solid #02598E; border-radius: 4px; cursor: pointer; background: #1e7bb3; color: #fff; text-align: center; overflow: hidden; zoom: 1; *display: inline; }
+.webuploader-pick-hover { opacity: 0.9; }
+.webuploader-pick-disable { opacity: 0.6; pointer-events: none; }
+.upload-box { position: relative; display: inline-block; height: 24px; vertical-align: middle; zoom: 1; *display: inline; }
+.upload-box .upload-btn { display: inline-block; height: 24px; zoom: 1; *display: inline; }
+.upload-box .upload-progress { position: absolute; top: 0; left: 0; padding: 2px 5px; width: 115px; height: 22px; border: 1px solid #d7d7d7; background: #fff; overflow: hidden; }
+.upload-box .upload-progress .txt { display: block; padding-right: 10px; font-weight: normal; font-style: normal; font-size: 11px; line-height: 18px; height: 18px; text-overflow: ellipsis; overflow: hidden; }
+.upload-box .upload-progress .bar { position: relative; display: block; width: 112px; height: 4px; border: 1px solid #1da76b; }
+.upload-box .upload-progress .bar b { display: block; width: 0%; height: 4px; font-weight: normal; text-indent: -99em; background: #28B779; overflow: hidden; }
+.upload-box .upload-progress .close { position: absolute; display: block; top: 1px; right: 1px; width: 14px; height: 14px; text-indent: -99em; background: url(../images/dialogclose.gif) no-repeat; cursor: pointer; overflow: hidden; }

@@ -1,0 +1,146 @@
+{{include 'default/public/header.html'}}
+<style type="text/css">
+    .footer {
+        margin: 0;
+    }
+
+    .main-tit p {
+        font-size: 20px;
+        width: 200px;
+        padding-right: 0;
+        margin-bottom: -30px;
+        line-height: 45px;
+        border-left: 1px solid #f0f0f0;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        text-align: center;
+    }
+
+    .main-tit p.buyer {
+        color: #fff1f1;
+        background-color: #ea544a;
+    }
+
+    .main-tit p.seller {
+        color: #f1f7ff;
+        background-color: #2e8df3;
+    }
+
+    .btn.buyer {
+        border: 0;
+        font-size: 18px;
+        width: 240px;
+        height: 46px;
+        background-image: -webkit-linear-gradient(left, #ff6f06 0, #ee4e43 100%);
+        background-image: -o-linear-gradient(left, #ff6f06 0, #ee4e43 100%);
+        background-image: linear-gradient(to right, #ff6f06 0, #ee4e43 100%);
+    }
+
+    .btn.seller {
+        border: 0;
+        font-size: 18px;
+        width: 240px;
+        height: 46px;
+        background-image: -webkit-linear-gradient(left, #00b8ff 0, #2388f5 100%);
+        background-image: -o-linear-gradient(left, #00b8ff 0, #2388f5 100%);
+        background-image: linear-gradient(to right, #00b8ff 0, #2388f5 100%);
+    }
+</style>
+
+
+<body>
+    <!--Header-->
+    <style>
+        .main-nav {
+            background: #fff;
+        }
+
+        .main-nav .main-nav-logo a {
+            margin: 12px 0 0 10px;
+            padding: 0;
+            border-radius: 0;
+        }
+
+        .main-nav .nav-item>a {
+            color: #666;
+        }
+
+        .main-nav .nav-item>a:hover {
+            color: #f50;
+        }
+    </style>
+    <div class="header">
+        <!--导航栏-->
+        <div class="main-nav">
+            <div class="wrap-nav">
+                <div class="main-nav-logo left">
+                    <a href="#"><img src="/default/images/logo_reg.png" alt="会员注册logo" /></a>
+                </div>
+                <div class="m-nav right">
+                    <ul>
+                        <li class="nav-item"><a href="/login">登 录</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--/导航栏-->
+    </div>
+    <!--/Header-->
+
+    <div class="main-box">
+        <div class="section clearfix">
+            <div class="register_index">
+                <div class="theleft">
+                    <div class="type-box">
+                        <h1>普通用户注册</h1>
+                        <div class="title_line">
+                            <div class="colour"></div>
+                        </div>
+                        <div class="intro">
+                            我有的是时间，我想要做任务赚钱，帮助商家踩踩店，并将这份快乐传递给更多人！适合普通用户注册！
+                        </div>
+                        <div class="left_pic"><img src="/default/images/buyer.jpg" /></div>
+                        <div class="reg-btn-box"><a href="/register/buyer" class="buyer_btn">用户注册</a>
+                        </div>
+                        <div class="have_account_left">
+                            我已注册过了，现在就
+                            <a class="login-btn" href="/login">登 录</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="theright">
+                    <div class="type-box">
+                        <h1>商家注册</h1>
+                        <div class="title_line">
+                            <div class="colour blue-right"></div>
+                        </div>
+                        <div class="intro">
+                            我开了网店，想要推广商品、收集新品市场反馈、提升产品销量，打造专属于我的品牌！立即注册，百万用户为您进行推广营销！
+                        </div>
+                        <div class="left_pic"><img src="/default/images/store_ico.png" /></div>
+                        <div class="reg-btn-box"><a href="/register/seller" class="seller_btn">商家注册</a>
+                        </div>
+                        <div class="have_account_right">
+                            我已注册过了，现在就
+                            <a class="login-btn" href="/login">登 录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="login_footer_warp">
+        <div class="login_footer">
+            <ul class="clearfix">
+                <li><span class="h01"></span>海量会员，随时接放</li>
+                <li><span class="h02"></span>实时查号，拒绝降权</li>
+                <li><span class="h03"></span>品类齐全，轻松申请</li>
+                <li><span class="h04"></span>贴心服务，资金保障</li>
+            </ul>
+        </div>
+    </div>
+
+    {{include 'default/public/footer.html'}}

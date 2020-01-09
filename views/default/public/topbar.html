@@ -1,0 +1,91 @@
+<div id="topbar" class="topbar">
+    <div id="topbarWrap">
+        <div class="g-doc top_nav">
+            <p class="loginInfo">
+                您好
+                <span class="red">{{username}}</span> &nbsp; 欢迎您回来！
+                <a href="/p/user/message/system.html" target="_blank">短消息
+                    <template v-if="total_msg != 0">
+                        <span class="red">({{total_msg}})</span>
+                    </template>
+                    <template v-else>
+                        ({{total_msg}})
+                    </template>
+                </a>
+                &nbsp;&nbsp;
+                <a href="/p/user/center/index.html">会员中心</a>&nbsp;&nbsp;
+                <a class="logout" href="javascript:;">退出</a>
+            </p>
+            <div class="fr">
+                <div class="top-nav-other">
+                    <a href="/p/user/center/index.html">会员首页</a>
+                    <a href="/p/user/userspread/spread.html" target="_blank"
+                        style="position: relative;text-align: left;width: 85px;padding: 0 23px 0 2px;background: url(/default/images/site_top_merge.gif) no-repeat scroll 50px 3px;display: inline-block;">邀请好友</a>
+                    <span class="sk-app">
+                        手机版
+                        <div class="sk-app-code">
+                            <a target="_blank" href="#" class="sk-app-img"></a>
+                        </div>
+                        <i></i>
+                    </span>
+                    <a target="_blank" href="/p/service.html">帮助中心</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="header">
+    <!--会员中心导航栏-->
+    <div class="main-nav">
+        <div class="wrap-nav">
+            <div class="main-nav-logo left">
+                <a href="index.html"><img src="/default/images/logo_buyer.png" alt="会员中心logo"></a>
+            </div>
+            <div class="m-nav left">
+                <ul>
+                    <li class="nav-item"><a href="../userspread/spread.html">推广赚钱</a></li>
+
+                    <!--<li class="nav-item"><a href="../../service.html" target="_blank">帮助中心</a></li>-->
+                </ul>
+            </div>
+            <div class="m-nav right">
+                <ul>
+                    <li class="nav-item m_SubMenuHover"><a href="proinfo.html">账户设置</a>
+                        <div class="nav-sub">
+                            <div class="nav-arr"></div>
+                            <dl class="nav-sub-col1">
+                                <dt>安全设置</dt>
+                                <dd>
+                                    <p><a href="password.html">修改登录/二级密码</a></p>
+                                    <p><a href="proinfo.html">修改个人资料</a></p>
+                                    <p><a href="question.html">密保问题设置</a></p>
+                                    <p><a href="../auth/index.html"><span class="red">安全认证中心</span></a></p>
+                                </dd>
+                            </dl>
+                            <dl class="nav-sub-col2">
+                                <dt>其他服务</dt>
+                                <dd>
+                                    <p><a href="../../service.html" target="_blank">帮助中心</a></p>
+
+                                    <p><a href="../exchange/index.html">兑换资金</a></p>
+                                </dd>
+                            </dl>
+                            <dl class="nav-sub-col3">
+                                <dt>充值提现</dt>
+                                <dd>
+                                    <p><a href="../amount/recharge.html">账户充值</a></p>
+                                    <p><a href="../tixian/apply.html">余额提现</a></p>
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+
+                    <li class="nav-item"><a href="../../task/index.html">任务大厅</a></li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--/会员中心导航栏-->
+</div>
