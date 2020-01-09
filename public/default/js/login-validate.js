@@ -42,30 +42,12 @@ $(function () {
             success: function (res, textStatus) {
                 const data = res.data;
                 if (res.status === 1) {
-                    if (data.type == 0) {
-                        if ($('#chkRemember').is(":checked")) {
-                            Util.setCookie('token', data.token, { path: '/p', expires: 7 });
-                        } else {
-                            Util.setCookie('token', data.token, { path: '/p' });
-                        }
-                        top.location.href = 'user/center/index.html'
+                    if ($('#chkRemember').is(":checked")) {
+                        Util.setCookie('token', data.token, { path: '/p', expires: 7 });
                     } else {
-                        // $("#msgtips").text('用户不存在');
-                        // return;
-                        if ($('#chkRemember').is(":checked")) {
-                            Util.setCookie('token', data.token, { path: '/c', expires: 7 });
-                        } else {
-                            Util.setCookie('token', data.token, { path: '/c' });
-                        }
-                        top.location.href = '/c/user/center/index.html'
+                        Util.setCookie('token', data.token, { path: '/p' });
                     }
-
-                    // if (!data.type) {
-                    //     // top.location.href = 'userp/center/index.html'
-                    //     top.location.href = '/p/user/center/index.html'
-                    // } else {
-                    //     top.location.href = 'user/center/index.html'
-                    // }
+                    top.location.href = res.data.url;
                 } else {
                     $("#btnSubmit").attr("disabled", false);
                     $("#msgtips").text(res.message);

@@ -673,8 +673,8 @@ function changeUserType(userType) {
 
 
 window.Util = {
-    baseURL: 'http://jdm.zhangqingxi.cn',
-    __dirname: '/p',
+    baseURL: 'http://localhost:3000',
+    __dirname: '/',
     ajax: function (opts) {
         opts = opts || {};
         if (!opts.data) {
@@ -777,7 +777,7 @@ window.Util = {
     * 登录
     */
     login: function () {
-        window.location.replace(Util.__dirname + '/login.html');
+        window.location.replace('/login');
     },
 
     getToken: function () {

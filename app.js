@@ -34,14 +34,14 @@ app.use(function (ctx, next) {
 });
 
 // 路由权限控制
-app.use(koaJwt({ secret: config.secret }).unless({
-  // 设置login、register接口，可以不需要认证访问
-  path: [
-    /^\/api\/login/,
-    /^\/api\/register/,
-    /^((?!\/api).)*$/   // 设置除了私有接口外的其它资源，可以不需要认证访问
-  ]
-}))
+// app.use(koaJwt({ secret: config.secret }).unless({
+//   // 设置login、register接口，可以不需要认证访问
+//   path: [
+//     /^\/api\/login/,
+//     /^\/api\/register/,
+//     /^((?!\/api).)*$/   // 设置除了私有接口外的其它资源，可以不需要认证访问
+//   ]
+// }))
 
 //配置session的中间件
 

@@ -63,7 +63,6 @@ class Db {
                 var result = db.collection(collectionName).find(json);
 
                 result.toArray(function (err, docs) {
-
                     if (err) {
                         reject(err);
                         return;
@@ -132,7 +131,7 @@ class Db {
             })
         })
     }
-    getObjectId(id) {    /*mongodb�����ѯ _id ���ַ���ת���ɶ���*/
+    getObjectId(id) {   /*mongodb里面查询 _id 把字符串转换成对象*/
 
         return new ObjectID(id);
     }

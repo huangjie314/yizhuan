@@ -2,6 +2,7 @@
 var md5 = require('md5');
 const jwt = require('jsonwebtoken'); // 用于签发、解析`token`
 const config = require('./config');
+const request = require('request');
 
 let tools = {
     md5(str) {
@@ -19,6 +20,25 @@ let tools = {
 
     signToken(payload = {}) {
         return jwt.sign(payload, config.secret, { expiresIn: config.expiresIn })
+    },
+
+    request(opts = {}) {
+        return new Promise((resolve, reject) => {
+            request(opts.queryUrl, function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    const jsonObj = JSON.parse(body);
+                    resolve(jsonObj)
+                } else {
+                    reject('请求异常');
+                }
+            })
+        })
+    },
+
+    verifySmsCode(code) {
+        if (code == 123456) {
+            return true;
+        }
     }
 }
 

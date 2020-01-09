@@ -4,7 +4,7 @@
  */
 const router = require('koa-router')();
 const url = require('url');
-
+const tools = require('../model/tools');
 const buyer = require('./default/buyer');
 const seller = require('./default/seller');
 const login = require('./default/login');
@@ -17,10 +17,10 @@ router.use(async (ctx, next) => {
     var pathname = url.parse(ctx.request.url).pathname;
     //权限判断
     // let token = ctx.headers.authorization;
-    // let token = ctx.cookies.get('token');
-    // const verifyResult = tools.verifyToken(token);
+    let token = ctx.cookies.get('token');
+    const verifyResult = tools.verifyToken(token);
 
-    if (false) {
+    if (verifyResult) {
         await next();
     } else {  //没有登录跳转到登录页面
         const reg = /\/login|\/register|\/repassword/;

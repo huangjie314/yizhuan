@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<script>
+
+    $(function () {
+
+        $('#code').click(function () {
+
+            $(this).attr('src', '{{__ROOT__}}/admin/login/code?t=' + Math.random() * 1000)
+        })
+
+        $("#loginForm").submit(function () {
+            if ($('#username').val() == '' || $("#password").val() == '' || $("#code").val()) {
+
+                alert('用户名或者密码或者验证码不能为空')
+                return false;
+            }
+            return true;
+
+        })
+
+    })
+</script>
+
+<body>
+
+    <form action="/api/sms_send" method="post" id="loginForm">
+        <fieldset>
+            <label class="block clearfix">
+                <span class="block input-icon input-icon-right">
+                    <input id="username" type="text" name="mobile" class="form-control" placeholder="用户名" />
+                    <i class="icon-user"></i>
+                </span>
+            </label>
+
+            <label class="block clearfix">
+                <span class="block input-icon input-icon-right">
+                    <input id="password" type="password" name="password" class="form-control" placeholder="密码" />
+                    <i class="icon-lock"></i>
+                </span>
+            </label>
+
+            <label class="block clearfix">
+                <span class="block input-icon input-icon-right">
+                    <input type="text" class="form-control" placeholder="验证吗" name="code"
+                        style="width:200px;float:left;" />
+                    <img id="code" src="{{__ROOT__}}/admin/login/code" alt="">
+                </span>
+            </label>
+
+            <div class="space"></div>
+
+            <div class="clearfix">
+                <label class="inline">
+                    <input type="checkbox" class="ace" />
+                    <span class="lbl"> Remember Me</span>
+                </label>
+
+                <button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
+                    <i class="icon-key"></i>
+                    登录
+                </button>
+            </div>
+
+            <div class="space-4"></div>
+        </fieldset>
+    </form>
+</body>
+
+</html>
