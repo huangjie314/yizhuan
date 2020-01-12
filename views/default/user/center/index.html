@@ -14,7 +14,8 @@
                     <div class="usercenter-box">
                         <div class="m-message">
                             <em class="ico"></em>
-                            <p class="last_login">您上次登陆的时间是：{{last_login_time}} &nbsp; ip:{{last_login_ip}}</p>
+                            <p class="last_login">您上次登陆的时间是：{{userInfo.last_login_time}} &nbsp;
+                                ip:{{userInfo.last_login_ip}}</p>
                             <p class="login_city">开启异地登录限制 <input name="checkLoginCity" id="checkLoginCity"
                                     type="checkbox" title="打勾表示启用，账号异地登录时需要你手机验证" /></p>
                         </div>
@@ -27,26 +28,25 @@
                                 <div class="my-big-font">
                                     <div class="my-money">
                                         <h2>账户余额</h2>
-                                        <span class="orange">￥{{money}} 元</span>
+                                        <span class="orange">￥{{userInfo.money}} 元</span>
                                     </div>
                                     <div class="my-money">
                                         <h2>发布点</h2>
-                                        <span>{{publishing_point}} 点</span>
+                                        <span>{{userInfo.publishing_point}} 点</span>
                                     </div>
                                     <div class="my-money">
                                         <h2>收藏点</h2>
-                                        <span>{{collection_point}} 点</span>
+                                        <span>{{userInfo.collection_point}} 点</span>
                                     </div>
                                     <div class="my-money">
                                         <h2>流量点</h2>
-                                        <span>{{flow_point}} 点</span>
+                                        <span>{{userInfo.flow_point}} 点</span>
                                     </div>
                                     <div class="my-money">
                                         <h2>可用积分</h2>
-                                        <span>{{integral}} 分</span>
+                                        <span>{{userInfo.integral}} 分</span>
                                     </div>
                                 </div>
-
                                 <div class="my-btn">
                                     <a href="../amount/recharge.html">账户充值</a>
                                     <a href="../tixian/apply.html">余额提现</a>
@@ -64,8 +64,7 @@
                                         <dt>已参与任务：</dt>
                                         <dd>
                                             <a href="../../task/jie.html">
-
-                                                <b class="orange"></b>
+                                                <b class="orange">{{userInfo.order_info.release}}</b>
                                             </a>
                                         </dd>
                                     </dl>
@@ -73,8 +72,7 @@
                                         <dt>待商家发货：</dt>
                                         <dd>
                                             <a href="../../task/jie-0-5.html">
-
-                                                <b class="orange"></b>
+                                                <b class="orange">{{userInfo.order_info.wait_for_delivery}}</b>
                                             </a>
                                         </dd>
                                     </dl>
@@ -82,36 +80,32 @@
                                         <dt>待收货好评：</dt>
                                         <dd>
                                             <a href="../../task/jie-0-6.html">
-
-                                                <b class="orange"></b></a>
+                                                <b class="orange">{{userInfo.order_info.wait_for_receive}}</b>
+                                            </a>
                                         </dd>
                                     </dl>
                                     <dl>
                                         <dt>待审核返款：</dt>
                                         <dd>
                                             <a href="../../task/jie-0-7.html">
-
-                                                <b class="orange"></b></a>
+                                                <b class="orange">{{userInfo.order_info.wait_for_examine}}</b>
+                                            </a>
                                         </dd>
                                     </dl>
                                     <dl>
                                         <dt>我发起的未解决申诉：</dt>
                                         <dd>
                                             <b class="blue">
-                                                <a href="../appeal/apply_list.html">
-
-                                                </a>
+                                                <a
+                                                    href="../appeal/apply_list.html">{{userInfo.user_appeal.send_no_solve}}</a>
                                             </b>
                                         </dd>
                                     </dl>
                                     <dl>
                                         <dt>我被申诉的未解决申诉：</dt>
                                         <dd>
-                                            <b class="blue">
-                                                <a href="../appeal/recive_list.html">
-
-                                                </a>
-                                            </b>
+                                            <b class="blue"><a
+                                                    href="../appeal/recive_list.html">{{userInfo.user_appeal.accept_no_solve}}</a></b>
                                         </dd>
                                     </dl>
                                     <dl>
@@ -122,18 +116,14 @@
                                     <dl>
                                         <dt>已完成：</dt>
                                         <dd>
-                                            <a href="../../task/jie-0-8.html">
-                                                <b class="orange">
-
-                                                </b>
-                                            </a>
+                                            <a href="../../task/jie-0-8.html"><b
+                                                    class="orange">{{userInfo.order_info.finished}}</b></a>
                                         </dd>
                                     </dl>
                                     <div class="clear"></div>
                                     <div class="tips">
-                                        我已被：<strong class="red">
-
-                                        </strong> 人拉入黑名单（达到20人系统禁止接任务）
+                                        我已被：<strong class="red">{{userInfo.pull_blacklist_count}}</strong>
+                                        人拉入黑名单（达到20人系统禁止接任务）
                                     </div>
                                 </div>
                             </div>

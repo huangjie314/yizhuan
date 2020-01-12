@@ -5,12 +5,9 @@
                 您好
                 <span class="red">{{userInfo.username}}</span> &nbsp; 欢迎您回来！
                 <a href="/p/user/message/system.html" target="_blank">短消息
-                    <template v-if="total_msg != 0">
-                        <span class="red">({{total_msg}})</span>
-                    </template>
-                    <template v-else>
-                        ({{total_msg}})
-                    </template>
+                    {{if userInfo.newest_message_count != '0'}}
+                    <span class="red">({{userInfo.newest_message_count}})</span>
+                    {{/if}}
                 </a>
                 &nbsp;&nbsp;
                 <a href="/">会员中心</a>&nbsp;&nbsp;
@@ -51,15 +48,15 @@
             </div>
             <div class="m-nav right">
                 <ul>
-                    <li class="nav-item m_SubMenuHover"><a href="proinfo.html">账户设置</a>
+                    <li class="nav-item m_SubMenuHover">
+                        <a href="/userCenter/proinfo">账户设置</a>
                         <div class="nav-sub">
                             <div class="nav-arr"></div>
                             <dl class="nav-sub-col1">
                                 <dt>安全设置</dt>
                                 <dd>
-                                    <p><a href="password.html">修改登录/二级密码</a></p>
-                                    <p><a href="proinfo.html">修改个人资料</a></p>
-                                    <p><a href="question.html">密保问题设置</a></p>
+                                    <p><a href="/userCenter/password">修改登录/二级密码</a></p>
+                                    <p><a href="/userCenter/proinfo">修改个人资料</a></p>
                                     <p><a href="../auth/index.html"><span class="red">安全认证中心</span></a></p>
                                 </dd>
                             </dl>

@@ -3,46 +3,57 @@
     <div class="m-inner">
         <div class="m-userinfo">
             <div class="u-img">
-                <a href="../center/avatar.html" class="u-mask">
-                    <img :src="avatar" />
+                <a href="/userCenter/avatar" class="u-mask">
+                    <img src="{{userInfo.avatar || '/default/images/user-avatar.png'}}" />
                 </a>
             </div>
             <p class="u-name">您好！
-                {{username}}
+                {{userInfo.username}}
             </p>
             <div class="u-money">
-                <p class="u-mooney-t">会员组：<span title="">
-                        {{userLevel}} </span></p>
-                <p class="u-mooney-t">账户余额：<span>{{money}}</span> 元</p>
+                <p class="u-mooney-t">会员组：
+                    <span title="">
+                        {{if userInfo.type == '0'}}
+                        {{if userInfo.level == '0'}}
+                        普通会员
+                        {{else}}
+                        VIP会员
+                        {{/if}}
+                        {{else}}
+                        商家会员
+                        {{/if}}
+                    </span>
+                </p>
+                <p class="u-mooney-t">账户余额：<span>{{userInfo.money}}</span> 元</p>
             </div>
             <div class="u-security">
-                <template v-if="mobile_authentication == 1">
-                    <img src="../../style/images/mobile_1.gif" title="已通过手机认证" /> &nbsp;
-                </template>
-                <template v-else>
-                    <img src="../../style/images/mobile.gif" title="未通过手机认证" /> &nbsp;
-                </template>
+                {{if userInfo.mobile_authentication == '0'}}
+                <img src="/default/style/images/mobile.gif" title="未通过手机认证" />
+                {{else}}
+                <img src="/default/style/images/mobile_1.gif" title="已通过手机认证" />
+                {{/if}}
+                &nbsp;
 
-                <template v-if="video_authentication == 0">
-                    <a href="../auth/video.html">
-                        <img src="../../style/images/video_2.gif" title="尚未通过视频认证，点击现在去认证" /> &nbsp;
-                    </a>
-                </template>
-                <template v-else-if="video_authentication == 1">
-                    <img src="../../style/images/video_2.gif" title="已经视频认证" /> &nbsp;
-                </template>
+                {{if userInfo.video_authentication == '0'}}
+                <a href="../auth/video.html">
+                    <img src="/default/style/images/video_2.gif" title="尚未通过视频认证，点击现在去认证" />
+                </a>
+                {{else}}
+                <img src="/default/style/images/video_2.gif" title="已经视频认证" />
+                {{/if}}
+                &nbsp;
 
-                <template v-if="real_name_authentication == 0">
-                    <a href="../auth/realname.html">
-                        <img src="../../style/images/shiming_2.gif" title="尚未通过实名认证，点击现在去认证" /> &nbsp;
-                    </a>
-                </template>
-                <template v-else>
-                    <img src="../../style/images/ShiMing.gif" title="已实名认证" /> &nbsp;
-                </template>
+                {{if userInfo.real_name_authentication == '0'}}
+                <a href="../auth/realname.html">
+                    <img src="/default/style/images/shiming_2.gif" title="尚未通过实名认证，点击现在去认证" />
+                </a>
+                {{else}}
+                <img src="/default/style/images/ShiMing.gif" title="已实名认证" />
+                {{/if}}
+                &nbsp;
             </div>
         </div>
-        {{if userType == '0'}}
+        {{if userInfo.type == '0'}}
         {{include './buyerLeftnav.html'}}
         {{else}}
         {{include './sellerLeftnav.html'}}

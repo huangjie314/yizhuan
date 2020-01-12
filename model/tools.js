@@ -3,6 +3,8 @@ var md5 = require('md5');
 const jwt = require('jsonwebtoken'); // 用于签发、解析`token`
 const config = require('./config');
 const request = require('request');
+const DB = require('./db');
+const UserInfo = require('./userInfo');
 
 let tools = {
     md5(str) {
@@ -39,6 +41,19 @@ let tools = {
         if (code == 123456) {
             return true;
         }
+    },
+
+    async getUserInfo(userId) {
+        const result = await UserInfo.find(userId);
+        return result;
+    },
+
+    setUserInfo(json) {
+        new UserInfo(json).insert();
+    },
+
+    formatMobile: function (mobile) {
+        return mobile.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
     }
 }
 

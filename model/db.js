@@ -132,9 +132,27 @@ class Db {
         })
     }
     getObjectId(id) {   /*mongodb里面查询 _id 把字符串转换成对象*/
-
         return new ObjectID(id);
     }
+
+    getNextSequence(name) {
+        return new Promise((resolve, reject) => {
+            this.dbClient.collection('counter').findAndModify(
+                { _id: name },
+                [['_id', 'asc']],
+                { $inc: { seq: 1 } },
+                { new: true },
+                function (err, result) {
+                    if (err) {
+                        reject(err);
+                    }
+                    resolve(result.value.seq);
+                }
+            );
+        })
+
+    }
+
 }
 
 

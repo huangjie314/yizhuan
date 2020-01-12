@@ -3,6 +3,8 @@ var router = require('koa-router')();
 const tools = require('../../model/tools.js');
 
 const DB = require('../../model/db.js');
+const fs = require('fs');
+const path = require('path');
 
 
 router.get('/', async (ctx) => {
@@ -15,9 +17,7 @@ router.post('/register', async (ctx) => {
     const {
         platform_type,
         password,
-        confirm_password,
         pay_password,
-        confirm_pay_password,
         qq,
         mobile,
         code,
@@ -31,7 +31,7 @@ router.post('/register', async (ctx) => {
     }
     if (tools.verifySmsCode(code)) {
         try {
-            let result = await DB.find('yizhuan', { "mobile": mobile });
+            let result = await DB.find('user', { "mobile": mobile });
             if (result.length > 0) {
                 return ctx.body = {
                     status: 10005,
@@ -40,7 +40,7 @@ router.post('/register', async (ctx) => {
                 }
             }
             if (p_name) {
-                result = await DB.find('yizhuan', { "mobile": p_name });
+                result = await DB.find('user', { "mobile": p_name });
                 if (result.length == 0) {
                     return ctx.body = {
                         status: 10003,
@@ -49,24 +49,31 @@ router.post('/register', async (ctx) => {
                     }
                 }
             }
-            result = await DB.insert('yizhuan', {
+            const _id = await DB.getNextSequence('userId');
+            result = await DB.insert('user', {
+                _id: _id,
                 platform_type,
                 password: tools.md5(password),
-                confirm_password: tools.md5(confirm_password),
                 pay_password: tools.md5(pay_password),
-                confirm_pay_password: tools.md5(confirm_pay_password),
                 qq,
                 mobile,
                 p_name,
                 type
             }).catch(err => {
-                res = {
+                return ctx.body = {
                     status: 10004, //用户注册失败
                     message: "用户注册失败",
                     data: []
                 }
             });
-
+            tools.setUserInfo({
+                userId: _id,
+                platform_type,
+                qq,
+                mobile,
+                p_name,
+                type
+            })
         } catch (e) {
 
         }
@@ -83,9 +90,10 @@ router.post('/login', async (ctx) => {
 
     let password = ctx.request.body.password;
 
-    var result = await DB.find('yizhuan', { "mobile": username, "password": tools.md5(password) });
+    var result = await DB.find('user', { "mobile": username, "password": tools.md5(password) });
     if (result.length > 0) {
-        var token = tools.signToken({ "mobile": username, "password": tools.md5(password), "type": result[0].type });
+        var token = tools.signToken({ "mobile": username, "type": result[0].type, "_id": result[0]._id });
+        ctx.session.userId = result[0]._id;
         ctx.cookies.set('token', token, {
             maxAge: 60 * 1000 * 60,
             httpOnly: true
@@ -121,16 +129,165 @@ router.post('/logout', async (ctx) => {
     }
 })
 
-router.get('/edit', async (ctx) => {
-
-    ctx.body = "编辑用户";
-
+// 上传头像
+router.post('/uploadAvatar', async (ctx) => {
+    const { avatar } = ctx.request.body;
+    var base64Data = avatar.replace(/^data:image\/\w+;base64,/, "");
+    var dataBuffer = Buffer.from(base64Data, 'base64');
+    const filePath = '/default/avatar.png';
+    try {
+        fs.writeFileSync('upload' + filePath, dataBuffer);
+        const ret = await DB.update('userInfo', { userId: ctx.session.userId }, { avatar: filePath });
+        return ctx.body = {
+            status: 1,
+            message: '上传成功',
+            data: {
+                avatar: filePath
+            }
+        }
+    } catch (err) {
+        return ctx.body = {
+            status: 10004,
+            message: '上传失败',
+            data: {}
+        }
+    }
 })
 
-router.get('/delete', async (ctx) => {
-
-    ctx.body = "删除用户";
-
+// 更新个人资料
+router.post('/update', async (ctx) => {
+    const json = ctx.request.body;
+    try {
+        const ret = await DB.update('userInfo', { userId: ctx.session.userId }, json);
+        return ctx.body = {
+            status: 1,
+            message: '更新密码成功',
+            data: {}
+        }
+    } catch (err) {
+        return ctx.body = {
+            status: 10004,
+            message: '更新密码失败',
+            data: {}
+        }
+    }
 })
+
+// 修改密码
+router.post('/password', async (ctx) => {
+    const { old_password, password } = ctx.request.body;
+    var result = await DB.find('user', { _id: ctx.session.userId }).catch(err => {
+    });
+    if (result[0].password != tools.md5(old_password)) {
+        return ctx.body = {
+            status: 10004,
+            message: '用户密码不正确',
+            data: {}
+        }
+    }
+
+    try {
+        const ret = await DB.update('user', { _id: ctx.session.userId }, { password: tools.md5(password) });
+        ctx.cookies.set('token', ctx.cookies.get('token'), {
+            maxAge: -1,
+            httpOnly: true
+        });
+        return ctx.body = {
+            status: 1,
+            message: '更新密码成功',
+            data: {}
+        }
+    } catch (err) {
+        return ctx.body = {
+            status: 10004,
+            message: '更新密码失败',
+            data: {}
+        }
+    }
+})
+
+// 忘记密码
+router.post('/forget', async (ctx) => {
+    const { mobile, password, code } = ctx.request.body;
+    var result = await DB.find('user', { mobile: mobile }).catch(err => {
+    });
+    if (result.length == 0) {
+        return ctx.body = {
+            status: 10004,
+            message: '该用户名不存在，请前往注册',
+            data: {}
+        }
+    }
+
+    try {
+        const ret = await DB.update('user', { mobile: mobile }, { password: tools.md5(password) });
+        ctx.cookies.set('token', ctx.cookies.get('token'), {
+            maxAge: -1,
+            httpOnly: true
+        });
+        return ctx.body = {
+            status: 1,
+            message: '重设密码成功',
+            data: {}
+        }
+    } catch (err) {
+        return ctx.body = {
+            status: 10004,
+            message: '重设密码失败',
+            data: {}
+        }
+    }
+})
+
+
+// 修改支付密码
+router.post('/updatePayPassword', async (ctx) => {
+    const { old_pay_password, pay_password } = ctx.request.body;
+    var result = await DB.find('user', { _id: ctx.session.userId }).catch(err => {
+    });
+    if (result[0].password != tools.md5(old_pay_password)) {
+        return ctx.body = {
+            status: 10004,
+            message: '支付密码不正确',
+            data: {}
+        }
+    }
+
+    try {
+        const ret = await DB.update('user', { _id: ctx.session.userId }, { pay_password: tools.md5(pay_password) });
+        return ctx.body = {
+            status: 1,
+            message: '更新支付密码成功',
+            data: {}
+        }
+    } catch (err) {
+        return ctx.body = {
+            status: 10004,
+            message: '更新支付密码失败',
+            data: {}
+        }
+    }
+})
+
+// 忘记支付密码
+router.post('/forgetPayPassword', async (ctx) => {
+    const { mobile, pay_password, code } = ctx.request.body;
+    try {
+        const ret = await DB.update('user', { _id: ctx.session.userId }, { pay_password: tools.md5(pay_password) });
+        return ctx.body = {
+            status: 1,
+            message: '重设支付密码成功',
+            data: {}
+        }
+    } catch (err) {
+        return ctx.body = {
+            status: 10004,
+            message: '重设支付密码失败',
+            data: {}
+        }
+    }
+})
+
+
 
 module.exports = router.routes();

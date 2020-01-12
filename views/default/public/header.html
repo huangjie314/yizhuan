@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{title}} - 易赚</title>
+    <title>{{title || '会员中心'}} - 易赚</title>
     <meta name="keywords" content="易赚-接单平台,免费爆款,打造爆款,补单平台,免费排名优化，刷放单平台手机赚钱" />
     <meta name="description" content="易赚是一家专注电商打造优质品牌及爆款平台，刷补单平台专业优化淘宝排名，和销量提升平台。" />
-    {{if userType == '0'}}
+    {{if userInfo && userInfo.type == '0'}}
     <link href="/default/css/style.css" rel="stylesheet" type="text/css" />
     {{else}}
     <link href="/default/css/style_seller.css" rel="stylesheet" type="text/css" />

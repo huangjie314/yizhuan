@@ -10,7 +10,8 @@ var path = require('path'),
   session = require('koa-session'),
   bodyParser = require('koa-bodyparser'),
   koaJwt = require('koa-jwt'), // 用于路由权限控制
-  config = require('./model/config');
+  config = require('./model/config'),
+  templateVariable = require('./model/templateVariable');
 
 
 var app = new Koa();
@@ -19,7 +20,9 @@ var app = new Koa();
 onerror(app);
 
 //配置post提交数据的中间件
-app.use(bodyParser());
+app.use(bodyParser({
+  formLimit: 20 * 1024 * 1024
+}));
 
 // Custom 401 handling if you don't want to expose koa-jwt errors to users
 app.use(function (ctx, next) {
@@ -48,7 +51,7 @@ app.use(function (ctx, next) {
 app.keys = ['some secret hurr'];
 const CONFIG = {
   key: 'koa:sess',
-  maxAge: 864000,
+  maxAge: 60 * 1000 * 60,
   overwrite: true,
   httpOnly: true,
   signed: true,
@@ -61,11 +64,13 @@ app.use(session(CONFIG, app));
 render(app, {
   root: path.join(__dirname, 'views'),
   extname: '.html',
-  debug: process.env.NODE_ENV !== 'production'
+  debug: process.env.NODE_ENV !== 'production',
+  imports: templateVariable
 });
 
 //配置 静态资源的中间件
 app.use(static(__dirname + '/public'));
+app.use(static(__dirname + '/upload'));
 
 app.use(json());
 // app.use(logger());
