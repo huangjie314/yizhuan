@@ -25,7 +25,7 @@ class Db {
     constructor() {
 
         this.dbClient = ''; /*���� ��db����*/
-        this.connect();   /*ʵ������ʱ����������ݿ�*/
+        // this.connect();   /*ʵ������ʱ����������ݿ�*/
 
     }
 

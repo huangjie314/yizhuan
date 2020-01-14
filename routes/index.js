@@ -11,6 +11,9 @@ const seller = require('./default/seller');
 
 const login = require('./default/login');
 const user = require('./default/user');
+const userInfo = require('../data/model/UserInfo');
+
+
 
 let verifyResult = null;
 //配置中间件 获取url的地址
@@ -24,7 +27,9 @@ router.use(async (ctx, next) => {
     verifyResult = tools.verifyToken(token);
 
     if (verifyResult) {
-        ctx.state.userInfo = await tools.getUserInfo(verifyResult._id);
+        // ctx.state.userInfo = await tools.getUserInfo(verifyResult._id);
+        const result = await userInfo.find({ userId: verifyResult._id });
+        ctx.state.userInfo = result[0]._doc;
         await next();
     } else {  //没有登录跳转到登录页面
         const reg = /\/login|\/register|\/repassword/;

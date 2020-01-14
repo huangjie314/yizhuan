@@ -13,6 +13,8 @@ var path = require('path'),
   config = require('./model/config'),
   templateVariable = require('./model/templateVariable');
 
+// const userInfo3 = require('./data/model/User');
+
 
 var app = new Koa();
 

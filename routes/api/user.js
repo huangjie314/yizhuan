@@ -5,12 +5,11 @@ const tools = require('../../model/tools.js');
 const DB = require('../../model/db.js');
 const fs = require('fs');
 const path = require('path');
+const User = require('../../data/model/User');
+const Counter = require('../../data/model/Counter');
+const UserInfo = require('../../data/model/UserInfo');
 
 
-router.get('/', async (ctx) => {
-
-    await ctx.render('admin/user/list');
-})
 
 // 用户注册
 router.post('/register', async (ctx) => {
@@ -31,7 +30,8 @@ router.post('/register', async (ctx) => {
     }
     if (tools.verifySmsCode(code)) {
         try {
-            let result = await DB.find('user', { "mobile": mobile });
+            // let result = await DB.find('user', { "mobile": mobile });
+            let result = await User.getCountByConditions({ "mobile": mobile });
             if (result.length > 0) {
                 return ctx.body = {
                     status: 10005,
@@ -49,8 +49,9 @@ router.post('/register', async (ctx) => {
                     }
                 }
             }
-            const _id = await DB.getNextSequence('userId');
-            result = await DB.insert('user', {
+            // const _id = await DB.getNextSequence('userId');
+            const _id = await Counter.findByIdAndUpdate('userId');
+            result = await User.insert({
                 _id: _id,
                 platform_type,
                 password: tools.md5(password),
@@ -59,14 +60,24 @@ router.post('/register', async (ctx) => {
                 mobile,
                 p_name,
                 type
-            }).catch(err => {
-                return ctx.body = {
-                    status: 10004, //用户注册失败
-                    message: "用户注册失败",
-                    data: []
-                }
             });
-            tools.setUserInfo({
+            // result = await DB.insert('user', {
+            //     _id: _id,
+            //     platform_type,
+            //     password: tools.md5(password),
+            //     pay_password: tools.md5(pay_password),
+            //     qq,
+            //     mobile,
+            //     p_name,
+            //     type
+            // }).catch(err => {
+            //     return ctx.body = {
+            //         status: 10004, //用户注册失败
+            //         message: "用户注册失败",
+            //         data: []
+            //     }
+            // });
+            const hj = await UserInfo.insert({
                 userId: _id,
                 platform_type,
                 qq,
@@ -74,6 +85,15 @@ router.post('/register', async (ctx) => {
                 p_name,
                 type
             })
+            console.log(hj);
+            // tools.setUserInfo({
+            //     userId: _id,
+            //     platform_type,
+            //     qq,
+            //     mobile,
+            //     p_name,
+            //     type
+            // })
         } catch (e) {
 
         }
@@ -85,12 +105,10 @@ router.post('/register', async (ctx) => {
 
 // 用户登录
 router.post('/login', async (ctx) => {
-
     let username = ctx.request.body.username;
-
     let password = ctx.request.body.password;
-
-    var result = await DB.find('user', { "mobile": username, "password": tools.md5(password) });
+    // var result = await DB.find('user', { "mobile": username, "password": tools.md5(password) });
+    var result = await User.find({ "mobile": username, "password": tools.md5(password) });
     if (result.length > 0) {
         var token = tools.signToken({ "mobile": username, "type": result[0].type, "_id": result[0]._id });
         ctx.session.userId = result[0]._id;
@@ -137,7 +155,8 @@ router.post('/uploadAvatar', async (ctx) => {
     const filePath = '/default/avatar.png';
     try {
         fs.writeFileSync('upload' + filePath, dataBuffer);
-        const ret = await DB.update('userInfo', { userId: ctx.session.userId }, { avatar: filePath });
+        // const ret = await DB.update('userInfo', { userId: ctx.session.userId }, { avatar: filePath });
+        const ret = await UserInfo.update({ userId: ctx.session.userId }, { avatar: filePath });
         return ctx.body = {
             status: 1,
             message: '上传成功',
@@ -158,7 +177,8 @@ router.post('/uploadAvatar', async (ctx) => {
 router.post('/update', async (ctx) => {
     const json = ctx.request.body;
     try {
-        const ret = await DB.update('userInfo', { userId: ctx.session.userId }, json);
+        // const ret = await DB.update('userInfo', { userId: ctx.session.userId }, json);
+        const ret = await UserInfo.update({ userId: ctx.session.userId }, json);
         return ctx.body = {
             status: 1,
             message: '更新密码成功',
@@ -176,7 +196,9 @@ router.post('/update', async (ctx) => {
 // 修改密码
 router.post('/password', async (ctx) => {
     const { old_password, password } = ctx.request.body;
-    var result = await DB.find('user', { _id: ctx.session.userId }).catch(err => {
+    // var result = await DB.find('user', { _id: ctx.session.userId }).catch(err => {
+    // });
+    var result = await User.find({ _id: ctx.session.userId }).catch(err => {
     });
     if (result[0].password != tools.md5(old_password)) {
         return ctx.body = {
@@ -187,7 +209,8 @@ router.post('/password', async (ctx) => {
     }
 
     try {
-        const ret = await DB.update('user', { _id: ctx.session.userId }, { password: tools.md5(password) });
+        // const ret = await DB.update('user', { _id: ctx.session.userId }, { password: tools.md5(password) });
+        const ret = await User.update({ _id: ctx.session.userId }, { password: tools.md5(password) });
         ctx.cookies.set('token', ctx.cookies.get('token'), {
             maxAge: -1,
             httpOnly: true
