@@ -39,7 +39,15 @@ router.post('/tools/uploadImage', async (ctx) => {
     const { image } = ctx.request.body;
     var base64Data = image.replace(/^data:image\/\w+;base64,/, "");
     var dataBuffer = Buffer.from(base64Data, 'base64');
-    const filePath = '/default/' + tools.getObjectId().toString() + '.png';
+    var curTime = new Date().toLocaleDateString().replace(/-/g, '');
+    var filePath = await new Promise((resolve, reject) => {
+        fs.stat('upload/' + curTime, function (err, stats) {
+            if (err) {  /*没有这个目录*/
+                fs.mkdirSync('upload/' + curTime);
+            }
+            resolve('/' + curTime + '/' + tools.getObjectId().toString() + '.png');
+        })
+    }).catch(err => { })
     try {
         fs.writeFileSync('upload' + filePath, dataBuffer);
         return ctx.body = {
@@ -56,6 +64,7 @@ router.post('/tools/uploadImage', async (ctx) => {
             data: {}
         }
     }
+
 })
 
 
