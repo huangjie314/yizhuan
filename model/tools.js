@@ -5,8 +5,14 @@ const config = require('./config');
 const request = require('request');
 const DB = require('./db');
 const UserInfo = require('./userInfo');
+var MongoDB = require('mongodb');
+var ObjectID = MongoDB.ObjectID;
 
 let tools = {
+    getObjectId(id) {   /*mongodb里面查询 _id 把字符串转换成对象*/
+        return new ObjectID(id);
+    },
+
     md5(str) {
         return md5(str)
     },
@@ -54,7 +60,11 @@ let tools = {
 
     formatMobile: function (mobile) {
         return mobile.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
-    }
+    },
+
+
+
+
 }
 
 module.exports = tools;

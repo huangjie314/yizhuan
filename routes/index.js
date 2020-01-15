@@ -12,7 +12,7 @@ const seller = require('./default/seller');
 const login = require('./default/login');
 const user = require('./default/user');
 const userInfo = require('../data/model/UserInfo');
-
+// const captial = require('../data/model/CaptalConfig');
 
 
 let verifyResult = null;

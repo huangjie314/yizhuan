@@ -32,7 +32,7 @@ router.post('/register', async (ctx) => {
         try {
             // let result = await DB.find('user', { "mobile": mobile });
             let result = await User.getCountByConditions({ "mobile": mobile });
-            if (result.length > 0) {
+            if (result > 0) {
                 return ctx.body = {
                     status: 10005,
                     message: "该手机号已被注册",
@@ -61,39 +61,21 @@ router.post('/register', async (ctx) => {
                 p_name,
                 type
             });
-            // result = await DB.insert('user', {
-            //     _id: _id,
-            //     platform_type,
-            //     password: tools.md5(password),
-            //     pay_password: tools.md5(pay_password),
-            //     qq,
-            //     mobile,
-            //     p_name,
-            //     type
-            // }).catch(err => {
-            //     return ctx.body = {
-            //         status: 10004, //用户注册失败
-            //         message: "用户注册失败",
-            //         data: []
-            //     }
-            // });
-            const hj = await UserInfo.insert({
+            await UserInfo.insert({
                 userId: _id,
                 platform_type,
                 qq,
                 mobile,
+                username: mobile,
                 p_name,
                 type
-            })
-            console.log(hj);
-            // tools.setUserInfo({
-            //     userId: _id,
-            //     platform_type,
-            //     qq,
-            //     mobile,
-            //     p_name,
-            //     type
-            // })
+            }).catch(err => {
+                return ctx.body = {
+                    status: 10004, //用户注册失败
+                    message: "用户注册失败",
+                    data: []
+                }
+            });
         } catch (e) {
 
         }
@@ -232,7 +214,7 @@ router.post('/password', async (ctx) => {
 // 忘记密码
 router.post('/forget', async (ctx) => {
     const { mobile, password, code } = ctx.request.body;
-    var result = await DB.find('user', { mobile: mobile }).catch(err => {
+    var result = await User.find({ mobile: mobile }).catch(err => {
     });
     if (result.length == 0) {
         return ctx.body = {
@@ -243,7 +225,7 @@ router.post('/forget', async (ctx) => {
     }
 
     try {
-        const ret = await DB.update('user', { mobile: mobile }, { password: tools.md5(password) });
+        const ret = await User.update({ mobile: mobile }, { password: tools.md5(password) });
         ctx.cookies.set('token', ctx.cookies.get('token'), {
             maxAge: -1,
             httpOnly: true
@@ -266,7 +248,7 @@ router.post('/forget', async (ctx) => {
 // 修改支付密码
 router.post('/updatePayPassword', async (ctx) => {
     const { old_pay_password, pay_password } = ctx.request.body;
-    var result = await DB.find('user', { _id: ctx.session.userId }).catch(err => {
+    var result = await User.find({ _id: ctx.session.userId }).catch(err => {
     });
     if (result[0].password != tools.md5(old_pay_password)) {
         return ctx.body = {
@@ -277,7 +259,7 @@ router.post('/updatePayPassword', async (ctx) => {
     }
 
     try {
-        const ret = await DB.update('user', { _id: ctx.session.userId }, { pay_password: tools.md5(pay_password) });
+        const ret = await User.update({ _id: ctx.session.userId }, { pay_password: tools.md5(pay_password) });
         return ctx.body = {
             status: 1,
             message: '更新支付密码成功',
@@ -296,7 +278,7 @@ router.post('/updatePayPassword', async (ctx) => {
 router.post('/forgetPayPassword', async (ctx) => {
     const { mobile, pay_password, code } = ctx.request.body;
     try {
-        const ret = await DB.update('user', { _id: ctx.session.userId }, { pay_password: tools.md5(pay_password) });
+        const ret = await User.update({ _id: ctx.session.userId }, { pay_password: tools.md5(pay_password) });
         return ctx.body = {
             status: 1,
             message: '重设支付密码成功',

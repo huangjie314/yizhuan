@@ -1,4 +1,5 @@
 const router = require('koa-router')();
+var CaptalConfig = require('../../data/model/CaptalConfig');
 
 
 router.get('/proinfo', async (ctx) => {
@@ -34,6 +35,15 @@ router.get('/repaypassword', async (ctx) => {
 
 router.get('/avatar', async (ctx) => {
     await ctx.render('default/user/center/avatar');
+})
+
+
+router.get('/amount/recharge', async ctx => {
+    var result = await CaptalConfig.find({});
+    await ctx.render('default/user/amount/recharge', {
+        title: '账户充值',
+        capital: result[0]._doc
+    })
 })
 
 

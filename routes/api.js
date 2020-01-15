@@ -3,6 +3,8 @@ var router = require('koa-router')();
 var querystring = require('querystring');
 const tools = require('../model/tools');
 const user = require('./api/user');
+const rechange = require('./api/recharge');
+const fs = require('fs');
 
 router.get('/', async (ctx) => {
 
@@ -32,7 +34,33 @@ router.post("/sendCode", async (ctx) => {
     };
 });
 
+// 上传图片
+router.post('/tools/uploadImage', async (ctx) => {
+    const { image } = ctx.request.body;
+    var base64Data = image.replace(/^data:image\/\w+;base64,/, "");
+    var dataBuffer = Buffer.from(base64Data, 'base64');
+    const filePath = '/default/' + tools.getObjectId().toString() + '.png';
+    try {
+        fs.writeFileSync('upload' + filePath, dataBuffer);
+        return ctx.body = {
+            status: 1,
+            message: '图片上传成功',
+            data: {
+                image: filePath
+            }
+        }
+    } catch (err) {
+        return ctx.body = {
+            status: 10004,
+            message: '图片上传失败',
+            data: {}
+        }
+    }
+})
+
+
 router.use('/user', user);
+router.use('/recharge', rechange);
 
 
 module.exports = router.routes();
