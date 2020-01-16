@@ -1,10 +1,6 @@
 
 const router = require('koa-router')();
 
-const tools = require('../../model/tools.js');
-
-const DB = require('../../model/db.js');
-
 
 router.get('/login', async (ctx) => {
     await ctx.render('default/login', {

@@ -1,11 +1,9 @@
-/**
- * Created by Administrator on 2018/3/20 0020.
- */
+
 const router = require('koa-router')();
 
-const tools = require('../../model/tools.js');
+const tools = require('../../util/tools.js');
 
-const DB = require('../../model/db.js');
+const DB = require('../../util/db.js');
 
 
 //验证码模块

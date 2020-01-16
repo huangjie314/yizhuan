@@ -10,10 +10,11 @@ var path = require('path'),
   session = require('koa-session'),
   bodyParser = require('koa-bodyparser'),
   koaJwt = require('koa-jwt'), // 用于路由权限控制
-  config = require('./model/config'),
-  templateVariable = require('./model/templateVariable');
+  config = require('./util/config'),
+  templateVariable = require('./util/templateVariable');
 
-// const userInfo3 = require('./data/model/User');
+
+
 
 
 var app = new Koa();

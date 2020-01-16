@@ -1,5 +1,5 @@
 
-var Config = require('../model/config'),
+var Config = require('../util/config'),
     mongoose = require('mongoose'),
 
     DB_URL = Config.dbUrl + Config.dbName; /** * 连接 */

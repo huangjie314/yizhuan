@@ -4,7 +4,7 @@
  */
 const router = require('koa-router')();
 const url = require('url');
-const tools = require('../model/tools');
+const tools = require('../util/tools');
 const buyer = require('./default/buyer');
 const seller = require('./default/seller');
 
@@ -13,6 +13,7 @@ const login = require('./default/login');
 const user = require('./default/user');
 const userInfo = require('../data/model/UserInfo');
 // const captial = require('../data/model/CaptalConfig');
+// const re = require('../data/model/ReleaseConfig')
 
 
 let verifyResult = null;
@@ -51,6 +52,18 @@ router.get('/', async (ctx) => {
 router.use(login);
 
 router.use('/userCenter', user);
+
+router.get('/task/index', async ctx => {
+    await ctx.render('default/task/index', {
+        title: '任务大厅'
+    })
+})
+
+router.get('/task/jie', async ctx => {
+    await ctx.render('default/task/jie', {
+        title: '已参与任务'
+    })
+})
 
 
 // router.use('/login', login);

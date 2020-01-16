@@ -1,6 +1,6 @@
 
 var router = require('koa-router')();
-const tools = require('../../model/tools.js');
+const tools = require('../../util/tools');
 
 
 const fs = require('fs');

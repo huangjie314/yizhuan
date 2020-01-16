@@ -1,8 +1,8 @@
 
 var router = require('koa-router')();
-const tools = require('../../model/tools.js');
+const tools = require('../../util/tools');
 
-const DB = require('../../model/db.js');
+const DB = require('../../util/db');
 const fs = require('fs');
 const path = require('path');
 const User = require('../../data/model/User');
@@ -288,6 +288,44 @@ router.post('/forgetPayPassword', async (ctx) => {
         return ctx.body = {
             status: 10004,
             message: '重设支付密码失败',
+            data: {}
+        }
+    }
+})
+
+// 绑定QQ
+router.post('/uploadQQ', async (ctx) => {
+    const { qq } = ctx.body.request;
+    try {
+        const ret = await UserInfo.update({ userId: ctx.session.userId }, { qq });
+        return ctx.body = {
+            status: 1,
+            message: '更新QQ号成功',
+            data: {}
+        }
+    } catch (err) {
+        return ctx.body = {
+            status: 10004,
+            message: '更新QQ号失败',
+            data: {}
+        }
+    }
+})
+
+router.post('/uploadMobile', async (ctx) => {
+    const { mobile, code } = ctx.body.request;
+    try {
+        await UserInfo.update({ userId: ctx.session.userId }, { mobile });
+        await User.update({ _id: ctx.session.userId }, { mobile });
+        return ctx.body = {
+            status: 1,
+            message: '更新手机成功',
+            data: {}
+        }
+    } catch (err) {
+        return ctx.body = {
+            status: 10004,
+            message: '更新手机失败',
             data: {}
         }
     }

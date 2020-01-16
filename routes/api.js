@@ -1,10 +1,35 @@
 
 var router = require('koa-router')();
 var querystring = require('querystring');
-const tools = require('../model/tools');
+const tools = require('../util/tools');
+
+const fs = require('fs');
+
 const user = require('./api/user');
 const rechange = require('./api/recharge');
-const fs = require('fs');
+const auth = require('./api/auth');
+
+
+//配置中间件 获取url的地址
+router.use(async (ctx, next) => {
+    //权限判断
+    // let token = ctx.headers.authorization;
+    let token = ctx.cookies.get('token');
+    verifyResult = tools.verifyToken(token);
+
+    if (verifyResult) {
+        await next();
+    } else {
+        if (/\/login/.test(ctx.request.url)) {
+            await next();
+        } else {
+            //无权限
+            console.log('无权限');
+        }
+
+    }
+})
+
 
 router.get('/', async (ctx) => {
 

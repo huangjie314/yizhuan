@@ -6,7 +6,7 @@ var login = require('./admin/login.js');
 var user = require('./admin/user.js');
 var url = require('url');
 
-const tools = require('../model/tools');
+const tools = require('../util/tools');
 
 // app.all("*", function (req, res, next) {
 //     res.header("Access-Control-Allow-Origin", "*");
