@@ -5,7 +5,7 @@ var BaseModel = require("./BaseModel");
 class ReleaseModel extends BaseModel {
     constructor() {
         super(ReleaseConfig);
-        this.insertOne();
+        // this.insertOne();
     }
 
     insertOne() {

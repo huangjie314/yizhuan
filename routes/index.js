@@ -53,17 +53,11 @@ router.use(login);
 
 router.use('/userCenter', user);
 
-router.get('/task/index', async ctx => {
-    await ctx.render('default/task/index', {
-        title: '任务大厅'
-    })
-})
 
-router.get('/task/jie', async ctx => {
-    await ctx.render('default/task/jie', {
-        title: '已参与任务'
-    })
-})
+
+router.use('/buyer', buyer);
+router.use('/seller', seller);
+
 
 
 // router.use('/login', login);

@@ -40,8 +40,8 @@ router.post('/register', async (ctx) => {
                 }
             }
             if (p_name) {
-                result = await DB.find('user', { "mobile": p_name });
-                if (result.length == 0) {
+                result = await User.getCountByConditions({ "mobile": p_name });
+                if (result == 0) {
                     return ctx.body = {
                         status: 10003,
                         message: "推荐人账户不存在",
@@ -49,7 +49,6 @@ router.post('/register', async (ctx) => {
                     }
                 }
             }
-            // const _id = await DB.getNextSequence('userId');
             const _id = await Counter.findByIdAndUpdate('userId');
             result = await User.insert({
                 _id: _id,

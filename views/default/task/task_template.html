@@ -1,0 +1,150 @@
+{{include 'default/public/header.html'}}
+<script type="text/javascript" src="/default/style/js/common.js"></script>
+<link rel="stylesheet" type="text/css" href="/default/css/pagination.css" />
+<link href="/default/style/css/task.css" type="text/css" rel="stylesheet" />
+
+
+<style type="text/css">
+    .center_tbl td {
+        border-bottom: 1px solid #E5F5FF;
+        line-height: 24px;
+        height: 26px;
+        clear: both;
+        background-color: #FFF;
+    }
+
+    .center_tbl tr:hover td {
+        background-color: #EBF5FF;
+    }
+
+    .Template_Tips {
+        background-color: #eef9ff;
+        border: 1px solid #ACDAFF;
+        border-top: 0px;
+        height: auto;
+        width: 1198px;
+        padding-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    .Template_Tips .center {
+        border: 1px solid #c7e5fa;
+        margin: 0 10px 10px 10px;
+        padding: 10px;
+        background: url(style/images/kuai.gif) #FFF 10px center no-repeat;
+        padding-left: 85px;
+        line-height: 26px;
+    }
+</style>
+
+<body>
+
+    <!--Header-->
+    {{include 'default/public/topbar.html'}}
+    <!--/Header-->
+
+
+    <div class="clear"></div>
+    <!-- 模板列表外框 -->
+    <div class="task_content" id="tplApp">
+        <!-- 列表头 -->
+        <div class="taskHall">
+            <!-- 中间子导航 -->
+            <ul class="task_tab">
+
+                <li><a href="add"><span>发布任务</span></a></li>
+                <li><a href="fa"><span>已发布任务</span></a></li>
+                <li id="tab_m1" class="current">
+                    <a href="task_template"><span>任务模板</span></a>
+                </li>
+            </ul>
+            <div class="clear"></div>
+
+            <div class="Template_Tips">
+                <div class="center">
+                    <span class="orange">任务模板流程：发布任务时保存为模板 &gt;&gt; 下次发同样或类似的任务 &gt;&gt; 选择【从任务模板中创建】快速创建！</span><br />
+                    1.平台的任务模板是为了方便试客们发布重复的任务而设计的一项实用功能；<br />
+                    2.在发布任务时，可以选择是否将该次发布的任务保存为任务模板；<br />
+                    3.如果您已经保存了任务模板，这次发布相同的任务就可以选择&ldquo;从任务模板中创建&rdquo;，为您省时省力，方便快捷！
+                </div>
+            </div>
+            <ul class="screening" style="border-top: 1px solid #ACDAFF; margin-top: 20px;">
+                <li>
+                    任务区筛选：
+                    <select name="ddlOrderby" @change="changePlatType" id="ddlOrderby" style="margin-right:10px">
+                        <option selected="selected" value="">所有任务区</option>
+                        <option value="0">淘宝天猫</option>
+                        <option value="1">京东</option>
+                    </select>
+                    <span class="orderSub">
+                        <a class="active">所有模板</a>
+                    </span>
+                </li>
+            </ul>
+            <!-- 模板列表 -->
+            <div class="t_list">
+                <table style="border-bottom: 1px solid #ACDAFF; margin-bottom: 6px;" border="0" cellspacing="0"
+                    cellpadding="4" height="40" width="100%">
+                    <tr>
+                        <th width="50" align="center">序号</th>
+                        <th width="70" align="center">所在任务区</th>
+                        <th width="110" align="center">模板名称</th>
+                        <th width="100" align="center">掌柜名</th>
+                        <th width="" align="center">商品网址</th>
+                        <th width="70" align="center">价格</th>
+                        <th width="70" align="center">发布点</th>
+                        <th width="95" align="center">好评时限</th>
+                        <th width="90" align="center">添加时间</th>
+                        <th width="145" align="center">操作</th>
+                    </tr>
+                </table>
+                <table class="list_tbl" border="0" cellspacing="0" cellpadding="4" width="100%">
+                    {{if tplList.length > 0}}
+
+                    {{each tplList}}
+                    <tr>
+                        <td width="50" align="center">{{$index + 1}}</td>
+                        <template v-if="item.platform_type == 1">
+                            <td width="70" align="center">京东</td>
+                        </template>
+                        <template v-else>
+                            <td width="70" align="center">淘宝天猫</td>
+                        </template>
+                        <td width="110" align="center">{{$value.name}}</td>
+                        <td width="100" align="center">{{$value.shop.name}}</td>
+                        <td width="" align="center" style="word-wrap: break-word">{{$value.goods_url}}</td>
+                        <td width="70" align="center">{{$value.order_price}} 元</td>
+                        <td width="70" align="center">{{$value.order_points}} 点</td>
+                        <td width="95" align="center">
+                            <span v-if="$value.goods_good_comment_rule==1" title="物流显示签收后好评">物流显示签收后好评</span>
+                            <span v-else title="马上好评">马上好评</span>
+                        </td>
+                        <td width="90" align="center">{{$value.created_at}}</td>
+                        <td width="145" align="right">
+                            <a class="link_btn" :href="'task/tpldetail.html?id=' + $value.id">发布任务</a>
+                            <a @click="deleteTpl($value.id);" id="rptList_btnDelete_0" class="link_btn red btnDelete"
+                                href="javascript:;">删除</a>
+                        </td>
+                    </tr>
+                    {{/each}}
+
+                    {{else}}
+                    <tr>
+                        <td style="text-align: center">暂无任何模板数据...</td>
+                    </tr>
+                    {{/if}}
+                </table>
+
+            </div>
+            <!-- /模板列表 -->
+        </div>
+        <!-- /列表头 -->
+        <div class="multipage">
+            <div id="PageContent" class="flickr"></div>
+        </div>
+    </div>
+    <!-- /模板列表外框  -->
+    <script src="templates/main/js/scripts/addtasktpl.js?v=2"></script>
+
+
+    {{include 'default/public/footer.html'}}

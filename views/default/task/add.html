@@ -1,0 +1,1793 @@
+{{include 'default/public/header.html'}}
+<link rel="stylesheet" type="text/css" href="/default/css/pagination.css" />
+<link href="/default/style/css/task.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="/default/scripts/icheck/skins/square/blue.css" />
+
+<body>
+    <!--Header-->
+    {{include 'default/public/topbar.html'}}
+
+    <!--/Header-->
+
+
+
+    <!-- <script type="text/javascript">
+        $(function () {
+            /初始化上传插件
+            / $(".upload-box").InitUploader();
+            dialog({
+                title: '淘宝接口更新通知',
+                url: '../html/memberr_tips.html',
+                okValue: ' 关 闭 ',
+                ok: function () { }
+            }).show();
+        });
+    </script> -->
+    <div class="clear"></div>
+    <div id="addTaskApp">
+        <!-- 中间内容外围 start -->
+        <div class="task_content">
+            <div class="taskHall">
+                <!-- 中间子导航 -->
+                <ul class="task_tab">
+                    <li id="tab_m1" class="current">
+                        <a href="add"><span>发布任务</span></a>
+                    </li>
+                    <li>
+                        <a href="fa"><span>已发布任务</span></a>
+                    </li>
+                    <li>
+                        <a href="task_template"><span>任务模板</span></a>
+                    </li>
+                    <!-- <li>
+                        <a href="../user/expressbuy/index.html" target="_blank">
+                            <span style="width:96px; color:red;">订购空包快递</span>
+                        </a>
+                    </li> -->
+                </ul>
+                <div class="clear"></div>
+                <!-- 发布任务表单 -->
+                <div class="AddTask">
+                    <div class="center">
+                        <form method="post" action="/task/add.html" id="form1">
+                            <div
+                                style="border-bottom: 1px #E5F5FF solid; padding: 20px 10px; background: url(/default/style/images/loudspeaker.gif) 20px center no-repeat; padding-left: 105px;line-height: 28px; position:relative; font-size: 15px;">
+                                1、欢迎选择【易赚】平台发布任务！
+                                <a href="../service/show-25.html" target="_blank" class="orange">平台最常见问题与解答</a>
+                                <br />
+                                2、近期根据淘宝系统调整，请商家控制关键词转化在10%以下，避免稽查风险；
+                                <br />
+                                3、<strong>
+                                    <font color="red">买家付款后请在24小时内完成发货，如果超时平台会自动设为发货状态（立返单会返款给买家），没有审核带来的后果由商家您承担。
+                                    </font>
+                                </strong>
+                                <br />
+                                4、<strong>
+                                    <font color="red">特别注意:如果对下面每项有不明白的,点击右边浮动按钮【显示功能注解】即可!</font>
+                                </strong>
+                                <input type="button" name="tips_btn" id="tips_btn" value="显示功能注解" class="link_btn red"
+                                    style="position: fixed; top: 210px; left: 1390px; z-index: 1; display: none;"
+                                    onclick="toggleTips()" />
+                            </div>
+
+                            <table width="100%" border="0" align="center" cellpadding="1" cellspacing="1"
+                                class="center_tbl">
+                                <tr>
+                                    <td colspan="2" align="center" class="title">填 写 任 务 基 本信 息</td>
+                                </tr>
+                                <tr>
+                                    <td style="height:10px;background-color:#FFF;border-bottom:0;"></td>
+                                    <td style="height:10px;background-color:#FFF;border-bottom:0;"></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><strong>从任务模板中创建：</strong></td>
+                                    <td>
+                                        <!-- onchange="getTemplate(this)" -->
+                                        <select name="ddlTaskTemplate" id="ddlTaskTemplate">
+                                            <option value="0">选择任务模板</option>
+                                            {{each tplList}}
+                                            <option value="{{$value.id}}">{{$value.name}}</option>
+                                            {{/each}}
+                                            <!-- 
+                                            <option value="1434">989刷</option>
+                                            <option value="1419">BV501模板</option>
+                                            <option value="1331">989探索模板</option> -->
+                                        </select>
+                                        <span class="tips"> 　
+                                            你可以选择已存在的任务模板，一键快速创建任务。
+                                            <a href="task_template" target="_blank" class="orange">任务模板管理>>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="22%" align="right"><strong>任务区：</strong></td>
+                                    <td width="78%">
+                                        <select name="ddlCategoryID" id="ddlCategoryID" class="small"
+                                            onchange="changeCategory(this)">
+                                            <option value="0" selected>淘宝天猫</option>
+                                            <option value="1">京东</option>
+                                        </select>
+                                        <input type="hidden" name="platform_type" id="platform_type" value="0" />
+                                        <input name="txtChannelID" type="hidden" id="txtChannelID" value="15" />
+                                        <input name="txtShopSiteID" type="hidden" id="txtShopSiteID" value="1" />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td align="right">
+                                        <strong>订单类型：</strong>
+                                    </td>
+                                    <td>
+                                        <div class="newRadio">
+                                            <!-- onclick="ChangeRadioItem(this,1,'1')" -->
+                                            <a class="radioCurr" title="需要在手机客户端操作完成">
+                                                <img src="/default/style/images/ipad.png" height="20" />
+                                                手机单
+                                            </a>
+                                            <input name="is_app_buy" type="hidden" id="is_app_buy" value="1" />
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td align="right">
+                                        <strong>选择店铺掌柜名称：</strong>
+                                    </td>
+                                    <td id="ShopNameFlag">
+                                        <template v-if="taobaoShops.length">
+                                            <span id="rblShopName">
+                                                <template v-for="(item,idx) in taobaoShops">
+                                                    <label>
+                                                        <input name="rblShopName" :id="'rblShopName_'+idx" type="radio"
+                                                            :value="item.id" />
+                                                        {{true || item.name}}
+                                                    </label>
+                                                </template>
+                                            </span>
+                                        </template>
+                                        <template v-else>
+                                            <a id="tipsBindAccount" class="red" href="../user/bind_account.html">
+                                                请先绑定掌柜号再回来发任务
+                                                &nbsp; 点我绑定>>
+                                            </a>
+                                        </template>
+                                    </td>
+                                </tr>
+                                <tr style="display: none;">
+                                    <td align="right">
+                                        <strong>使用购物车：</strong>
+                                        <input type="checkbox" name="is_shop_cart" id="is_shop_cart" value="1"
+                                            onclick="chkShopCart()" />
+                                        <span class="tips">
+                                            如果你想让买家一次拍下你多件宝贝，那么请勾上！注：任务担保价格是购物车总价(含运费)。
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">
+                                        <strong>商品链接地址：</strong>
+                                    </td>
+                                    <td>
+                                        <span id="UrlChange">
+                                            <input name="product_url" type="text" maxlength="200" class="w500"
+                                                id="product_url"
+                                                onblur="ChangePoint(getObj('price'));ShortUrl();GetTitle()"
+                                                value="" />&nbsp;
+                                            <span class="tips" style="display: inline;">安全起见请尽量避免单刷一款,可多款配合补单,</span>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">
+                                        <strong>商品标题：</strong>
+                                    </td>
+                                    <td>
+                                        <input name="title" id="title" type="text" maxlength="50" class="w500"
+                                            value="" />
+                                        <span class="tips">方便接手人准确找到您商品<span class="red">（输入链接地址可自动获取）</span>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><strong>商品主图：</strong></td>
+                                    <td>
+                                        <img src="/default/style/images/noimg.png" width="120" height="120"
+                                            id="product_pic_img" class="preview" align="absmiddle"
+                                            onclick="window.open(this.src)" style="cursor:pointer" title="查看大图" />
+                                        <input name="product_pic" id="product_pic" type="hidden" class="upload-path"
+                                            value="" />&nbsp;
+                                        <div id="pp_upload-box" class="upload-box" style="display:none;"></div>
+                                        <span class="tips" style="display: inline">
+                                            输入链接地址可自动获取，如果获取失败或手机端和pc端主图不一致可以
+                                            <a href="javascript:;" class="red" id="uploadImage">点击我上传</a>
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td align="right"><strong>付款方式：</strong></td>
+                                    <td>
+                                        <div class="newRadio" id="newRadio">
+                                            <input name="payType" type="hidden" id="pay_type" value="0" />
+                                            <!-- onclick="ChangeRadio(this,0)" -->
+                                            <a data-type="1" href="javascript:;"
+                                                title="买家拍下宝贝并自己付款，完成任务后担保金才转到他账户！">买家收货后再返款</a>
+                                            <a data-type="0" class='radioCurr' href="javascript:;"
+                                                title="买家拍下宝贝并自己付款，下单后填写订单号，经你审核后立返本金">立返本金</a>
+                                            <span class="tips">单价低于500元尽量选择<span class="red">【立返本金】接手会更快噢</span></span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td align="right"><strong>单件商品实际下单价格：</strong></td>
+                                    <td>
+                                        <input type="text" maxlength="8" class="w80" name="single_price"
+                                            id="single_price" value="" title="请输入商品(+邮费)总价格" />
+                                        元 &nbsp;
+                                        <strong>每单拍：</strong>
+                                        <input type="text" maxlength="4" class="w80" name="buy_number" id="buy_number"
+                                            value="1" title="买家一次性购买多少件意思" /> 件 &nbsp;
+                                        <input type="hidden" name="price" id="price" value="" />
+                                        <span class="red rough" id="count_price" style="display:none"></span> &nbsp;
+                                        <span class="red">您账户余额：<span class="user_amount"
+                                                id="user_amount">{{userInfo.money}}</span> 元</span>
+                                        &nbsp;
+                                        <span class="tips">下单价格 = 商品价格(或改价后价格) + 邮费的总价</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><strong>搜索页面展示的价格：</strong></td>
+                                    <td><input type="text" maxlength="8" class="w80" name="show_price" id="show_price"
+                                            value="" onkeyup="this.value=this.value.replace(/[^\d.]/g, '')"
+                                            title="搜索页面默认显示的商品价格" /> 元 &nbsp; <span
+                                            class="blue">如果与下单价格不同请自行修改</span><span
+                                            class="tips">（请务必亲自在手机端搜索下，确认展示的价格）</span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td align="right">
+                                        <strong>平台服务费：</strong>
+                                    </td>
+                                    <td>
+                                        <input type="text" maxlength="5" class="w80" style="background-color:#F0F0F0;"
+                                            title="自动计算，不可手工输入" name="service_cost" id="service_cost"
+                                            readonly="readonly" :value="platform_service_charge" /> 元
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td align="right"><strong>基本发布点：</strong></td>
+                                    <td>
+                                        <input type="text" maxlength="8" class="w80" style="background-color:#F0F0F0;"
+                                            title="自动计算，不可手工输入" name="point" id="point" readonly="readonly"
+                                            value="{{release.base}}" />
+                                        点 &nbsp;
+                                        <span class="red">您账户发布点：{{userInfo.publishing_point}}点</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><strong>指定购买规格或属性：</strong></td>
+                                    <td>
+                                        <input type="text" maxlength="16" class="w80" name="spec_property"
+                                            id="spec_property" value="" /> &nbsp;
+                                        <span class="tips">例如要求买某颜色或某尺寸等</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><strong>搜索页面展示的已付款人数：</strong></td>
+                                    <td>
+                                        <input type="text" maxlength="6" class="w80" name="pay_user_number"
+                                            id="pay_user_number" value=""
+                                            onkeyup="this.value=this.value.replace(/[^\d]/g,'')" title="输入例如：0.5 或 1" />
+                                        人（选填,可留空）&nbsp;
+                                        <span class="tips">手机端显示的已付款人数，为方便买家在同款图片产品中找到你的商品</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><strong>商品是否需要改价：</strong></td>
+                                    <td>
+                                        <input type="checkbox" name="is_mod_price" id="is_mod_price" value="0"
+                                            title="勾上表示商品需要改价" />
+                                        <span
+                                            class="tips">如果买家拍下你商品后还需要修改宝贝价格，请勾上。（例如你改价后的商品价格+邮费=100元，商品下单价格必须也是100元）</span>
+                                    </td>
+                                </tr>
+                                <tr style="display: none;">
+                                    <td align="right"><strong>任务大厅竞价排名追加发布点：</strong></td>
+                                    <td><input type="text" maxlength="4" class="w80" name="sort_point" id="sort_point"
+                                            value="0" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')"
+                                            title="输入例如：0.5 或 1" /> 点 &nbsp;
+                                        <span class="tips">追加发布点数越多，你的任务在大厅排名越靠前，越快被人接手，效率越高（可选项）</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><strong>任务类型：</strong></td>
+                                    <td>
+                                        <label>
+                                            <input name="xushi_type" id="xushi_type1" type="radio" value="0"
+                                                onclick="checkType(0)" checked='checked' />
+                                            实物</label>
+                                        &nbsp;
+                                        <img src="/default/style/images/realobject.gif" align="absmiddle" />
+                                        &nbsp; &nbsp;
+                                        <label title="注意：店铺有开启自动发货功能的卖家请关闭该功能，否则会造成资金损失！">
+                                            <input name="xushi_type" id="xushi_type0" type="radio" value="1"
+                                                onclick="checkType(1)" />
+                                            虚拟</label>&nbsp;
+                                        <img src="/default/style/images/virtual.gif" align="absmiddle" />
+                                        &nbsp; &nbsp;
+                                        <span class="tips"> 仅仅指你的产品属于实物还是虚拟产品,跟你发不发快递,发什么东西都无关</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><strong>收货好评时间：</strong></td>
+                                    <td>
+                                        <select name="haoping_limit" id="haoping_limit" onchange="checkType(2)">
+                                            <option value="0" selected="selected">马上好评</option>
+                                            <option value="1" selected='selected'>物流显示签收后才可以收货好评</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr id="isRealExpress_tr">
+                                    <td align="right">
+                                        <strong>
+                                            <font color="red">快递签收方式：</font>
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <div class="newRadio" id="isRealExpressItem">
+                                            <!-- onclick="ChangeRadioItem(this,0,'')" -->
+                                            <a data-type="0" class="radioCurr" title="发空包快递，到达后自动签收">空包自动签收</a>
+                                            <a data-type="1" title="发真实快递，要求买家本人签收"> 买家本人签收</a>
+                                            <input type="hidden" name="isRealExpress" id="isRealExpress" value="0" />
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><strong>指定好评内容：</strong></td>
+                                    <td>
+                                        <table border="0" cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td style="padding-left:0">
+                                                    <textarea rows="4" cols="20" class="w350" name="haoping_content"
+                                                        id="haoping_content"
+                                                        placeholder="批量发布时建议留空，默认会提示买家自由发挥写30字以上评语"></textarea>
+                                                </td>
+                                                <td style="line-height:32px;">&nbsp;
+                                                    <select name="HaoPingYu" id="HaoPingYu"
+                                                        onChange="setValue('haoping_content',this.options[this.selectedIndex].value)">
+                                                        <option selected="selected">===========
+                                                            您可以在这里快速选择常用的评语===========</option>
+                                                        <option value="">=========== 清空内容 ===========</option>
+                                                        <optgroup label="1 通用评语"></optgroup>
+                                                        <option value="请您自由发挥写30字以上评语即可。">请您自由发挥写30字以上评语即可。</option>
+                                                        <option value="请您自由发挥写30字以上评语即可，拜托了！">请您自由发挥写30字以上评语即可，拜托了！
+                                                        </option>
+                                                        <option value="请您自由发挥写30字以上评语即可，拜托了！【这句话不要复制去评价哦】">
+                                                            请您自由发挥写30字以上评语即可，拜托了！【这句话不要复制…</option>
+                                                        <option value="最近太忙了，确认晚了，东西是很好的，呵呵，谢了。">
+                                                            最近太忙了，确认晚了，东西是很好的，呵呵，谢了。
+                                                        </option>
+                                                        <option value="物流公司的态度比较差,建议换一家！不过掌柜人还不错！">
+                                                            物流公司的态度比较差,建议换一家！不过掌柜人还不错！</option>
+                                                        <option value="呵，货真不错，老公很喜欢！">呵，货真不错，老公很喜欢！</option>
+                                                        <option value="呵，货真不错，老婆很喜欢！">呵，货真不错，老婆很喜欢！</option>
+                                                        <option value="很好的卖家，谢谢喽。我的同事们都很喜欢呢。下次再来哦 ！">
+                                                            很好的卖家，谢谢喽。我的同事们都很喜欢呢。下次再来哦 ！</option>
+                                                        <option value="掌柜人不错，质量还行，服务很算不错的。">掌柜人不错，质量还行，服务很算不错的。</option>
+                                                        <option value="没想到这么快就到了，尺寸正好，老板态度很好。">没想到这么快就到了，尺寸正好，老板态度很好。
+                                                        </option>
+                                                        <option value="还不错，质量挺好的，速度也快！">还不错，质量挺好的，速度也快！</option>
+                                                        <option value="终于找到家好店，服务好，质量不错，下次有机会再来买。">
+                                                            终于找到家好店，服务好，质量不错，下次有机会再来买。</option>
+                                                        <option value="卖家人很好 这个还没用 看包装应该不错">卖家人很好 这个还没用 看包装应该不错</option>
+                                                        <option value="店已经收藏了很久，不过是第一次下手。应该说还不错。">
+                                                            店已经收藏了很久，不过是第一次下手。应该说还不错。
+                                                        </option>
+                                                        <option value="第二次来买了，货比我想像中要好！！老板人表扬下。。">
+                                                            第二次来买了，货比我想像中要好！！老板人表扬下。。
+                                                        </option>
+                                                        <option value="包装看起来很好，包得很用心，相信货一定很好，谢谢了！">
+                                                            包装看起来很好，包得很用心，相信货一定很好，谢谢了！</option>
+                                                        <option value="货超值，呵，下次再来。帮你做个广告，朋友们：这家店的货值。">
+                                                            货超值，呵，下次再来。帮你做个广告，朋友们：这家店的货值…</option>
+                                                        <option value="一个字！！值！！！">一个字！！值！！！</option>
+                                                        <option value="掌柜的服务态度真好，发货很快。商品质量也相当不错。太喜欢了，谢谢！">
+                                                            掌柜的服务态度真好，发货很快。商品质量也相当不错。太喜欢…</option>
+                                                        <option value="好卖家，真有耐心，我终于买到想要的东西了。谢谢卖家。">
+                                                            好卖家，真有耐心，我终于买到想要的东西了。谢谢卖家。</option>
+                                                        <option value="掌柜太善良了，真是干一行懂一行呀。在掌柜的指导下我都快变内行人士了！">
+                                                            掌柜太善良了，真是干一行懂一行呀。在掌柜的指导下我都快变…</option>
+                                                        <option value="卖家服务真周到。以后带同事一起来。">卖家服务真周到。以后带同事一起来。</option>
+                                                        <option value="宝贝质量不错，很喜欢了。谢谢掌柜。">宝贝质量不错，很喜欢了。谢谢掌柜。</option>
+                                                        <option value="货到了，比图片上看到的好多了3Q！">货到了，比图片上看到的好多了3Q！</option>
+                                                        <option value="真是一个好卖家。以后有这方面宝贝的需求还得找你哦！">
+                                                            真是一个好卖家。以后有这方面宝贝的需求还得找你哦！
+                                                        </option>
+                                                        <option value="不错，顶一个，谁要你这么诚信呢。。呵呵谢谢咯！">不错，顶一个，谁要你这么诚信呢。。呵呵谢谢咯！
+                                                        </option>
+                                                        <option value="这家店还好吧。来买过几次了，服务老客户非常周到，以后还常来！">
+                                                            这家店还好吧。来买过几次了，服务老客户非常周到，以后还常…</option>
+                                                        <option value="忠心地感谢你，让我买到了梦寐以求的宝贝，太感谢了！">
+                                                            忠心地感谢你，让我买到了梦寐以求的宝贝，太感谢了！
+                                                        </option>
+                                                        <option value="经过我的亲身体验，这家店信誉是相当地不错。宝贝的质量更像钻石一般。太感谢了！">
+                                                            经过我的亲身体验，这家店信誉是相当地不错。宝贝的质量更像…</option>
+                                                        <option
+                                                            value="不要以为信誉低的卖家货质量不好。我用我的亲身经历告诉大家，掌柜服务态度非常好。商品质量也非常不错。顶你了！">
+                                                            不要以为信誉低的卖家货质量不好。我用我的亲身经历告诉大家…</option>
+                                                        <option value="呵呵。商品这么快就到了，还不错哦，下次来你可要优惠哦^_^">
+                                                            呵呵。商品这么快就到了，还不错哦，下次来你可要优惠哦^_^</option>
+                                                        <option value="真没想到网上购物还这么有意思，在卖家的指导下我终于学会了网上购物，谢谢！">
+                                                            真没想到网上购物还这么有意思，在卖家的指导下我终于学会了…</option>
+                                                        <option value="老朋友。我又来你店光顾了，久了没来，生意看来还真不错哦。努力哦！">
+                                                            老朋友。我又来你店光顾了，久了没来，生意看来还真不错哦。…</option>
+                                                        <option value="网上购物这么激烈，没想到店家的服务这么好，商品质量好而价低廉，我太感谢你了！">
+                                                            网上购物这么激烈，没想到店家的服务这么好，商品质量好而价…</option>
+                                                        <option value="店家很讲信誉，而且很不错哦，在这家店买东东，我很满意~">
+                                                            店家很讲信誉，而且很不错哦，在这家店买东东，我很满意~</option>
+                                                        <option value="期盼之中，终于等到了心爱的东东，谢谢！">期盼之中，终于等到了心爱的东东，谢谢！</option>
+                                                        <option value="无意中来到你小铺就淘到心意的宝贝,心情不错!">无意中来到你小铺就淘到心意的宝贝,心情不错!
+                                                        </option>
+                                                        <option value="宝贝收到了，很喜欢，买家很有信用！">宝贝收到了，很喜欢，买家很有信用！</option>
+                                                        <option value="有了问题能很好的处理，可以信赖的好店家，以后有机会我们再合作。">
+                                                            有了问题能很好的处理，可以信赖的好店家，以后有机会我们再…</option>
+                                                        <option value="赞一个 发货迅速，宝贝和图片差不多。。">赞一个 发货迅速，宝贝和图片差不多。。</option>
+                                                        <option value="不错 希望下次合作 谢谢掌柜~~">不错 希望下次合作 谢谢掌柜~~</option>
+                                                        <option value="价格大众化，YY质量很好呀,款式、面料我都挺满意的．如果有需要我还会继续光顾你的店铺！">
+                                                            价格大众化，YY质量很好呀,款式、面料我都挺满意的．如果有需…</option>
+                                                        <option value="不好意思，付款晚了点！">不好意思，付款晚了点！</option>
+                                                        <option value="货好，人更好！简单就好！">货好，人更好！简单就好！</option>
+                                                        <option value="昨天拿到的，谢谢！">昨天拿到的，谢谢！</option>
+                                                        <option value="合作愉快，已经确认付款，请查收！">合作愉快，已经确认付款，请查收！</option>
+                                                        <option value="好好好！very good！">好好好！very good！</option>
+                                                        <option value="产品很好，服务态度也好！">产品很好，服务态度也好！</option>
+                                                        <option value="很好,非常满意！">很好,非常满意！</option>
+                                                        <option value="感谢老板，送个真诚的好评！">感谢老板，送个真诚的好评！</option>
+                                                        <option value="终于拿到啦~~ 好开心那！">终于拿到啦~~ 好开心那！</option>
+                                                        <option value="卖家人真的好好哦,太感谢了！">卖家人真的好好哦,太感谢了！</option>
+                                                        <option value="好好好好好好好好">好好好好好好好好</option>
+                                                        <option value="刚收到货，很好，物超所值！！以后还来！">刚收到货，很好，物超所值！！以后还来！</option>
+                                                        <option value="价格很优惠，服务也很好，东西不错，哈�~........">
+                                                            价格很优惠，服务也很好，东西不错，哈哈.........</option>
+                                                        <option value="质量很好，希望更多的朋友信赖．">质量很好，希望更多的朋友信赖．</option>
+                                                        <option value="店主态度特好，我会再次光顾的．">店主态度特好，我会再次光顾的．</option>
+                                                        <option value="可不可以再便宜点．我带朋友来你家买。">可不可以再便宜点．我带朋友来你家买。</option>
+                                                        <option value="不好意思评价晚了，非常好的店家，东西很喜欢！">不好意思评价晚了，非常好的店家，东西很喜欢！
+                                                        </option>
+                                                        <option value="买来这个是送人�~她很喜欢.卖家的贴心让我感到很温暖.以后我还会来选的.">
+                                                            买来这个是送人的,她很喜欢.卖家的贴心让我感到很温暖.以后我…</option>
+                                                        <option value="强烈支持！！！！">强烈支持！！！！</option>
+                                                        <option value="很喜欢!也喜欢店家,很热情~!">很喜欢!也喜欢店家,很热情~!</option>
+                                                        <option value="一个字 好，两个字 很好，三个字 太好了！哈哈……">一个字 好，两个字 很好，三个字
+                                                            太好了！哈哈……
+                                                        </option>
+                                                        <option value="好,支持,如果需要,下次还找你">好,支持,如果需要,下次还找你</option>
+                                                        <option value="呵呵,很好,给个" 优"">呵呵,很好,给个&quot;优&quot;</option>
+                                                        <option value="信誉很好,,,,,,发货很及时">信誉很好,,,,,,发货很及时</option>
+                                                        <option value="支持,强烈顶起！……">支持,强烈顶起！……</option>
+                                                        <option value="主人不错，而且很热情。希望你的生意 越做越好啊！！呵呵">主人不错，而且很热情。希望你的生意
+                                                            越做越好啊！！呵呵</option>
+                                                        <option value="话说！~只能用快，好，来形容啦！~嘻嘻！`下次再找你！~">
+                                                            话说！~只能用快，好，来形容啦！~嘻嘻！`下次再找你！~</option>
+                                                        <option value="不错的卖家，所以有又光顾叻！！！2009">不错的卖家，所以有又光顾叻！！！2009
+                                                        </option>
+                                                        <option value="不错，很好的卖家。 很好，很high">不错，很好的卖家。 很好，很high</option>
+                                                        <option value="方便快捷,谢谢,,,合作愉快!!">方便快捷,谢谢,,,合作愉快!!</option>
+                                                        <option value="东西今天收到 很满意 谢谢老板！ 下次来的时候记得优惠咯！">东西今天收到 很满意 谢谢老板！
+                                                            下次来的时候记得优惠咯！</option>
+                                                        <option value="不错啊 还会来的！">不错啊 还会来的！</option>
+                                                        <option
+                                                            value="东西收到,很满意!!真的是超级好的卖家,解答疑问不厌其烦,细致认真,关键是东西好,而且货物发得超快,包装仔细,值得信赖!">
+                                                            东西收到,很满意!!真的是超级好的卖家,解答疑问不厌其烦,细致…</option>
+                                                        <option value="很好,发货很快!服务周到！">很好,发货很快!服务周到！</option>
+                                                        <option value="店家服务的很周到 店家的宝贝我很满意！">店家服务的很周到 店家的宝贝我很满意！</option>
+                                                        <option value="发货速度挺快的,赞一个">发货速度挺快的,赞一个</option>
+                                                        <option value="挺特别的,再来光顾……～">挺特别的,再来光顾……～</option>
+                                                        <option value="很热情的卖家，下次还来">很热情的卖家，下次还来</option>
+                                                        <option value="希望下次还有机会合作">希望下次还有机会合作</option>
+                                                        <option value="祝你生意兴隆^_^">祝你生意兴隆^_^</option>
+                                                        <option value="质量非常好,真出乎我的意料,包装非常仔细,非常感谢 ,祝生意兴隆!">
+                                                            质量非常好,真出乎我的意料,包装非常仔细,非常感谢 ,祝生意兴…</option>
+                                                        <option value="非常感谢，好喜欢哦，下次再来哦~">非常感谢，好喜欢哦，下次再来哦~</option>
+                                                        <option value="东西不错，卖家也很风趣。下次还来～">东西不错，卖家也很风趣。下次还来～</option>
+                                                        <option value="偶还来哈！哈哈，要记得偶啦">偶还来哈！哈哈，要记得偶啦</option>
+                                                        <option value="速度很快^很快^很快......谢谢了~~~有机会再合作~~~">
+                                                            速度很快^很快^很快......谢谢了~~~有机会再合作~~~</option>
+                                                        <option value="加油加油。生意欣荣">加油加油。生意欣荣</option>
+                                                        <option value="服务质量好,态度热情,值得推荐!">服务质量好,态度热情,值得推荐!</option>
+                                                        <option value="掌柜发货很及时阿，谢谢啦！">掌柜发货很及时阿，谢谢啦！</option>
+                                                        <option value="虽然有点麻烦。。但是诚信拉！">虽然有点麻烦。。但是诚信拉！</option>
+                                                        <option value="诚信第一，服务第一，绝对相信">诚信第一，服务第一，绝对相信</option>
+                                                        <option value="效率卖家，东西也不错！">效率卖家，东西也不错！</option>
+                                                        <option value="西西。多多光顾。西西。加油加油。生意欣荣">西西。多多光顾。西西。加油加油。生意欣荣
+                                                        </option>
+                                                        <option value="很好，加一分。呵呵">很好，加一分。呵呵</option>
+                                                        <option value="朋友介绍一起买的，收到了，谢谢了">朋友介绍一起买的，收到了，谢谢了</option>
+                                                        <option value="蛮喜欢的 还有赠品 卖家人真不错">蛮喜欢的 还有赠品 卖家人真不错</option>
+                                                        <option value="货已收到给个好评">货已收到给个好评</option>
+                                                        <option value="发货速度很快哦，东西很赞！！">发货速度很快哦，东西很赞！！</option>
+                                                        <option value="还不错的老板，下次还来买别的">还不错的老板，下次还来买别的</option>
+                                                        <option value="DD很漂亮，发货及时，包装完好，">DD很漂亮，发货及时，包装完好，</option>
+                                                        <option value="谢谢,以后有机会还从您那里购买。">谢谢,以后有机会还从您那里购买。</option>
+                                                        <option value="好卖家，宝贝相当理想，关注ing！ 有新货了，记得通知我~">好卖家，宝贝相当理想，关注ing！
+                                                            有新货了，记得通知我~</option>
+                                                        <option value="东西好便宜，赚信用很不错吗，呵呵，不错宝贝确实不错~">
+                                                            东西好便宜，赚信用很不错吗，呵呵，不错宝贝确实不错~</option>
+                                                        <option value="非常出乎意料，下次还会来的~ 好卖家，继续关注！">非常出乎意料，下次还会来的~
+                                                            好卖家，继续关注！
+                                                        </option>
+                                                        <option value="很不错的卖家，很有耐心~东东也超好呢~">很不错的卖家，很有耐心~东东也超好呢~</option>
+                                                        <option value="比图片是漂亮多了~">比图片是漂亮多了~</option>
+                                                        <option value="好卖家，下次还会来的，谢谢卖家的热心~">好卖家，下次还会来的，谢谢卖家的热心~</option>
+                                                        <option value="觉得自己眼光还是不错的，很好看！">觉得自己眼光还是不错的，很好看！</option>
+                                                        <option value="非常好的卖家，会继续支持你的！">非常好的卖家，会继续支持你的！</option>
+                                                        <option value="支持卖家,宝贝真不错">支持卖家,宝贝真不错</option>
+                                                        <option value="很漂亮啊。值得拥有~ 下次还回来的~">很漂亮啊。值得拥有~ 下次还回来的~</option>
+                                                        <option value="东西很实惠哦,支持卖家">东西很实惠哦,支持卖家</option>
+                                                        <option value="货到了，和描述的很相符，好卖家！">货到了，和描述的很相符，好卖家！</option>
+                                                        <option value="不错的卖家，发货很快的说！">不错的卖家，发货很快的说！</option>
+                                                        <option value="呵呵，送朋友的，很合适！">呵呵，送朋友的，很合适！</option>
+                                                        <option value="强烈支持啊 ~卖家好.东西好">强烈支持啊 ~卖家好.东西好</option>
+                                                        <option value="支持~~~~~~~~~~~~~~卖家">支持~~~~~~~~~~~~~~卖家</option>
+                                                        <option value="货到了，很漂亮啊~ 好卖家~">货到了，很漂亮啊~ 好卖家~</option>
+                                                        <option value="非常好的卖家，很热情啊，下次还会来的~ 宝贝很不错！">非常好的卖家，很热情啊，下次还会来的~
+                                                            宝贝很不错！</option>
+                                                        <option value="到货很迅速，质量很好，好店铺，推荐了~">到货很迅速，质量很好，好店铺，推荐了~</option>
+                                                        <option value="货到了，质量很不错，支持下~">货到了，质量很不错，支持下~</option>
+                                                        <option value="店铺确实很不错，收藏了~">店铺确实很不错，收藏了~</option>
+                                                        <option value="很漂亮，谢谢店主了">很漂亮，谢谢店主了</option>
+                                                        <option value="好卖家,果然是一流的,非常会为卖家着想,赞一个">好卖家,果然是一流的,非常会为卖家着想,赞一个
+                                                        </option>
+                                                        <option value="很不错的买家，有你这样的买家是我的荣幸，希望下次再光临本店哦！谢谢！">
+                                                            很不错的买家，有你这样的买家是我的荣幸，希望下次再光临本…</option>
+                                                        <option value="东西很漂亮，卖家服务态度很好，下次还来。">东西很漂亮，卖家服务态度很好，下次还来。
+                                                        </option>
+                                                        <option value="东西很满意 速度很快 有机会我还会再来的 呵呵 合作愉快哦">东西很满意 速度很快
+                                                            有机会我还会再来的
+                                                            呵呵 合作愉快哦</option>
+                                                        <option value="店家发货相当快~服务也很好！~还会在来买的">店家发货相当快~服务也很好！~还会在来买的
+                                                        </option>
+                                                        <option
+                                                            value="真不好意思！！！因为电脑坏了，昨天才维修好，所以今天才给您付款。请谅解！！不过您的商品真的很不错，很喜欢！！！">
+                                                            真不好意思！！！因为电脑坏了，昨天才维修好，所以今天才给…</option>
+                                                        <option value="卖家的服务 挺好的,以后 还能做上买卖#892008">卖家的服务 挺好的,以后
+                                                            还能做上买卖#892008</option>
+                                                        <option value="不错不错，这样的老板我喜欢~~~~">不错不错，这样的老板我喜欢~~~~</option>
+                                                        <option value="跟你交易次次都这么成功和开心的．．希望我们以后有更多的交易吧．．．哈哈">
+                                                            跟你交易次次都这么成功和开心的．．希望我们以后有更多的交…</option>
+                                                        <option value="�~�~�~尽在不言�~">好 好 好 尽在不言中.</option>
+                                                        <option value="蛮好的，呵呵，以后继续光顾">蛮好的，呵呵，以后继续光顾</option>
+                                                        <option value="还可以，一分价钱一分货">还可以，一分价钱一分货</option>
+                                                        <option value="宝贝不错发货很快！">宝贝不错发货很快！</option>
+                                                        <option value="店家货物做工很精美，服务也不错，给好评一个，">店家货物做工很精美，服务也不错，给好评一个，
+                                                        </option>
+                                                        <option value="发货超快，只是我不在，没能及时签收。赞，赞">发货超快，只是我不在，没能及时签收。赞，赞
+                                                        </option>
+                                                        <option value="很好的卖家,绝对支持">很好的卖家,绝对支持</option>
+                                                        <option value="早上收到，很喜欢，下次一定还来">早上收到，很喜欢，下次一定还来</option>
+                                                        <option value="很耐心的店主！到货也很及时">很耐心的店主！到货也很及时</option>
+                                                        <option value="价格很优惠，服务也很好，YY款式和面料都不错的，给个好评此次鼓励">
+                                                            价格很优惠，服务也很好，YY款式和面料都不错的，给个好评此…</option>
+                                                        <option value="很好啊，这东东值。谢谢老板">很好啊，这东东值。谢谢老板</option>
+                                                        <option value="嗯，这店主很令人满意。支持一下。">嗯，这店主很令人满意。支持一下。</option>
+                                                        <option value="很好，态度诚恳，回复及时">很好，态度诚恳，回复及时</option>
+                                                        <option value="哈，真是不错。这老板很地道">哈，真是不错。这老板很地道</option>
+                                                        <option value="和你作生意很舒服。很负责，谢谢啦，以后合作。">和你作生意很舒服。很负责，谢谢啦，以后合作。
+                                                        </option>
+                                                        <option value="呵呵，比预想的还好呢。价格也公道，谢谢啦~~~">呵呵，比预想的还好呢。价格也公道，谢谢啦~~~
+                                                        </option>
+                                                        <option value="早上刚才收到，很是喜欢。下次还有来，介绍朋友来能不能给打个折？">
+                                                            早上刚才收到，很是喜欢。下次还有来，介绍朋友来能不能给打…</option>
+                                                        <optgroup label="2 服装类评语"></optgroup>
+                                                        <option value="呵呵 ,,,好着呢.穿上还是挺舒服的">呵呵 ,,,好着呢.穿上还是挺舒服的</option>
+                                                        <option value="非常好，质量好，掌柜服务态度也非常的好，大大的赞一个～">
+                                                            非常好，质量好，掌柜服务态度也非常的好，大大的赞一个～</option>
+                                                        <option value="YY真不错，以后还会光顾！">YY真不错，以后还会光顾！</option>
+                                                        <option value="非常漂亮，和实物图片一样，呵呵盒盒也好好哦">非常漂亮，和实物图片一样，呵呵盒盒也好好哦
+                                                        </option>
+                                                        <option value="蛮好的,质量也不错,同事都说蛮好看的">蛮好的,质量也不错,同事都说蛮好看的</option>
+                                                        <option value="太感谢了，衣服很漂亮，朋友很喜欢，最主要的是买家太好了~~~大大的赞一个。。。">
+                                                            太感谢了，衣服很漂亮，朋友很喜欢，最主要的是买家太好了~~…</option>
+                                                        <option value="衣服，很合身">衣服，很合身</option>
+                                                        <option value="出去玩忘记确认啦，嘿嘿，非常好的宝贝，喜欢喜欢">出去玩忘记确认啦，嘿嘿，非常好的宝贝，喜欢喜欢
+                                                        </option>
+                                                        <option value="很不错的卖家 货早就到了 没时间签收 呵呵 质量很好 谢谢了">很不错的卖家 货早就到了
+                                                            没时间签收 呵呵
+                                                            质量很好 谢谢了</option>
+                                                        <option value="衣衣不错,很喜欢，哈哈">衣衣不错,很喜欢，哈哈</option>
+                                                        <option value="比图片上漂亮呢 质量也好">比图片上漂亮呢 质量也好</option>
+                                                        <option value="宝贝收到了,好可爱,很喜欢">宝贝收到了,好可爱,很喜欢</option>
+                                                        <option value="衣衣收到了,很合身,心情不错,哈哈!!!">衣衣收到了,很合身,心情不错,哈哈!!!
+                                                        </option>
+                                                        <option value="穿上很舒服,谢谢了">穿上很舒服,谢谢了</option>
+                                                        <option value="PP，不过我穿大了点．">PP，不过我穿大了点．</option>
+                                                        <option value="质量不错，跟店主谈的不出入．">质量不错，跟店主谈的不出入．</option>
+                                                        <option value="质量好，不变形不掉色，真不愧是牌子货．">质量好，不变形不掉色，真不愧是牌子货．</option>
+                                                        <option value="穿上很好�~..........................">
+                                                            穿上很好看...........................</option>
+                                                        <option value="我最喜欢的款,专卖太贵了,谢谢,简直一样,">我最喜欢的款,专卖太贵了,谢谢,简直一样,
+                                                        </option>
+                                                        <option value="质量不错，款式差不多">质量不错，款式差不多</option>
+                                                        <option value="质量不错,谢谢店主了,">质量不错,谢谢店主了,</option>
+                                                        <option value="对比之后,还是你家的最好">对比之后,还是你家的最好</option>
+                                                        <option value="很好看,比我想象的好多了,售后也不错">很好看,比我想象的好多了,售后也不错</option>
+                                                        <option value="穿上感觉很舒服．">穿上感觉很舒服．</option>
+                                                        <option value="就是好象有点大,嗨。。怪我自己拍前没仔细问下老板哦。">
+                                                            就是好象有点大,嗨。。怪我自己拍前没仔细问下老板哦。</option>
+                                                        <option value="确实很漂亮">确实很漂亮</option>
+                                                        <option value="衣服很不错！谢谢！好卖家">衣服很不错！谢谢！好卖家</option>
+                                                        <option value="产品质量很好，很高档，朋友超喜欢！">产品质量很好，很高档，朋友超喜欢！</option>
+                                                        <option value="PP很不错的。">PP很不错的。</option>
+                                                        <option value="料子一般，样式还可以，">料子一般，样式还可以，</option>
+                                                        <option value="宝贝不错,买家也讲诚信">宝贝不错,买家也讲诚信</option>
+                                                        <option value="可以穿,谢谢啦">可以穿,谢谢啦</option>
+                                                        <option value="发货好快呀。。。YY不错。。很喜欢。。">发货好快呀。。。YY不错。。很喜欢。。</option>
+                                                        <option value="和商场滴一样，朋友说以后也让我帮她买呢。">和商场滴一样，朋友说以后也让我帮她买呢。
+                                                        </option>
+                                                        <option value="价格合理，服务到位，发货及时。">价格合理，服务到位，发货及时。</option>
+                                                        <option value="这样的YY质量和服务态度能不给好评吗？">这样的YY质量和服务态度能不给好评吗？</option>
+                                                        <option value="收到的实物与想象中的一样，谢谢老板哦！">收到的实物与想象中的一样，谢谢老板哦！</option>
+                                                        <option value="抱歉，付款晚了，衣服很漂亮">抱歉，付款晚了，衣服很漂亮</option>
+                                                        <option value="这种我老婆好喜欢。谢谢。">这种我老婆好喜欢。谢谢。</option>
+                                                        <option value="这个很好哦，多多进些，我还要。">这个很好哦，多多进些，我还要。</option>
+                                                        <option value="抱歉,隔了好几天才确认收货,比较忙,我们同事都赞可爱">
+                                                            抱歉,隔了好几天才确认收货,比较忙,我们同事都赞可爱</option>
+                                                        <option
+                                                            value="这件衣服比我想象的要好，很满意，你推荐的号也不错，买小了过几天真的穿不成了。谢谢啊，以后有好东西推荐啊。就是没见你的礼品小袜子，呵呵，我想下次会有的。">
+                                                            这件衣服比我想象的要好，很满意，你推荐的号也不错，买小了…</option>
+                                                        <option value="好卖家，衣服很漂亮，喜欢。我162，110斤，穿M号正好，给需要的MM一点参考吧">
+                                                            好卖家，衣服很漂亮，喜欢。我162，110斤，穿M号正好，给需要…</option>
+                                                        <option value="很好 ，衣服很满意，以后多合作！我再推荐给朋友！">很好
+                                                            ，衣服很满意，以后多合作！我再推荐给朋友！
+                                                        </option>
+                                                        <option value="YY很板，很漂亮。就是下次别再寄邮包了。">YY很板，很漂亮。就是下次别再寄邮包了。
+                                                        </option>
+                                                        <option value="衣服质量很好，很好的卖家。">衣服质量很好，很好的卖家。</option>
+                                                        <optgroup label="3 鞋子类评语"></optgroup>
+                                                        <option value="觉得挺好的,穿上好象还高了一点">觉得挺好的,穿上好象还高了一点</option>
+                                                        <option value="牌子就是牌子穿起来感觉就是不一样">牌子就是牌子穿起来感觉就是不一样</option>
+                                                        <option value="鞋子穿上舒服就好，没有什么要求">鞋子穿上舒服就好，没有什么要求</option>
+                                                        <option value="和图片一模一样，很好穿。">和图片一模一样，很好穿。</option>
+                                                        <option value="非常好！满意">非常好！满意</option>
+                                                        <option value="不错，很合适，款式不错">不错，很合适，款式不错</option>
+                                                        <option value="可以穿,谢谢啦">可以穿,谢谢啦</option>
+                                                        <option value="非常好！很漂亮的鞋子">非常好！很漂亮的鞋子</option>
+                                                        <option value="哇,这鞋子穿上,感觉好高哦,!">哇,这鞋子穿上,感觉好高哦,!</option>
+                                                        <option value="很好的卖家，发货很及时来的也很快，鞋看起来也不错，希望以后能有更多的合作机会，祝生意兴隆！">
+                                                            很好的卖家，发货很及时来的也很快，鞋看起来也不错，希望以…</option>
+                                                        <option value="货不错 下次还来">货不错 下次还来</option>
+                                                        <option value="看在老板的面子上给个好评吧！">看在老板的面子上给个好评吧！</option>
+                                                        <option value="鞋子 挺好的 大家放心买吧 呵呵">鞋子 挺好的 大家放心买吧 呵呵</option>
+                                                        <option value="鞋子已经收到了！质量一般！有出地方有瑕疵！搞不好穿段时间就会脱机！不过对得起这价钱了！">
+                                                            鞋子已经收到了！质量一般！有出地方有瑕疵！搞不好穿段时间…</option>
+                                                        <option value="很好的卖�~弟弟对鞋子很满意.">很好的卖家,弟弟对鞋子很满意.</option>
+                                                        <option value="稍到晚了点！不过是 好东东！">稍到晚了点！不过是 好东东！</option>
+                                                        <option value="看上去还可以吧">看上去还可以吧</option>
+                                                        <option value="货很满意，下次一定还找掌柜光顾希望优惠些。">货很满意，下次一定还找掌柜光顾希望优惠些。
+                                                        </option>
+                                                        <option value="鞋子很不�~谢谢买家.">鞋子很不错,谢谢买家.</option>
+                                                        <option value="不错的鞋�~.">不错的鞋子..</option>
+                                                        <option value="货收到了，満意！">货收到了，満意！</option>
+                                                        <option value="防为查了是正的．鞋的做工看起来有点假．不过还可以接受．">
+                                                            防为查了是正的．鞋的做工看起来有点假．不过还可以接受．</option>
+                                                        <option value="http:/www.jiudamai.com/task/謝店主啦...">謝店主啦...
+                                                        </option>
+                                                        <option value="鞋子發貨�~.">鞋子發貨快..</option>
+                                                        <option value="http:/www.jiudamai.com/task/質量好又便宜..">質量好又便宜..
+                                                        </option>
+                                                        <option value="http:/www.jiudamai.com/task/下次再來幫襯...">下次再來幫襯...
+                                                        </option>
+                                                        <option value="http:/www.jiudamai.com/task/合作愉快..">合作愉快..
+                                                        </option>
+                                                        <option value="颜色有点不对 啊~">颜色有点不对 啊~</option>
+                                                        <option value="不好意思，这几天比较忙，忘记付款了，鞋子很好！！">
+                                                            不好意思，这几天比较忙，忘记付款了，鞋子很好！！
+                                                        </option>
+                                                        <option value="谁要说这个卖家不厚道，我跟他拼了！">谁要说这个卖家不厚道，我跟他拼了！</option>
+                                                        <option value="收到货后发现左脚前边是质量上问题，发黑，于是与卖家联系，至今没有一声回话，是不是不该这样的？">
+                                                            收到货后发现左脚前边是质量上问题，发黑，于是与卖家联系，…</option>
+                                                        <option value="下次合作愉快哦?">下次合作愉快哦?</option>
+                                                        <option value="贷还不错,加油!!!">贷还不错,加油!!!</option>
+                                                        <option value="卖家人很好！出了一些小问题，卖家用很満意的方法解决了，谢谢！">
+                                                            卖家人很好！出了一些小问题，卖家用很満意的方法解决了，谢…</option>
+                                                        <option value="鞋子不错！查防伪也是真的，我还叫同学来买了。好买家。">
+                                                            鞋子不错！查防伪也是真的，我还叫同学来买了。好买家。</option>
+                                                        <option value="你的“东东”很好。物有所值。店主很热心。">你的“东东”很好。物有所值。店主很热心。
+                                                        </option>
+                                                        <option value="好宝贝，好老板">好宝贝，好老板</option>
+                                                        <option value="可以!!!值得@!!">可以!!!值得@!!</option>
+                                                        <option value="卖家人很好~东西也不错~谢谢诶~">卖家人很好~东西也不错~谢谢诶~</option>
+                                                        <option value="鞋穿了不到一�~就有点变�~">鞋穿了不到一天,就有点变形.</option>
+                                                        <option value="比想象中的好哦`">比想象中的好哦`</option>
+                                                        <option
+                                                            value="鞋子是正品，但是卖家给错了样色，要粉色的给了灰色的，因为卖家服务态度较好，故更改为好评，望卖家日后多多注意细节问题。">
+                                                            鞋子是正品，但是卖家给错了样色，要粉色的给了灰色的，因为…</option>
+                                                        <option value="质量没有问题。发货也很快。">质量没有问题。发货也很快。</option>
+                                                        <option value="不错的卖家哦，鞋子质量也不错的！">不错的卖家哦，鞋子质量也不错的！</option>
+                                                        <option value="不错不错,老哥很喜欢,也叫我帮他买呢">不错不错,老哥很喜欢,也叫我帮他买呢</option>
+                                                        <option value="鞋子不错！但发货速度有待改善！">鞋子不错！但发货速度有待改善！</option>
+                                                        <option
+                                                            value="发货请认真点,麻烦你老板,.鞋 的 颜色发错了给我,不过幸好他人愿意接受,看在你的服务还可以,下次认真点,先给你个好平.下次来有这情况的我退款来回邮费你来付.还给你个差">
+                                                            发货请认真点,麻烦你老板,.鞋 的 颜色发错了给我,不过幸好他…</option>
+                                                        <option value="买家按时发货，更重要的是正品，">买家按时发货，更重要的是正品，</option>
+                                                        <option value="希望大家在购买是放心~！">希望大家在购买是放心~！</option>
+                                                        <option value="卖家态度很好呀，鞋子质量也不错的！">卖家态度很好呀，鞋子质量也不错的！</option>
+                                                        <option value="不错！鞋子很好！">不错！鞋子很好！</option>
+                                                        <option value="非常抱歉！昨天我没在家，没能及时把钱给您！真是不好意思！">
+                                                            非常抱歉！昨天我没在家，没能及时把钱给您！真是不好意思！…</option>
+                                                        <option value="很感谢您的理解">很感谢您的理解</option>
+                                                        <option value="卖家不错，虽然两双鞋子没有按我要求一起发，但好评还是应该给你的！呵呵">
+                                                            卖家不错，虽然两双鞋子没有按我要求一起发，但好评还是应该…</option>
+                                                        <option value="很好的卖家~~~~期待下次合作~~~">很好的卖家~~~~期待下次合作~~~</option>
+                                                        <option value="不错的卖家很实在">不错的卖家很实在</option>
+                                                        <option value="挺合适的，效果也不错">挺合适的，效果也不错</option>
+                                                        <option value="感觉还不错，123值了">感觉还不错，123值了</option>
+                                                        <option value="鞋子正品，防伪也查了，老板信用不错哦，给予强烈支持，支持正品，">
+                                                            鞋子正品，防伪也查了，老板信用不错哦，给予强烈支持，支持…</option>
+                                                        <option value="老板好，鞋子质量也可以，不错~！">老板好，鞋子质量也可以，不错~！</option>
+                                                        <option value="还可以的啦！！可惜，我码子买大了~呵呵！">还可以的啦！！可惜，我码子买大了~呵呵！
+                                                        </option>
+                                                        <option value="东西很好~~~~~~~~~~~~谢谢~~~~~老板~~~">
+                                                            东西很好~~~~~~~~~~~~谢谢~~~~~老板~~~</option>
+                                                        <option value="顶你一个">顶你一个</option>
+                                                        <option value="宝贝物美价廉 发货很快 希望大家都来看看">宝贝物美价廉 发货很快 希望大家都来看看
+                                                        </option>
+                                                        <option
+                                                            value="老板非常诚信，三天就到货了，拨打400防伪查询后证明鞋子是正品，价钱也很便宜。以后我买鞋子就都到你们家买了。我家人、我朋友、我同事、我同学，要买鞋子的话我都会推荐到你们家买。谢谢老板！！">
+                                                            老板非常诚信，三天就到货了，拨打400防伪查询后证明鞋子是正…</option>
+                                                        <option value="鞋子很好，很漂亮，我喜欢。掌柜人也好好哦！以后买鞋都来掌柜店里淘宝了！">
+                                                            鞋子很好，很漂亮，我喜欢。掌柜人也好好哦！以后买鞋都来掌…</option>
+                                                        <option value="鞋子还行 就是鞋带有点问题">鞋子还行 就是鞋带有点问题</option>
+                                                        <option value="不是非常好，也还可以了，谢谢">不是非常好，也还可以了，谢谢</option>
+                                                        <option value="热情的卖家 不错的鞋子 希望下次合作！！！">热情的卖家 不错的鞋子 希望下次合作！！！
+                                                        </option>
+                                                        <option
+                                                            value="亲，宝贝收到了，我超喜欢，做工质地都好得没话说，呵呵，服务态度也超好， 很有心的店家，以后常光顾">
+                                                            亲，宝贝收到了，我超喜欢，做工质地都好得没话说，呵呵，服…</option>
+                                                        <option value="一个字形容就是“好">一个字形容就是“好</option>
+                                                        <option value="挺合适的，效果也不错">挺合适的，效果也不错</option>
+                                                        <option value="防伪码是真的，但是被撕下来了。感觉鞋不是真的。鉴于价格和老板态度不错，给个好评吧。。">
+                                                            防伪码是真的，但是被撕下来了。感觉鞋不是真的。鉴于价格和…</option>
+                                                        <option value="货到了，谢谢你。挺喜欢的，好卖家">货到了，谢谢你。挺喜欢的，好卖家</option>
+                                                        <option value="能够跟你合作，我觉得非常愉快！谢谢！">能够跟你合作，我觉得非常愉快！谢谢！</option>
+                                                        <option value="不是最好，也算是过得去了，谢谢 了">不是最好，也算是过得去了，谢谢 了</option>
+                                                        <option value="合作愉快，已经确认付款，请查收！">合作愉快，已经确认付款，请查收！</option>
+                                                        <option value="卖家的态度非常好，虽然曾经让我等待过">卖家的态度非常好，虽然曾经让我等待过</option>
+                                                        <option value="很好的店家，服务很到位">很好的店家，服务很到位</option>
+                                                        <option value="真的好好哦">真的好好哦</option>
+                                                        <option value="做工和款式都不错，赞一个">做工和款式都不错，赞一个</option>
+                                                        <option value="很喜欢 正好满足我的需要">很喜欢 正好满足我的需要</option>
+                                                        <option value="鞋子很满意，，老板很守信用，发货也很快！！！">鞋子很满意，，老板很守信用，发货也很快！！！
+                                                        </option>
+                                                        <option value="以后有机会还要合作愉快啊！！！！">以后有机会还要合作愉快啊！！！！</option>
+                                                        <option value="不错!!感觉还很透气,最主要是结实">不错!!感觉还很透气,最主要是结实</option>
+                                                        <option value="鞋还不错哦，但表面有少许皱哦....不过还可以啊，下次再合作">
+                                                            鞋还不错哦，但表面有少许皱哦....不过还可以啊，下次再合作…</option>
+                                                        <option value="对鞋子很满意~发货也很快">对鞋子很满意~发货也很快</option>
+                                                        <option value="非常好 正品 值死了">非常好 正品 值死了</option>
+                                                        <option value="随办事速度一般,可是很讲信用的卖家,不错,以后买东西一定先看你的货!">
+                                                            随办事速度一般,可是很讲信用的卖家,不错,以后买东西一定先看…</option>
+                                                        <option value="买这个鞋 是帮朋友买的 鞋很好 ！ 在你这边都买3个一样的鞋了！ 呵呵 ！">买这个鞋
+                                                            是帮朋友买的
+                                                            鞋很好 ！ 在你这边都买3个一样的鞋了…</option>
+                                                        <option value="最近没上网,!所以评价晚咯,">最近没上网,!所以评价晚咯,</option>
+                                                        <option value="卖家的货很好噢2">卖家的货很好噢2</option>
+                                                        <option value="老板人很好，很耐心！所有问题都解释的清清楚楚！有机会还会光顾的">
+                                                            老板人很好，很耐心！所有问题都解释的清清楚楚！有机会还会…</option>
+                                                        <option value="还不错，就是表皮有些皱了">还不错，就是表皮有些皱了</option>
+                                                        <option value="不是太完美，但那个价钱，也就算物有所值了">不是太完美，但那个价钱，也就算物有所值了
+                                                        </option>
+                                                        <option value="卖家的为人，让我很放心,希望生意更好">卖家的为人，让我很放心,希望生意更好</option>
+                                                        <option value="希望掌柜的多话心思在包装�~...鞋子盒子都烂�~鞋子也有点变形了....">
+                                                            希望掌柜的多话心思在包装上....鞋子盒子都烂了,鞋子也有点变…</option>
+                                                        <option value="价格便宜，质量还算可以，发货速度比较快，给个好评吧！">
+                                                            价格便宜，质量还算可以，发货速度比较快，给个好评吧！</option>
+                                                        <option value="非常好的卖家，有自己的想法和原则">非常好的卖家，有自己的想法和原则</option>
+                                                        <option value="很有耐心的卖家">很有耐心的卖家</option>
+                                                        <option value="不好意思，学校上课，确认晚了">不好意思，学校上课，确认晚了</option>
+                                                        <option value="发货特别准时，而且货特别的好 ！我很很满意 ！老板人也好一切都好！">发货特别准时，而且货特别的好
+                                                            ！我很很满意 ！老板人也好一…</option>
+                                                        <option value="发货快，物品基本满意。。所以给好评！">发货快，物品基本满意。。所以给好评！</option>
+                                                        <option value="以后买东西再找你">以后买东西再找你</option>
+                                                        <option value="可爱的卖家！">可爱的卖家！</option>
+                                                        <option value="发货很快,赞一个">发货很快,赞一个</option>
+                                                        <option value="感谢店主的推荐,本人相当满意..谢谢谢谢">感谢店主的推荐,本人相当满意..谢谢谢谢
+                                                        </option>
+                                                        <option value="还发阳正品，不然我会难过的，谢谢老板">还发阳正品，不然我会难过的，谢谢老板</option>
+                                                        <option value="当礼物首选哈，谢谢店家推荐！">当礼物首选哈，谢谢店家推荐！</option>
+                                                        <option value="要买好鞋，找这个老板，准没有错!">要买好鞋，找这个老板，准没有错!</option>
+                                                        <optgroup label="4 其他评语"></optgroup>
+                                                        <option value="忙了，都忘记了，不好意思">忙了，都忘记了，不好意思</option>
+                                                        <option value="还能说什么呢～～有生之年能碰到老板这个店，够幸福的．．">
+                                                            还能说什么呢～～有生之年能碰到老板这个店，够幸福的．．</option>
+                                                        <option value="****质量还不错，货发到的也很及时 ***可以用 衣服 裤子 什么什么的">
+                                                            ****质量还不错，货发到的也很及时 ***可以用 衣服 裤子 什么…</option>
+                                                        <option value="老熟客了,东西还是一如既往的好,货真价实的日货尾单,性价比突出">
+                                                            老熟客了,东西还是一如既往的好,货真价实的日货尾单,性价比突…</option>
+                                                        <option value="哈哈，很喜欢，以后看到好看的包再进点吧">哈哈，很喜欢，以后看到好看的包再进点吧</option>
+                                                        <option value="不错，百搭的裤型">不错，百搭的裤型</option>
+                                                        <option value="很修身，颜色很正">很修身，颜色很正</option>
+                                                        <option value="真的不好意思 由于我的粗心大意让**麻烦了... **店家昵称">真的不好意思
+                                                            由于我的粗心大意让**麻烦了... **店家昵称</option>
+                                                        <option value="衣服质量特别好。">衣服质量特别好。</option>
+                                                        <option value="第二次买了 货不错啊老板人很好">第二次买了 货不错啊老板人很好</option>
+                                                        <option value="就是这个风险啊，不能实时验证呵呵。">就是这个风险啊，不能实时验证呵呵。</option>
+                                                        <option value="换的裤子已收到，麻烦老板了，非常感谢！">换的裤子已收到，麻烦老板了，非常感谢！</option>
+                                                        <option value="你店的都很好质量。谢谢">你店的都很好质量。谢谢</option>
+                                                        <option value="虽然还没有到手上，不过爸爸说不错">虽然还没有到手上，不过爸爸说不错</option>
+                                                        <option value="实在是考验修身极限...以后还是要买L啊 哈哈">实在是考验修身极限...以后还是要买L啊 哈哈
+                                                        </option>
+                                                        <option value="最近太忙了，确认晚了，东西是很好的，呵呵。">最近太忙了，确认晚了，东西是很好的，呵呵。
+                                                        </option>
+                                                        <option value="很棒的衣服，很好的服务，谢谢">很棒的衣服，很好的服务，谢谢</option>
+                                                        <option value="发货很快，颜色、质地很好，就是有些薄。总体来说不错，继续支持！">
+                                                            发货很快，颜色、质地很好，就是有些薄。总体来说不错，继续…</option>
+                                                        <option value="买了很多东西 都非常满意 很好的卖家 我会常来的 折扣卡可以升到顶级了吧">买了很多东西
+                                                            都非常满意
+                                                            很好的卖家 我会常来的 折扣卡可以…</option>
+                                                        <option value="不错 面料很薄 春夏交替季节穿合适">不错 面料很薄 春夏交替季节穿合适</option>
+                                                        <option value="物流公司的态度比较差,建议换一家！不过店长人还不错！">
+                                                            物流公司的态度比较差,建议换一家！不过店长人还不错！</option>
+                                                        <option value="能够马上换,值得表扬！">能够马上换,值得表扬！</option>
+                                                        <option value="真不错，老公喜欢就是好！">真不错，老公喜欢就是好！</option>
+                                                        <option value="刚好穿的裤子，很好!">刚好穿的裤子，很好!</option>
+                                                        <option
+                                                            value="很亮的粉红色，质量做工更是没的说。回头看看有个可爱的买家说买了件校服，哈哈……估计他买了白色的。">
+                                                            很亮的粉红色，质量做工更是没的说。回头看看有个可爱的买家…</option>
+                                                        <option value="次上货的时候，弄点裤腿宽松一点的新款吧，，，，， 给多点选择">
+                                                            次上货的时候，弄点裤腿宽松一点的新款吧，，，，， 给多点选…</option>
+                                                        <option value="对裤子很满意，裤型不错">对裤子很满意，裤型不错</option>
+                                                        <option value="真是很值得�~... 什么都很好..">真是很值得哦.... 什么都很好..</option>
+                                                        <option value="衣服很舒�~寄得很快,2天就到了.">衣服很舒服,寄得很快,2天就到了.</option>
+                                                        <option value="东西还ok，但是有点脏了，希望下次发货的时候多注意一下">
+                                                            东西还ok，但是有点脏了，希望下次发货的时候多注意一下</option>
+                                                        <option value="货物还算可以，样式不错，很合身，只是一些细节上还很一般，没有想像中那么好。">
+                                                            货物还算可以，样式不错，很合身，只是一些细节上还很一般，…</option>
+                                                        <option value="老客户了啊，希望以后有更多好东东">老客户了啊，希望以后有更多好东东</option>
+                                                        <option value="还好选大一个码，超修身，很棒！">还好选大一个码，超修身，很棒！</option>
+                                                        <option value="yy不错，朋友很喜欢，谢谢">yy不错，朋友很喜欢，谢谢</option>
+                                                        <option value="实物的色和图片稍有差异，但还是挺满意的。">实物的色和图片稍有差异，但还是挺满意的。
+                                                        </option>
+                                                        <option value="物有所值">物有所值</option>
+                                                        <option value="店已经收藏了很久，不过是第一次下手。应该说还不错。">
+                                                            店已经收藏了很久，不过是第一次下手。应该说还不错。
+                                                        </option>
+                                                        <option value="衣服很好 面料很舒服,下次记得送点小礼品哦。">衣服很好 面料很舒服,下次记得送点小礼品哦。
+                                                        </option>
+                                                        <option value="卖家人很好 这个还没用 看包装应该不错">卖家人很好 这个还没用 看包装应该不错</option>
+                                                        <option value="裤子太棒咯，很喜欢这颜色，另外谢谢long送的袜子lo 。">
+                                                            裤子太棒咯，很喜欢这颜色，另外谢谢long送的袜子lo 。</option>
+                                                        <option value="还不�~质量挺好�~速度也快.">还不错.质量挺好的.速度也快.</option>
+                                                        <option
+                                                            value="http:/www.jiudamai.com/task/没想到这么快就到了，尺寸正好，老板服务热心.">
+                                                            没想到这么快就到了，尺寸正好，老板服务热心.</option>
+                                                        <option value="老板性格好，宝贝也好，戴上去也很舒服，超�~">老板性格好，宝贝也好，戴上去也很舒服，超赞.
+                                                        </option>
+                                                        <option value="效果很不错，以后会长期服用。">效果很不错，以后会长期服用。</option>
+                                                        <option value="掌柜人不错 。衣服很好 服务很热情。">掌柜人不错 。衣服很好 服务很热情。</option>
+                                                        <option value="质量好，以后还来你家买。">质量好，以后还来你家买。</option>
+                                                        <option value="很难得的正品，网购以来最满意的了。">很难得的正品，网购以来最满意的了。</option>
+                                                        <option value="做工较细致 款式上身比较修身 发货速度快 是物有所值的一件衣衣 谢谢。">做工较细致
+                                                            款式上身比较修身
+                                                            发货速度快 是物有所值的一件衣…</option>
+                                                        <option value="很好的卖家。谢谢喽。我的同事们都很喜欢呢。下次再来哦">
+                                                            很好的卖家。谢谢喽。我的同事们都很喜欢呢。下次再来哦</option>
+
+                                                    </select>
+                                                    <br />&nbsp;
+                                                    <span class="tips">设置买家好评时填写的指定内容,留空默认会提示买家自由发挥写30字以上评语。</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right" width="19%"><strong>平台留言提醒：</strong></td>
+                                    <td>
+                                        <table border="0" cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td style="padding-left:0">
+                                                    <textarea rows="4" cols="20" class="w350" name="message_remind"
+                                                        id="message_remind"
+                                                        title="不可手工输入，请选择旁边常用留言，如没有你想要的留言，请联系客服帮你增加上。"></textarea>
+                                                </td>
+                                                <td style="line-height:32px;">&nbsp;
+                                                    <select name="message_remind_select" id="message_remind_select"
+                                                        onchange="setValue('message_remind',getObj('message_remind').value + this.options[this.selectedIndex].value);if(getObj('message_remind').value.substr(0,1)=='，'){setValue('message_remind',getObj('message_remind').value.substr(1,50));};if(this.options[this.selectedIndex].value=='清空'){setValue('message_remind','');}">
+                                                        <option selected="selected">=========== 您可以在这里快速选择常用的留言
+                                                            ===========
+                                                        </option>
+                                                        <option value="清空">====== 清空留言内容 ======</option>
+                                                        <option value="，请根据商品酌情带字好评">请根据商品酌情带字好评</option>
+                                                        <option value="，自由填写好评内容">自由填写好评内容</option>
+                                                        <option value="，拍下宝贝时请选“匿名购买”">拍下宝贝时请选“匿名购买”</option>
+                                                        <option value="，只确认收货不评价，让系统默认好评">只确认收货不评价，让系统默认好评</option>
+                                                        <option value="，带字好评">带字好评</option>
+                                                        <option value="，请留下邮箱">请留下邮箱</option>
+                                                        <option value="，动态评分全打5分">动态评分全打5分</option>
+                                                        <option value="，接过的请不要再接">接过的请不要再接</option>
+                                                        <option value="，进入店铺后，随便浏览几个宝贝再拍">进入店铺后，随便浏览几个宝贝再拍</option>
+                                                        <option value="，在页面停留几分钟再拍">在页面停留几分钟再拍</option>
+                                                        <option value="，浏览5分钟在拍">浏览5分钟在拍</option>
+                                                        <option value="，收货后，请自由发挥写评语">收货后，请自由发挥写评语</option>
+                                                        <option value="，收货后，选好评，点亮全部星，不用写评语">收货后，选好评，点亮全部星，不用写评语
+                                                        </option>
+                                                        <option value="，只确认收货即可，不用评价，留给系统自动好评">只确认收货即可，不用评价，留给系统自动好评
+                                                        </option>
+                                                        <option value="，直接好评不带字，全五分即可">直接好评不带字，全五分即可</option>
+                                                        <option value="，不要好评，只要打五分，不明白联系qq">不要好评，只要打五分，不明白联系qq</option>
+                                                        <option value="，不要好评（红花不要点）只打五分，不明白联系qq">不要好评（红花不要点）只打五分，不明白联系qq
+                                                        </option>
+                                                        <option value="，不要好评（红花不要点）动态都要打五分，不明白联系qq">
+                                                            不要好评（红花不要点）动态都要打五分，不明白联系qq</option>
+                                                        <option value="，拍下留言框留下你邮箱号，统一晚上发货，急的不要接，谢谢">
+                                                            拍下留言框留下你邮箱号，统一晚上发货，急的不要接，谢谢</option>
+                                                        <option value="，收到货，必须旺-旺上面说句“已经收到货”，不然不审核">
+                                                            收到货，必须旺-旺上面说句“已经收到货”，不然不审核</option>
+                                                        <option value="，拍下的时候,记得留下邮箱号,收到货后烦请聊一句:我已经收到货了">
+                                                            拍下的时候,记得留下邮箱号,收到货后烦请聊一句:我已经收到货…</option>
+                                                        <option value="，拍宝贝时，根据价格输入相应数量拍下即可">拍宝贝时，根据价格输入相应数量拍下即可
+                                                        </option>
+                                                        <option value="，接过任务的不要再来接了，谢谢">接过任务的不要再来接了，谢谢</option>
+
+                                                    </select><br />&nbsp; <span
+                                                        class="tips">您可以在此给买家留言提醒，比如简单地描述下接手任务的要求或条件等。</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr style="display: none;">
+                                    <td align="right">
+                                        <strong>商铺动态评分：</strong>
+                                    </td>
+                                    <td>
+                                        <label>
+                                            <input name='shop_dynamic' type='radio' value='5' checked='checked' />
+                                            全部5分</label>&nbsp;&nbsp;
+                                        <label>
+                                            <input name='shop_dynamic' type='radio' value='0' /> 全部不打分</label>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <div onclick="chkshow2()" title="点击展开/收缩" class="function_title">
+                                <strong class="blue"
+                                    style="border-left:5px solid #006ef6; padding-left:10px">第二步：设置下单方式及关键词
+                                </strong>
+                                <span id="showfont2" style="float:right"><strong>点击收缩↑</strong></span>
+                            </div>
+
+                            <div id="keyword_div">
+                                <div class="line10"></div>
+                                <table width="100%" border="0" align="center" cellpadding="1" cellspacing="0"
+                                    class="center_tbl">
+                                    <tr>
+                                        <td width="22%" align="right">
+                                            <strong>
+                                                <font color="#FF6600">进店下单方式：</font>
+                                            </strong>
+                                        </td>
+                                        <td>
+                                            <table width="98%" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td style="line-height:40px;">
+                                                        <label title="买家搜索您的宝贝关键字进入您店铺">
+                                                            <input name="lailuSearchItem" class="into_store_type"
+                                                                type="radio" value="2" checked="checked" />搜索宝贝进店 &nbsp;
+                                                            &nbsp;
+                                                        </label>
+                                                        <label title="买家搜索您的宝贝关键字，然后点击右边的直通车推广链接进入您网店">
+                                                            <input name="lailuSearchItem" class="into_store_type"
+                                                                type="radio" value="5" />直通车下单 &nbsp; &nbsp;
+                                                        </label>
+
+                                                        <label title="例如您在某货源网站打广告推广，可以填写该网站网址让买家点击您广告连接进入你店铺">
+                                                            <input name="lailuSearchItem" class="into_store_type"
+                                                                type="radio" value="6" />
+                                                            <span class="orange">指定网站来路</span>
+                                                            &nbsp;
+                                                            &nbsp;
+                                                        </label>
+
+                                                        <br />
+                                                        <label>
+                                                            <input name="lailuSearchItem" class="into_store_type"
+                                                                type="radio" value="0" />直接打开下单
+                                                            &nbsp; &nbsp;
+                                                        </label>
+
+                                                        <label>
+                                                            <input name="lailuSearchItem" class="into_store_type"
+                                                                type="radio" value="4" />扫二维码下单
+                                                            &nbsp; &nbsp;
+                                                        </label>
+
+                                                        <input type="hidden" name="into_store_type_original_value"
+                                                            id="into_store_type_original_value" value="1" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="try_form-box">
+                                    <div class="keyword_box">
+                                        <div class="keyword_box_title">
+                                            <strong>设置搜索关键词</strong>
+                                            （建议填写2个以上关键词，请确保关键词可以搜到你的商品，多个关键词有助于提高权重）
+                                            　<strong>注：批量发布时“指定好评内容”输入框建议留空</strong>
+                                        </div>
+
+                                        <div class="search_key_box">
+                                            <dl class="search_key_box_one">
+                                                <dt>
+                                                    <span class="search_key_dt">搜索宝贝关键词</span><span
+                                                        class="search_key_index"></span>：
+                                                </dt>
+                                                <dd>
+                                                    <input name="lailuSearchKey" type="text" maxlength="250"
+                                                        class="search_key input wide" value="" placeholder="请填写关键词" />
+                                                    <span class="search_sort_and_area">
+                                                        &nbsp; 商品位置提示：
+                                                        <input name="lailuSearchTips" type="text" maxlength="80"
+                                                            class="search_tips input wide300" value=""
+                                                            placeholder="例如：按销量排序,卡价格80-100,在第二页等" />
+                                                    </span>
+                                                    &nbsp;　
+
+                                                    <a class="green search_add_link" href="javascript:;"
+                                                        style="display: inline;">+ 增加一个</a>
+
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                        <dl class="search_photo_box">
+                                            <dt class="search_photo_dt">宝贝链接位置截图：</dt>
+                                            <dd>
+                                                <input name='lailuSearchPhoto_url' type='text' id='lailuSearchPhoto_url'
+                                                    class="search_photo_url upload-path input wide" value=""
+                                                    maxlength="200" title="没有图片请保留空" />&nbsp;
+                                                <div class="upload-box linkPos">
+                                                    <div class="upload-btn webuploader-container">
+                                                        <div class="webuploader-pick">浏览...</div>
+                                                    </div>
+                                                </div>
+                                                <span class="tips">可以把商品目标链接位置截图保存到你的电脑，再上传</span>
+                                                <input name="callback" type="hidden" class="upload-callback"
+                                                    value="$('#search_photo_url_img').show();$('#line15').show()" />
+                                                <div class="line15" id="line15" style="display:none;"></div>
+                                                <img id="search_photo_url_img"
+                                                    style="cursor:pointer;box-shadow:0 0 10px #008DFF; display:none;"
+                                                    src="/default/style/images/noimg.png" width="200" class="preview"
+                                                    align="absmiddle" onclick="window.open(this.src)" title="查看大图" />
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div onclick="chkshow();" title="点击展开/收缩" class="function_title">
+                                <strong class="blue"
+                                    style="border-left:5px solid #006ef6; padding-left:10px">第三步：选择任务要求</strong>
+                                <span class="red">
+                                    　　　以下增值功能部分需额外支付发布点，请根据需求选择！
+                                </span>
+                                <span id="showfont" style="float:right"><strong>点击收缩↑</strong></span>
+                            </div>
+
+                            <!-- 以下增值功能 -->
+                            <div id="function_div" style="display:block;">
+                                <table width="100%" border="0" align="center" cellpadding="1" cellspacing="1"
+                                    class="center_tbl2">
+                                    <tr>
+                                        <td width="22%" align="right">
+                                            <img src="/default/style/images/hbsj.png" height="18" align="absmiddle" />
+                                            　
+                                            <strong>
+                                                <font color="red">货比三家：</font>
+                                            </strong>
+                                        </td>
+                                        <td>
+                                            <input name="is_hbsj" type="checkbox" id="is_hbsj" value="1" title="勾上才启用"
+                                                onclick="if (this.checked && ($('.into_store_type:checked').val() == '0' || $('.into_store_type:checked').val() == '3' || $('.into_store_type:checked').val() == '4')) { alert('提示：\n\n建议货比与【搜索宝贝进店】等搜索进店项配合使用，否则买家有可能无法完成货比！') }" />&nbsp;
+                                            <select name="hbsj" id="hbsj" class="select">
+                                                <option value="1">货比1家</option>
+                                                <option value="2">货比2家</option>
+                                                <option value="3" selected='selected'>货比3家</option>
+                                            </select>
+                                            &nbsp; <span class="tips">建议配合【搜索宝贝进店】方式使用<font color="red">【无额外费用】
+                                                </font>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="22%" align="right">
+                                            <img src="/default/style/images/viewproduct.png" height="18"
+                                                align="absmiddle" />
+                                            　<strong>
+                                                <font color="red">店内浏览商品：</font>
+                                            </strong></td>
+                                        <td>
+                                            <input name="is_view_product" type="checkbox" id="is_view_product" value="1"
+                                                title="勾上才启用" />&nbsp;
+                                            <select name="view_product" id="view_product" class="select">
+                                                <option value="1">额外浏览1个商品</option>
+                                                <option value="2" selected='selected'>额外浏览2个商品</option>
+                                                <option value="3">额外浏览3个商品</option>
+                                            </select>
+                                            <span class="tips">
+                                                <font color="red">【无额外费用】</font>
+                                            </span>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="22%" align="right"><img src="/default/style/images/pageStay.png"
+                                                height="18" align="absmiddle" /> 　<strong>
+                                                <font color="red">购买前页面停留：</font>
+                                            </strong></td>
+                                        <td>
+                                            <input name="is_page_stay" type="checkbox" id="is_page_stay" value="1"
+                                                title="勾上才启用" />&nbsp;
+                                            <select name="page_stay" id="page_stay" class="select">
+                                                <option value="1">停留1分钟</option>
+                                                <option value="3">停留3分钟</option>
+                                                <option value="5" selected='selected'>停留5分钟</option>
+                                            </select>
+                                            <span class="tips">
+                                                <font color="red">【无额外费用】</font>
+                                            </span>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="22%" align="right"><img src="/default/style/images/viewPage.png"
+                                                height="18" align="absmiddle" /> 　<strong>
+                                                <font color="red">完整浏览到底部：</font>
+                                            </strong></td>
+                                        <td>
+                                            <input name="is_page_down" type="checkbox" id="is_page_down" value="1"
+                                                title="勾上才启用" />
+                                            <span class="tips">要求买家上传任务商品的完整浏览截图</span>
+                                            <span class="tips">
+                                                <font color="red">【无额外费用】</font>
+                                            </span>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr style="display: none;">
+                                        <td width="22%" align="right">
+                                            <img src="/default/style/images/find_answer.png" height="18"
+                                                align="absmiddle" />
+                                            　<strong>
+                                                <font color="red">浏览找问题答案：</font>
+                                            </strong>
+                                        </td>
+                                        <td>
+                                            <div style="display: inline-block; vertical-align: middle;">
+                                                <input name="is_find_answer" type="checkbox" id="is_find_answer"
+                                                    value="1" title="勾上才启用" />
+                                                <span class="tips">要求买家浏览宝贝详情页时找到设置的问题答案<br />
+                                                </span>
+                                            </div>
+                                            <div style="display: inline-block; vertical-align: middle; line-height:35px; width:800px"
+                                                onmouseover="$('#FAbtn').show()" onmouseout="$('#FAbtn').hide()">
+                                                <div style="padding:4px 24px; line-height:46px;">问题：<input
+                                                        name='question1' type='text' id='question1'
+                                                        class="upload-path w400" value=""
+                                                        placeholder="填写问题内容，或者上传含有答案处被打马赛克的图片" maxlength="150" />&nbsp;
+                                                    <div class="upload-box"></div>
+                                                    <input type="hidden" class="upload-callback"
+                                                        value="$('#question1_img').show()" />
+                                                    <span id="FAbtn" style="padding-left:60px; display:none">
+                                                        <img src="/default/style/images/add.gif" align="absmiddle"
+                                                            title="点击增加" style="cursor:pointer;"
+                                                            onclick="$('#faq23').toggle()" />
+                                                    </span>
+                                                    <br>
+                                                    <img src=" /default/style/images/noimg.png" width="120" height="120"
+                                                        id="question1_img"
+                                                        style="padding-left:45px;cursor:pointer;display:none"
+                                                        class="preview" align="absmiddle"
+                                                        onclick="window.open(this.src)" alt="图片不存在了">
+                                                    <p>提示：<input name='tips1' type='text' id='tips1' class="w400"
+                                                            value="" placeholder="例如:答案在宝贝详情页的参数列表中" maxlength="150" />
+                                                        　答案：<input name='answer1' type='text' id='answer1' class="w200"
+                                                            value="" maxlength="50" title="答案必需是宝贝详情页中找得到的，否则一经投诉严惩" />
+                                                    </p>
+                                                </div>
+                                                <div id="faq23" style="display:none">
+                                                    <div style="padding:4px 24px; line-height:46px;">问题2：<input
+                                                            name='question2' type='text' id='question2'
+                                                            class="upload-path w400" value=""
+                                                            placeholder="填写问题内容，或者上传含有答案处被打马赛克的图片"
+                                                            maxlength="150" />&nbsp;
+                                                        <div class="upload-box"></div>
+                                                        <input type="hidden" class="upload-callback"
+                                                            value="$('#question2_img').show()" />
+                                                        <br />
+                                                        <img src="/default/style/images/noimg.png" width="120"
+                                                            height="120" id="question2_img"
+                                                            style="padding-left:51px;cursor:pointer;display:none"
+                                                            class="preview" align="absmiddle"
+                                                            onclick="window.open(this.src)" alt="图片不存在了">
+                                                        <p>提示2：<input name='tips2' type='text' id='tips2' class="w400"
+                                                                value="" placeholder="例如:图片打马赛克的是什么字，答案在页面底部那图片中有"
+                                                                maxlength="150" />
+                                                            　答案2：<input name='answer2' type='text' id='answer2'
+                                                                class="w200" value="" maxlength="50"
+                                                                title="答案必需是宝贝详情页中找得到的，否则一经投诉严惩" />
+                                                        </p>
+                                                    </div>
+                                                    <div style="padding:4px 24px; line-height:46px;">问题3：<input
+                                                            name='question3' type='text' id='question3'
+                                                            class="upload-path w400" value=""
+                                                            placeholder="填写问题内容，或者上传含有答案处被打马赛克的图片"
+                                                            maxlength="150" />&nbsp;
+                                                        <div class="upload-box"></div><input type="hidden"
+                                                            class="upload-callback"
+                                                            value="$('#question3_img').show()" />
+                                                        <br />
+                                                        <img src="/default/style/images/noimg.png" width="120"
+                                                            height="120" id="question3_img"
+                                                            style="padding-left:51px;cursor:pointer;display:none"
+                                                            class="preview" align="absmiddle"
+                                                            onclick="window.open(this.src)" alt="图片不存在了">
+                                                        <p>提示3：<input name='tips3' type='text' id='tips3' class="w400"
+                                                                value="" placeholder="填写如何找到答案的提示信息" maxlength="150" />
+                                                            　答案3：<input name='answer3' type='text' id='answer3'
+                                                                class="w200" value="" maxlength="50"
+                                                                title="答案必需是宝贝详情页中找得到的，否则一经投诉严惩" />
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td width="22%" align="right">
+                                            <img src="/default/style/images/shaiTu.png" height="18" align="absmiddle" />
+                                            　
+                                            <strong>
+                                                <font color="red">好评晒图：</font>
+                                            </strong>
+                                        </td>
+                                        <td>
+                                            <div style="display: inline-block; vertical-align: middle;">
+                                                <input name="is_shai_tu" type="checkbox" id="is_shai_tu" value="1"
+                                                    title="勾上才启用" />
+                                                <span class="tips">要求买家按照提供的图片晒图，每多晒一张图需多支付
+                                                    <font color="red">{{good_comment}}</font>
+                                                    个发布点奖励给买家【多张图请点击图片右边的加号】<br />
+                                                </span>
+                                            </div>
+                                            <div style="display: inline-block; vertical-align: middle; line-height:35px; width:800px"
+                                                onmouseover="$('#STbtn').show()" onmouseout="$('#STbtn').show()">
+                                                <div style="padding-left:6px; ">
+                                                    　 要求晒图的图片1：<input name='shaiTu_photoUrl' type='text'
+                                                        id='shaiTu_photoUrl' class="upload-path w400" value=""
+                                                        maxlength="150" title="没有图片请保留空" />&nbsp;
+                                                    <div class="upload-box shaitu-btn">
+                                                        <div class="upload-btn webuploader-container">
+                                                            <div class="webuploader-pick">浏览...</div>
+                                                        </div>
+                                                    </div>
+                                                    <span id="STbtn" style="padding-left:50px;">
+                                                        <img src="/default/style/images/add.gif" align="absmiddle"
+                                                            title="点击增加" style="cursor:pointer;"
+                                                            onclick="$('#shaitu2,#shaitu3,#shaitu4,#shaitu5').toggle()" />
+                                                    </span>
+                                                </div>
+                                                <div style="padding-left:6px; line-height:46px; display:none"
+                                                    id="shaitu2">
+                                                    　 要求晒图的图片2：<input name='shaiTu_photoUrl2' type='text'
+                                                        id='shaiTu_photoUrl2' class="upload-path w400" value=""
+                                                        maxlength="150" title="没有图片请保留空" />&nbsp;
+                                                    <div class="upload-box shaitu-btn">
+                                                        <div class="upload-btn webuploader-container">
+                                                            <div class="webuploader-pick">浏览...</div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                </div>
+                                                <div style="padding-left:6px; line-height:46px; display:none"
+                                                    id="shaitu3">
+                                                    　 要求晒图的图片3：<input name='shaiTu_photoUrl3' type='text'
+                                                        id='shaiTu_photoUrl3' class="upload-path w400" value=""
+                                                        maxlength="150" title="没有图片请保留空" />&nbsp;
+                                                    <div class="upload-box shaitu-btn">
+                                                        <div class="upload-btn webuploader-container">
+                                                            <div class="webuploader-pick">浏览...</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="padding-left:6px; line-height:46px; display:none"
+                                                    id="shaitu4">
+                                                    　 要求晒图的图片4：<input name='shaiTu_photoUrl4' type='text'
+                                                        id='shaiTu_photoUrl4' class="upload-path w400" value=""
+                                                        maxlength="150" title="没有图片请保留空" />&nbsp;
+                                                    <div class="upload-box shaitu-btn">
+                                                        <div class="upload-btn webuploader-container">
+                                                            <div class="webuploader-pick">浏览...</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="padding-left:6px; line-height:46px; display:none"
+                                                    id="shaitu5">
+                                                    　 要求晒图的图片5：<input name='shaiTu_photoUrl5' type='text'
+                                                        id='shaiTu_photoUrl5' class="upload-path w400" value=""
+                                                        maxlength="150" title="没有图片请保留空" />&nbsp;
+                                                    <div class="upload-box shaitu-btn">
+                                                        <div class="upload-btn webuploader-container">
+                                                            <div class="webuploader-pick">浏览...</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="22%" align="right">
+                                            <img src="/default/style/images/addHaoping.png" height="18"
+                                                align="absmiddle" /> 　
+                                            <strong>
+                                                <font color="red">追加好评：</font>
+                                            </strong>
+                                        </td>
+                                        <td><input name="isAddHaoping" type="checkbox" id="isAddHaoping" value="1"
+                                                title="勾上才启用" onclick="$('#is_after_sales').attr('checked', false)" />
+                                            <select name="addHaopingDay" id="addHaopingDay">
+                                                {{each release.append_good_comment_publishing_point}}
+                                                <option value="{{$value.index}}" data-value="{{$value.value}}">
+                                                    {{ $value.day }}天后追加好评（{{ $value.value }}个发布点）
+                                                </option>
+                                                {{/each}}
+                                            </select>　追加的好评内容：
+                                            <input name="addHaoPingContent" id="addHaoPingContent" class="w400"
+                                                type="text" maxlength="200" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="22%" align="right">
+                                            <img src="/default/style/images/afterSales.png" height="18"
+                                                align="absmiddle" /> 　
+                                            <strong>
+                                                <font color="red">好评后删除订单：</font>
+                                            </strong>
+                                        </td>
+                                        <td>
+                                            <input name="is_after_sales" type="checkbox" id="is_after_sales" value="1"
+                                                title="勾上才启用" onclick="$('#isAddHaoping').attr('checked', false)" />
+                                            <span class="tips">
+                                                要求买家好评后在淘宝后台删除该订单，预防退款，终止售后，需额外支付
+                                                <font color="red">{{good_comment_delete_order}}</font>
+                                                个发布点奖励给买家
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr style="display: none;">
+                                        <td align="right">
+                                            <img src="/default/style/images/DiZhi.gif" height="18" align="absmiddle" />
+                                            　<strong>
+                                                <font color="red">指定收货地址：</font>
+                                            </strong>
+                                        </td>
+                                        <td><input name="isModAddress" type="checkbox" id="isModAddress" value="1"
+                                                title="勾上才启用" />
+                                            <input type="text" style="width:600px;height:18px" name="mod_address"
+                                                id="mod_address" class='Example' value="" onfocus="this.className='';"
+                                                onblur="if(this.value==''){this.className='Example';}"
+                                                maxlength="200" /><br><span class="tips"
+                                                style="margin-left:24px">要求买家拍下宝贝时收货地址按上面指定的收货地址填写</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="22%" align="right">
+                                            <img src="/default/style/images/ShouCang.gif" height="18"
+                                                align="absmiddle" />
+                                            　
+                                            <strong>
+                                                <font color="red">店铺和宝贝双收藏：</font>
+                                            </strong>
+                                        </td>
+                                        <td>
+                                            <input name="isCollect" type="checkbox" id="isCollect" value="1"
+                                                title="勾上才启用" />
+                                            <span class="tips">
+                                                要求买家收藏您店铺和宝贝，需额外支付
+                                                <font color="red">{{release.collection_shop_and_goods}}</font>个发布点奖励给买家
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td align="right"><img src="/default/style/images/delay_buy.png" height="18"
+                                                align="absmiddle" />
+                                            　<strong>
+                                                <font color="red">加购物车隔天购买：</font>
+                                            </strong></td>
+                                        <td>
+                                            <input name="is_delay_buy" type="checkbox" id="is_delay_buy" value="1"
+                                                title="勾上才启用" />
+                                            <select name="delay_buy_day" id="delay_buy_day">
+                                                {{each release.add_carts_next_days_buy}}
+                                                <option value="{{$value.index}}" data-value="{{$value.value}}">
+                                                    延迟{{ $value.day}}天后再买（{{$value.value}}个发布点）
+                                                </option>
+                                                {{/each}}
+                                            </select>　
+                                            <span class="tips">买家先收藏宝贝和加入购物车，隔天后再购买!注:按自然天计算,即过了晚上0点即可下单!下单时间24小时</span>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td align="right"><img src="/default/style/images/ask.png" height="18"
+                                                align="absmiddle" />
+                                            　<strong>
+                                                <font color="red">问大家：</font>
+                                            </strong></td>
+                                        <td>
+                                            <input name="ask_everyone" type="checkbox" id="ask_everyone" value="1"
+                                                title="勾上才启用" />
+                                            给大家提问的问题内容：
+                                            <input type="text" class="w400" name="ask_everyone_content"
+                                                id="ask_everyone_content" value="" maxlength="250" />
+                                            (可留空，让买家自由发挥)<br>
+                                            <span class="tips" style="margin-left:24px;">要求买家拍下宝贝前先提问问大家再拍下，需额外支付
+                                                <font color="red">{{ask_question}}</font>个发布点奖励给买家</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td align="right"><img src="/default/style/images/share.png" height="18"
+                                                align="absmiddle" />
+                                            　<strong>
+                                                <font color="red">分享宝贝：</font>
+                                            </strong></td>
+                                        <td>
+                                            <input name="product_share" type="checkbox" id="product_share" value="1"
+                                                title="勾上才启用" />
+                                            <span class="tips">
+                                                要求买家分享您的宝贝，需额外支付<font color="red">{{share_goods}}</font>个发布点奖励给买家
+                                            </span>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td width="22%" align="right">
+                                            <img src="/default/style/images/credit_payment.png" height="18"
+                                                align="absmiddle" /> 　
+                                            <strong>
+                                                <font color="red">可花呗或信用卡支付：</font>
+                                            </strong>
+                                        </td>
+                                        <td>
+                                            <input name="is_credit_payment" type="checkbox" id="is_credit_payment"
+                                                value="1" title="勾上才启用" />
+                                            交易完成后从买家平台账户扣除
+                                            <input type="text" class="" style="width:40px;" name="credit_poundage"
+                                                id="credit_poundage" value="0" maxlength="6" />
+                                            元手续费返还给卖家
+                                            <span class="tips">
+                                                &nbsp;一般不建议扣买家手续费，除非是针对特殊需求用户，需额外支付
+                                                <font color="red">{{release.hb_and_credit_card_pay}}</font>个发布点
+                                            </span>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td width="22%" align="right">
+                                            <img src="/default/style/images/huabei.png" height="18" align="absmiddle" />
+                                            　
+                                            <strong>
+                                                <font color="red">要求买号开通花呗：</font>
+                                            </strong>
+                                        </td>
+                                        <td>
+                                            <input name="is_huabei_limit" type="checkbox" id="is_huabei_limit" value="1"
+                                                title="勾上才启用" />
+                                            <span class="tips">要求接手买号必须是开通花呗才可以接手此任务，需额外支付
+                                                <font color="red">{{release.opening_hb_and_bt}}</font>
+                                                个发布点奖励给买家</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td width="22%" align="right">
+                                            <img src="/default/style/images/score_1.gif" height="16"
+                                                align="absmiddle" />
+                                            　
+                                            <strong>
+                                                <font color="red">买号信誉等级要求：</font>
+                                            </strong></td>
+                                        <td><input name="is_maihao_limit" type="checkbox" id="is_maihao_limit" value="1"
+                                                title="勾上才启用" />&nbsp;
+                                            <select name="maihao_limit" id="maihao_limit" class="select">
+                                                {{each release.account_level}}
+                                                <option value="{{$value.index}}" data-value="{{$value.value}}">
+                                                    {{$value.level | formatAccount_level}}
+                                                    （{{$value.value}}个发布点）
+                                                </option>
+                                                {{/each}}
+                                            </select>
+                                            <span class="tips">只有所选级别买号(或更高)才可以接手你的任务</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="22%" align="right"><img src="/default/style/images/taoqizhi.png"
+                                                height="18" align="absmiddle" /> 　<strong>
+                                                <font color="red">淘气值：</font>
+                                            </strong></td>
+                                        <td><input name="is_taoqizhi_limit" type="checkbox" id="is_taoqizhi_limit"
+                                                value="1" title="勾上才启用" />&nbsp;
+                                            <select name="taoqizhi_limit" id="taoqizhi_limit" class="select">
+                                                {{each release.account_value}}
+                                                <option value="{{$value.index}}" data-value="{{$value.value}}">
+                                                    {{$value.number}}分以上（{{$value.value}}个发布点）
+                                                </option>
+                                                {{/each}}
+                                            </select>
+                                            <span class="tips">只有所选淘气值(或更高)才可以接手你的任务</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td align="right">
+                                            <img src="/default/style/images/WangLiao.gif" height="18"
+                                                align="absmiddle" />
+                                            　<strong>拍前需要旺旺聊天：</strong>
+                                        </td>
+                                        <td><input type="checkbox" id="is_chat" value="1" name="is_chat" />
+                                            <span class="tips">要求买家先在旺旺(手机订单则要求点击客服)聊几句再下单
+                                            </span></td>
+                                    </tr>
+
+
+                                    <tr style="display: none;">
+                                        <td width="22%" align="right">
+                                            <img src="/default/style/images/ShiMing.gif" height="18"
+                                                align="absmiddle" />
+                                            　<strong>实名认证买号：</strong>
+                                        </td>
+                                        <td>
+                                            <input name="isRealNameShop" type="checkbox" id="isRealNameShop" value="1"
+                                                title="勾上才启用" />
+                                            <div style="display:none">
+                                                <input type="radio" name="real_name_type" value="1" id="isReal_1"
+                                                    checked='checked' /><label for="isReal_1">普通实名认证买号</label>
+                                                &nbsp;
+                                                <input type="radio" name="real_name_type" value="2"
+                                                    id="isReal_2" /><label for="isReal_2">掌柜号（开店铺的账号）</label>
+                                                <br></div><span class="tips">要求接手买号必须是通过支付宝实名认证才可以接手此任务</span>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr style="display: none;">
+                                        <td width="22%" align="right">
+                                            <img src="/default/style/images/ShangBao.gif" width="20" height="20"
+                                                align="absmiddle" /> 　
+                                            <strong>商家保障服务：</strong>
+                                        </td>
+                                        <td>
+                                            <input name="isShangBao" type="checkbox" id="isShangBao" value="0"
+                                                title="勾上才启用" disabled="disabled" />
+                                            <span class="tips"> 商家保障功能只对VIP会员开放，
+                                                <a href="../user/cards/buy.html" target="_blank"
+                                                    class="orange">立即升级VIP会员>></a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right">
+                                            <img src="/default/style/images/ShenHe.gif" height="18" align="absmiddle" />
+                                            　<strong>商家自行审核买号：</strong>
+                                        </td>
+                                        <td>
+                                            <input name="is_verific" type="checkbox" id="is_verific" value="1" />
+                                            <span class="tips">买家接任务后，您审核后才可以下单，
+                                                <font color="red">审核时间{{release.examine_account_time}}分钟,超时自动通过,要及时审核噢!
+                                                </font>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right"><strong>限制用户接任务数量：</strong></td>
+                                        <td>
+                                            <input name="is_limit_buy" type="checkbox" id="is_limit_buy" value="1" />
+                                            <select name="limit_buy" id="limit_buy">
+                                                {{each release.limit_user_receive_tasks}}
+                                                <option value="{{$value.index}}" data-value="{{$value.value}}">
+                                                    最多购买{{$value.number}}个（{{$value.value}}个发布点）
+                                                </option>
+                                                {{/each}}
+                                            </select>　
+                                            <span class="tips">要求同一用户购买我店铺的宝贝不能超过指定数量</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right"><strong>指定某地区接手：</strong></td>
+                                        <td>
+                                            <input name="isLimitCity" type="checkbox" id="isLimitCity" value="1"
+                                                title="勾上才启用&#13;&#10;Tips:如果你只想指定某个省份接手，只需要选择省份即可，不需要选择市；也可以具体指定到某个省某个市接手" />
+                                            <select name="Province" id="Province"></select>
+                                            <select name="City" id="City" style="display: none;"></select>
+                                            <input name="isMultiple" type="checkbox" onclick="ChangeMultiple()" />多选
+                                            &nbsp;
+                                            <span class="tips">例如指定北京和上海用户才可接手，可避免重复用户购买，需额外支付
+                                                <font color="red">{{release.limit_area}}</font>
+                                                个发布点
+                                            </span>
+                                            <span class="red rough" id="Multiple_tips"
+                                                style="display:none;"><br>按住Ctrl或Shifl键加单击选项，可多选！</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right"><strong>买家性别：</strong></td>
+                                        <td>
+                                            <select name="limit_sex" id="limit_sex">
+                                                <option value="0" selected='selected'>不限</option>
+                                                <option value="1">男</option>
+                                                <option value="2">女</option>
+                                            </select>　
+                                            <span class="tips">指定男或女买号接手您的任务，需额外支付<font color=red>
+                                                    {{release.limit_sex}}</font>
+                                                个发布点奖励给买家</span>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right"><strong>买家年龄：</strong></td>
+                                        <td>
+                                            <select name="limit_age" id="limit_age">
+                                                <option value="0" selected='selected'>不限</option>
+                                                <option value="1">18-25岁</option>
+                                                <option value="2">26-35岁</option>
+                                                <option value="3">35岁以上</option>
+                                            </select>　<span class="tips">指定年龄段买号接手您的任务，需额外支付<font color=red>
+                                                    {{release.limit_age}}</font>
+                                                个发布点奖励给买家</span>
+                                        </td>
+                                    </tr>
+                                    <tr style="display: none;">
+                                        <td align="right"><strong>基础过虑：</strong></td>
+                                        <td style="padding-left:0;">
+                                            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                                                <tr>
+                                                    <td width="26">
+                                                        <input name="isBaseFilter1" type="checkbox" id="isBaseFilter1"
+                                                            value="1" title="勾上才启用" />
+                                                    </td>
+                                                    <td width="190">接手人平台经验积分不低于：</td>
+                                                    <td width="230">
+                                                        <input type="radio" name="BaseFilter1" value="50"
+                                                            checked="checked" />
+                                                        50　
+                                                        <input type="radio" name="BaseFilter1" value="200" />
+                                                        200　
+                                                        <input type="radio" name="BaseFilter1" value="400" />
+                                                        400
+                                                    </td>
+                                                    <td rowspan="3">
+                                                        <span class="tips">您可以根据自己需求设置接手条件，系统将自动为您过滤掉不符合条件的接手人。
+                                                            <font color="red">(此项设置过高可能导致接单速度慢,请谨慎设置)</font>
+                                                            每项过滤条件需额外支付
+                                                            <font color="red">1</font>个发布点
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input name="isBaseFilter2" type="checkbox" id="isBaseFilter2"
+                                                            value="1" title="勾上才启用" />
+                                                    </td>
+                                                    <td>接手人信用满意度不低于：</td>
+                                                    <td>
+                                                        <input name="BaseFilter2" type="radio" value="100" />
+                                                        100% <input name="BaseFilter2" type="radio" value="95" />
+                                                        95%&nbsp;&nbsp;
+                                                        <input name="BaseFilter2" type="radio" value="90"
+                                                            checked='checked' />
+                                                        90%
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input name="isBaseFilter3" type="checkbox" id="isBaseFilter3"
+                                                            value="1" title="勾上才启用" />
+                                                    </td>
+                                                    <td>接手人被拉黑名单数不大于：</td>
+                                                    <td>
+                                                        <input type="radio" name="BaseFilter3" value="0" />
+                                                        0　　
+                                                        <input type="radio" name="BaseFilter3" value="3"
+                                                            checked='checked' />
+                                                        3　　&nbsp;
+                                                        <input type="radio" name="BaseFilter3" value="10" />
+                                                        10
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <table width="100%" border="0" align="center" cellpadding="1" cellspacing="0"
+                                class="center_tbl2">
+                                <tr>
+                                    <td width="22%" align="right">
+                                        <strong>
+                                            <font color="#FF00FF">将本次任务保存为模板：</font>
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <input type='checkbox' name='istpl' id='istpl' value='1' title="勾上才启用" />
+                                        模板名称：
+                                        <input type="text" maxlength="20" class="w120" name="tplName" id="tplName"
+                                            value=""
+                                            title="请输入任务模板的名称（根据自己喜好输入）&#13;&#10;Tips:普通用户最多可保存100个任务模板，VIP用户可无限保存任务模板" />
+                                        <span class="orange">发布任务同时将该任务保存到任务模板中，方便下次发同样任务</span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table width="100%" border="0" align="center" cellpadding="1" cellspacing="1">
+                                <tr>
+                                    <td height="100" align="center">
+                                        <input type="hidden" name="total_point" id="total_point" value="" />
+                                        <input type="hidden" name="total_price" id="total_price" value="" />
+                                        <input type="hidden" name="product_count" id="product_count" value="" />
+                                        <input type="hidden" name="action" value="save" />
+                                        <input style="width: 200px;" type="button" name="submit_btn" id="submit_btn"
+                                            class="btn size18" value="确认提交" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+                <!-- /发布任务表单 -->
+            </div>
+            <!-- /中间内容外围 -->
+            <!-- 底部浮动统计 -->
+            <div id="bottomBar" style="display: none;">
+                <div class="bottomBar-wrap">
+                    <span class="d-signin">账户余额：<span class="orange user_amount">{{userInfo.money}}</span> 元
+                        <a href="../user/amount/recharge.html" target="_blank" class="blue size15">[充值]</a>
+                        <a href="javascript:;" id="update_amount" style="display:none"
+                            class="link_btn pad1 red size14">更新资金</a>
+                    </span>
+                    <span class="d-signin">本次任务所需金额：<span id="show_total_price" class="orange">0</span> 元</span>
+                    <span class="d-signin">账户发布点：<span class="orange user_point"
+                            id="user_point">{{userInfo.publishing_point}}</span> 点
+                        <a href="../user/cards/buy.html" target="_blank" class="blue size15">[购买]</a>
+                        <a href="javascript:;" id="update_point" style="display:none"
+                            class="link_btn pad1 red size14">更新发布点</a>
+                    </span>
+                    <span class="d-signin">本次任务所需发布点：<span id="show_total_point" class="orange">0</span> 点</span>
+                </div>
+                <span id="closeBottomBar"></span>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/default/style/js/common.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/default/scripts/icheck/icheck.js"></script>
+    <!-- <script type="text/javascript" src="../scripts/webuploader/webuploader.min.js"></script>
+    <script type="text/javascript" src="../scripts/webuploader/uploader.js"></script> -->
+    <script type="text/javascript" src="/default/scripts/jquery/PCASClass.js"></script>
+    <!-- <script type="text/javascript" src="../scripts/datepicker/WdatePicker.js"></script> -->
+    <script type="text/javascript" src="/default/style/js/chkAddTask.js"></script>
+    <script src="/default/js/scripts/addtask.js"></script>
+    <!-- /底部浮动统计 -->
+
+    <!--Footer-->
+    {{include 'default/public/footer.html'}}

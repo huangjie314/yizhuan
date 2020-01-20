@@ -46,6 +46,22 @@ router.get('/amount/recharge', async ctx => {
     })
 })
 
+router.get('/userspread/spread', async ctx => {
+    // var result = await CaptalConfig.find({});
+    await ctx.render('default/user/userspread/spread', {
+        title: '推广赚钱',
+        // capital: result[0]._doc
+    })
+})
+
+router.get('/userspread/list', async ctx => {
+    // var result = await CaptalConfig.find({});
+    await ctx.render('default/user/userspread/list', {
+        title: '我推广的用户',
+        // capital: result[0]._doc
+    })
+})
+
 
 
 

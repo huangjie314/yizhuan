@@ -1,331 +1,158 @@
 var avatarApp = null;
-!function () {
-  avatarApp = new Vue({
-    el: '#addTaskApp',
-    data: {
-      username: '',
-      type: 0,
-      level: 0,
-      mobile: '',
-      sex: '',
-      money: '0.00',
-      publishing_point: '0.00',
-      avatar: '../../templates/main/images/user-avatar.png',
-      commission: 0,
-      collection_point: '0.00',
-      integral: '0.00',
-      real_name: '',
-      flow_point: '0.00',
-      last_login_time: '',
-      last_login_ip: '',
-      real_name_authentication: '',
 
-      base: '8',
-      limit_sex: '0.5',
-      limit_area: '0.3',
-      limit_age: '0.5',
-      ask_question: '0.8',
-      collection_shop_and_goods: '0.3',
-      good_comment: '0.5',
-      good_comment_delete_order: '0.3',
-      hb_and_credit_card_pay: '0.5',
-      limit_user_receive_tasks: [],
-      opening_hb_and_bt: '0.5',
-      platform_service_charge: '',
-      share_goods: '0.5',
-      tb_credit_level: [],
-      account_level: [],
-      append_good_comment_publishing_point: [],
-      add_carts_next_days_buy: [],
-      account_value: [],
-      examine_account_time: 10,
-
-      shops: [], // 店铺列表
-      // platform_type: 0, // 平台类型
-    },
-    computed: {
-      userLevel: function () {
-        return this.level ? 'vip会员' : '普通会员'
+$(function () {
+  $('#uploadImage').uploadImg(function (that, result) {
+    Util.ajax({
+      url: '/api/tools/uploadImage',
+      type: 'POST',
+      certificate: false,
+      data: {
+        image: result,
       },
-      formatMobile: function () {
-        return this.mobile.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')
-      },
-      taobaoShops: function () {
-        return this.shops.filter(cur => {
-          return cur.type == 0
-        })
-      },
-      jdShops: function () {
-        return this.shops.filter(cur => {
-          return cur.type == 1
-        })
+      success: function (res) {
+        myAlert(res.message);
+        if (res.status === 1) {
+          $('#product_pic_img').attr('src', res.data.image);
+          $('#product_pic').val(res.data.image);
+        }
       }
-    },
-    created() {
-      // this.getUserInfo();
-      this.getTaskConfig();
-      this.getShopList();
-    },
-    watch: {
-      shops: function (val, oldVal) {
-        this.$nextTick(function () {
-          // iCheck
-          $('[name="rblShopName"]').icheck();
-        })
-      },
-      // jdShops
-    },
-    mounted() {
-
-    },
-    methods: {
-      getUserInfo: function () {
-        Util.ajax({
-          url: '/api/user/info',
-          type: 'POST',
-          certificate: true,
-          success: function (res) {
-            if (res.status === 1) {
-              var info = res.data.info;
-              // this.mobile = info.mobile;
-              // this.sex = info.sex;
-              // this.username = info.username;
-              // this.type = info.type;
-              // this.level = info.level;
-              // this.money = info.money;
-              // this.publishing_point = info.publishing_point;
-              // if (info.avatar) {
-              //   this.avatar = info.avatar;
-              // }
-              // this.commission = info.commission;
-              // this.collection_point = info.collection_point;
-              // this.integral = info.integral;
-              // this.real_name = info.real_name;
-              // this.flow_point = info.flow_point;
-              // this.last_login_time = info.last_login_time;
-              // this.last_login_ip = info.last_login_ip;
-              // this.real_name_authentication = info.real_name_authentication;
-              // this.birthday = info.birthday;
-              // this.qq = info.qq;
-              // this.email = info.email;
-              // this.phone = info.phone;
-              // this.province = info.province;
-              // this.city = info.city;
-              // this.area = info.area;
-              // this.address = info.address;
-              // this.signature = info.signature;
-            } else {
-              myAlert(res.message);
-            }
-          }.bind(this),
-          error: function (error) {
-            console.log(error);
-          }
-        })
-      },
-      getTaskConfig: function () {
-        Util.ajax({
-          url: '/api/config/release',
-          type: 'POST',
-          certificate: true,
-          success: function (res) {
-            if (res.status === 1) {
-              var release = res.data.release;
-              this.base = release.base;
-              this.limit_sex = release.limit_sex;
-              this.limit_area = release.limit_area;
-              this.limit_age = release.limit_age;
-              this.ask_question = release.ask_question;
-              this.collection_shop_and_goods = release.collection_shop_and_goods;
-              this.good_comment = release.good_comment;
-              this.good_comment_delete_order = release.good_comment_delete_order;
-              this.hb_and_credit_card_pay = release.hb_and_credit_card_pay;
-              this.limit_user_receive_tasks = release.limit_user_receive_tasks;
-              this.opening_hb_and_bt = release.opening_hb_and_bt;
-              this.platform_service_charge = release.platform_service_charge;
-              this.share_goods = release.share_goods;
-              this.tb_credit_level = release.tb_credit_level;
-              this.account_level = release.account_level;
-              this.append_good_comment_publishing_point = release.append_good_comment_publishing_point;
-              this.add_carts_next_days_buy = release.add_carts_next_days_buy;
-              this.account_value = release.account_value;
-              this.examine_account_time = release.examine_account_time;
-            } else {
-              myAlert(res.message);
-            }
-          }.bind(this),
-        })
-      },
-      getShopList: function () {
-        Util.ajax({
-          url: '/api/shop/list',
-          type: 'POST',
-          certificate: true,
-          success: function (res) {
-            if (res.status === 1) {
-              var shops = res.data.shops;
-              this.shops = shops;
-            } else {
-              myAlert(res.message);
-            }
-          }.bind(this),
-        })
-      }
-    },
+    })
   })
-  $(function () {
-    $('#uploadImage').uploadImg(function (that, result) {
-      Util.ajax({
-        url: '/api/tools/uploadImage',
-        type: 'POST',
-        certificate: false,
-        data: {
-          image: result,
-        },
-        success: function (res) {
-          myAlert(res.message);
-          if (res.status === 1) {
-            $('#product_pic_img').attr('src', res.data.image);
-            $('#product_pic').val(res.data.image);
-          }
+  $('.shaitu-btn').uploadImg(function (that, result) {
+    Util.ajax({
+      url: '/api/tools/uploadImage',
+      type: 'POST',
+      certificate: false,
+      data: {
+        image: result,
+      },
+      success: function (res) {
+        myAlert(res.message);
+        if (res.status === 1) {
+          that.siblings('input').val(res.data.image);
         }
-      })
-    })
-    $('.shaitu-btn').uploadImg(function (that, result) {
-      Util.ajax({
-        url: '/api/tools/uploadImage',
-        type: 'POST',
-        certificate: false,
-        data: {
-          image: result,
-        },
-        success: function (res) {
-          myAlert(res.message);
-          if (res.status === 1) {
-            that.siblings('input').val(res.data.image);
-          }
-        }
-      })
-    })
-    $('.linkPos').uploadImg(function (that, result) {
-      Util.ajax({
-        url: '/api/tools/uploadImage',
-        type: 'POST',
-        certificate: false,
-        data: {
-          image: result,
-        },
-        success: function (res) {
-          myAlert(res.message);
-          if (res.status === 1) {
-            that.siblings('#lailuSearchPhoto_url').val(res.data.image);
-          }
-        }
-      })
-    })
-    new PCAS("Province,请选择省份", "City,请选择城市");
-    $(window).scroll(function () {
-      if (!/msie [678]\.0/i.test(window.navigator.userAgent.toLowerCase())) {
-        ($(this).scrollTop() > 300) ? $("#bottomBar").fadeIn() : $("#bottomBar").fadeOut();
       }
-    });
-    $("#closeBottomBar").click(function () {
-      $("#bottomBar").fadeOut();
-    });
-    //表单提交
-    $('#submit_btn').click(function () {
-      var valid = CheckFormFun();
-      if (!valid) return false;
-      Util.ajax({
-        url: '/api/order/add',
-        certificate: true,
-        type: 'POST',
-        beforeSend: function () {
-          $("#submit_btn").attr({ value: "提交中..", disabled: true });
-        },
-        complete: function () {
-          $("#submit_btn").attr({ value: "确认提交", disabled: false });
-        },
-        data: {
-          platform_type: $('#ddlCategoryID').val(),
-          order_type: $('#is_app_buy').val(),
-          shop_id: $('#rblShopName').val(),
-          goods_url: $('#product_url').val(),
-          goods_title: $('#title').val(),
-          goods_image: $('#product_pic_img').attr('src'),
-          pay_type: $('#pay_type').val(),
-          goods_price: $('#single_price').val(),
-          order_goods_number: $('#buy_number').val(),
-          search_show_goods_price: $('#show_price').val(),
-          buy_assign_attribute: $('#spec_property').val(),
-          search_show_pay_numbers: $('#pay_user_number').val(),
-          is_need_change_price: $('#is_mod_price').is(":checked") ? 1 : 0,
-          goods_type: $('[name="xushi_type"]:checked').val(),
-          goods_good_comment_rule: $('#haoping_limit').val(),
-          express_type: $('#isRealExpress').val(),
-          assign_goods_comment_content: $('#haoping_content').val(),
-          platform_message_tips: $('#message_remind').val(),
-          place_order_type: $('[name="lailuSearchItem"]:checked').val(),
-          goods_tips_content: getGoodTipsCotent(),
-          is_need_three_shops: $('#is_hbsj').is(':checked') ? $('#hbsj').val() : 0,
-          is_need_in_shop_browse: $('#is_view_product').is(':checked') ? 1 : 0,
-          is_need_stop_before_buy: $('#is_page_stay').is(':checked') ? 1 : 0,
-          is_need_full_browse: $('#is_page_down').is(':checked') ? 1 : 0,
-          good_comment_images: getShaitu(),
-          append_good_comment: $('#addHaopingDay').val() + ',' + $('#addHaoPingContent').val(),
-          is_need_delete_order_after_good_comment: $('#is_after_sales').is(':checked') ? 1 : 0,
-          is_need_collection_shop_and_goods: $('#isCollect').is(':checked') ? 1 : 0,
-          is_need_add_carts_next_days_buy: $('#is_delay_buy').is(':checked') ? $('#delay_buy_day').val() : 0,
-          is_need_ask_question: $('#ask_everyone').is(':checked') ? 1 : 0,
-          ask_question_content: $('#ask_everyone_content').val(),
-          is_need_share_goods: $('#product_share').is(':checked') ? 1 : 0,
-          is_can_hb_and_credit_card_pay: $('#is_credit_payment').is(':checked') ? 1 : 0,
-          is_need_user_account_opening_hb_and_bt: $('#is_huabei_limit').is(':checked') ? 1 : 0,
-          user_account_level: $('#is_maihao_limit').is(':checked') ? $('#maihao_limit').val() : 0,
-          user_account_value: $('#is_taoqizhi_limit').is(':checked') ? $('#taoqizhi_limit').val() : 0,
-          is_need_chats_before_pay: $('#is_chat').is(':checked') ? 1 : 0,
-          is_need_examine_account: $('#is_verific').is(':checked') ? 1 : 0,
-          limit_user_accept_order_number: $('#is_limit_buy').is(':checked') ? $('#limit_buy').val() : 0,
-          order_limit_province: $('#isLimitCity').is(':checked') ? $('#Province').val() : 0,
-          order_limit_sex: $('#limit_sex').val(),
-          order_limit_age: $('#limit_age').val(),
-          template_name: $('#istpl').is(':checked') ? $('#tplName').val() : 0,
-          order_price: $('#total_price').val(),
-          order_points: $('#total_point').val(),
-        },
-        success: function (res) {
-          if (res.status == 1) {
-            myAlert(res.message, function () {
-              location.reload();
-            })
-          } else {
-            myAlert(res.message);
-          }
+    })
+  })
+  $('.linkPos').uploadImg(function (that, result) {
+    Util.ajax({
+      url: '/api/tools/uploadImage',
+      type: 'POST',
+      certificate: false,
+      data: {
+        image: result,
+      },
+      success: function (res) {
+        myAlert(res.message);
+        if (res.status === 1) {
+          that.siblings('#lailuSearchPhoto_url').val(res.data.image);
         }
-      })
+      }
     })
-
-    // 付款方式
-    $('#newRadio').on('click', 'a', function (e) {
-      var _this = $(this);
-      var pay_type = $('#pay_type');
-      var type = _this.data('type');
-      _this.siblings('a').removeClass('radioCurr');
-      _this.addClass('radioCurr');
-      pay_type.val(type);
-    })
-    // 快递签收方式
-    $('#isRealExpressItem').on('click', 'a', function (e) {
-      var _this = $(this);
-      var pay_type = $('#isRealExpress');
-      var type = _this.data('type');
-      _this.siblings('a').removeClass('radioCurr');
-      _this.addClass('radioCurr');
-      pay_type.val(type);
-    })
+  })
+  new PCAS("Province,请选择省份", "City,请选择城市");
+  $(window).scroll(function () {
+    if (!/msie [678]\.0/i.test(window.navigator.userAgent.toLowerCase())) {
+      ($(this).scrollTop() > 300) ? $("#bottomBar").fadeIn() : $("#bottomBar").fadeOut();
+    }
   });
+  $("#closeBottomBar").click(function () {
+    $("#bottomBar").fadeOut();
+  });
+  //表单提交
+  $('#submit_btn').click(function () {
+    var valid = CheckFormFun();
+    if (!valid) return false;
+    Util.ajax({
+      url: '/api/order/add',
+      certificate: true,
+      type: 'POST',
+      beforeSend: function () {
+        $("#submit_btn").attr({ value: "提交中..", disabled: true });
+      },
+      complete: function () {
+        $("#submit_btn").attr({ value: "确认提交", disabled: false });
+      },
+      data: {
+        platform_type: $('#ddlCategoryID').val(),
+        order_type: $('#is_app_buy').val(),
+        shop_id: $('#rblShopName').val(),
+        goods_url: $('#product_url').val(),
+        goods_title: $('#title').val(),
+        goods_image: $('#product_pic_img').attr('src'),
+        pay_type: $('#pay_type').val(),
+        goods_price: $('#single_price').val(),
+        order_goods_number: $('#buy_number').val(),
+        search_show_goods_price: $('#show_price').val(),
+        buy_assign_attribute: $('#spec_property').val(),
+        search_show_pay_numbers: $('#pay_user_number').val(),
+        is_need_change_price: $('#is_mod_price').is(":checked") ? 1 : 0,
+        goods_type: $('[name="xushi_type"]:checked').val(),
+        goods_good_comment_rule: $('#haoping_limit').val(),
+        express_type: $('#isRealExpress').val(),
+        assign_goods_comment_content: $('#haoping_content').val(),
+        platform_message_tips: $('#message_remind').val(),
+        place_order_type: $('[name="lailuSearchItem"]:checked').val(),
+        goods_tips_content: getGoodTipsCotent(),
+        is_need_three_shops: $('#is_hbsj').is(':checked') ? $('#hbsj').val() : 0,
+        is_need_in_shop_browse: $('#is_view_product').is(':checked') ? 1 : 0,
+        is_need_stop_before_buy: $('#is_page_stay').is(':checked') ? 1 : 0,
+        is_need_full_browse: $('#is_page_down').is(':checked') ? 1 : 0,
+        good_comment_images: getShaitu(),
+        append_good_comment: $('#addHaopingDay').val() + ',' + $('#addHaoPingContent').val(),
+        is_need_delete_order_after_good_comment: $('#is_after_sales').is(':checked') ? 1 : 0,
+        is_need_collection_shop_and_goods: $('#isCollect').is(':checked') ? 1 : 0,
+        is_need_add_carts_next_days_buy: $('#is_delay_buy').is(':checked') ? $('#delay_buy_day').val() : 0,
+        is_need_ask_question: $('#ask_everyone').is(':checked') ? 1 : 0,
+        ask_question_content: $('#ask_everyone_content').val(),
+        is_need_share_goods: $('#product_share').is(':checked') ? 1 : 0,
+        is_can_hb_and_credit_card_pay: $('#is_credit_payment').is(':checked') ? 1 : 0,
+        is_need_user_account_opening_hb_and_bt: $('#is_huabei_limit').is(':checked') ? 1 : 0,
+        user_account_level: $('#is_maihao_limit').is(':checked') ? $('#maihao_limit').val() : 0,
+        user_account_value: $('#is_taoqizhi_limit').is(':checked') ? $('#taoqizhi_limit').val() : 0,
+        is_need_chats_before_pay: $('#is_chat').is(':checked') ? 1 : 0,
+        is_need_examine_account: $('#is_verific').is(':checked') ? 1 : 0,
+        limit_user_accept_order_number: $('#is_limit_buy').is(':checked') ? $('#limit_buy').val() : 0,
+        order_limit_province: $('#isLimitCity').is(':checked') ? $('#Province').val() : 0,
+        order_limit_sex: $('#limit_sex').val(),
+        order_limit_age: $('#limit_age').val(),
+        template_name: $('#istpl').is(':checked') ? $('#tplName').val() : 0,
+        order_price: $('#total_price').val(),
+        order_points: $('#total_point').val(),
+      },
+      success: function (res) {
+        if (res.status == 1) {
+          myAlert(res.message, function () {
+            location.reload();
+          })
+        } else {
+          myAlert(res.message);
+        }
+      }
+    })
+  })
 
-}()
+  // 付款方式
+  $('#newRadio').on('click', 'a', function (e) {
+    var _this = $(this);
+    var pay_type = $('#pay_type');
+    var type = _this.data('type');
+    _this.siblings('a').removeClass('radioCurr');
+    _this.addClass('radioCurr');
+    pay_type.val(type);
+  })
+  // 快递签收方式
+  $('#isRealExpressItem').on('click', 'a', function (e) {
+    var _this = $(this);
+    var pay_type = $('#isRealExpress');
+    var type = _this.data('type');
+    _this.siblings('a').removeClass('radioCurr');
+    _this.addClass('radioCurr');
+    pay_type.val(type);
+  })
+});
+
+
 function getShaitu() {
   var image = [
     $('#shaiTu_photoUrl').val(),

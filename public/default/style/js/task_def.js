@@ -79,6 +79,22 @@ function CheckTime(t) {
     if (t < 0) t = 0;
     var id = "iidd_" + (_iidd++);
     var str = "<span class='red' id='" + id + "'>" + parseInt(t / 60) + "分" + t % 60 + "秒</span>";
+    var uptime = function () {
+        t = t - 1;
+        if (t <= 0) {
+            window.clearInterval(tt_0);
+            t = 0;
+            //			location.reload();
+        }
+        $('#' + id).html(parseInt(t / 60) + "分" + t % 60 + "秒");
+    }
+    var tt_0 = window.setInterval(uptime, 1000);
+    return str
+}
+function CheckTime1(t) {
+    if (t < 0) t = 0;
+    var id = "iidd_" + (_iidd++);
+    var str = "<span class='red' id='" + id + "'>" + parseInt(t / 60) + "分" + t % 60 + "秒</span>";
     document.write(str);
     var uptime = function () {
         t = t - 1;
@@ -95,6 +111,32 @@ function CheckTime(t) {
 //任务收货倒计时
 var _hhiidd = 1;
 function CheckTimeHour(t) {
+    if (t < 0) t = 0;
+    var id = "hhiidd_" + (_hhiidd++);
+    var str;
+    if (parseInt(t / 60 / 60 / 24) > 1)
+        str = "<span class='red' id='" + id + "'>" + parseInt(t / 60 / 60 / 24) + "天后</span>";
+    else
+        str = "<span class='red' id='" + id + "'>" + parseInt(t / 60 / 60) + "小时</span>";
+
+    var uptime = function () {
+        t = t - 1;
+        if (t <= 0) {
+            window.clearInterval(tt_0);
+            t = 0;
+        }
+        if (parseInt(t / 60 / 60 / 24) > 1) {
+            $('#' + id).html(parseInt(t / 60 / 60 / 24) + "天后");
+        }
+        else {
+            $('#' + id).html(parseInt(t / 60 / 60) + "小时");
+        }
+    }
+    var tt_0 = window.setInterval(uptime, 1000);
+
+    return str;
+}
+function CheckTimeHour1(t) {
     if (t < 0) t = 0;
     var id = "hhiidd_" + (_hhiidd++);
     var str;
@@ -198,7 +240,27 @@ function CheckModHPTime(url) {
         return false;
     }
     if (ModTime != '' && ModTime < 0 || ModTime > 72) { alert('请输入0到72的整数！'); return false; }
-    if (ModTime != '') { location.href = RewriteUrl(url, ModTime); }
+    if (ModTime != '') {
+        Util.ajax({
+            url: url,
+            type: 'PUT',
+            certificate: true,
+            data: {
+                type: 0,
+                hour: ModTime
+            },
+            success: function (res) {
+                if (res.status === 1) {
+                    myAlert(res.message, function () {
+                        location.reload();
+                    })
+                } else {
+                    myAlert(res.message);
+                }
+            }
+        })
+        // location.href = RewriteUrl(url, ModTime);
+    }
     return false;
 }
 //提前收货
@@ -207,17 +269,40 @@ function IsModHPTime(url, obj) {
 }
 
 function changeDelayDay(e, url, n) {
-    var Point = new Array();
-    Point[1] = 2;   //延迟1天 默认扣2个点
-    Point[2] = 4;   //延迟2天 默认扣4个点
-    $('#DelayPoint').html(Point[e.options[e.selectedIndex].value]);
-    if (n == 1) {
-        location.href = RewriteUrl(url, e.options[e.selectedIndex].value + ',' + Point[e.options[e.selectedIndex].value]);
-        return true;
-    }
+    // var Point = new Array();
+    // Point[1] = 2;   //延迟1天 默认扣2个点
+    // Point[2] = 4;   //延迟2天 默认扣4个点
+    // $('#DelayPoint').html(Point[e.options[e.selectedIndex].value]);
+    // if (n == 1) {
+    //     location.href = RewriteUrl(url, e.options[e.selectedIndex].value + ',' + Point[e.options[e.selectedIndex].value]);
+    //     return true;
+    // }
+    var hour = +e.value * 24;
+    Util.ajax({
+        url: url,
+        type: 'PUT',
+        certificate: true,
+        data: {
+            type: 1,
+            hour: hour
+        },
+        success: function (res) {
+            if (res.status === 1) {
+                myAlert(res.message, function () {
+                    location.reload();
+                })
+            } else {
+                myAlert(res.message);
+            }
+        }
+    })
+
 }
 //延迟收货
 function IsDelayHPTime(url, obj) {
+    jsDialog("延迟收货", "<b>您确定要为该任务延迟收货吗？<br><br>如果物流快递未能在规定时间内签收等类似原因，可为对方延迟收货时间。</b><br><br>&nbsp; &nbsp; &nbsp; 请选择延迟天数：<select name='DelayTime' id='DelayTime' style='width:60px;' ><option value=1>1天</option><option value=2>2天</option></select> &nbsp;", function () { changeDelayDay(document.getElementById('DelayTime'), url, 1); }, obj);
+}
+function IsDelayHPTime1(url, obj) {
     jsDialog("延迟收货", "<b>您确定要为该任务延迟收货吗？<br><br>如果物流快递未能在规定时间内签收等类似原因，可为对方延迟收货时间。</b><br><br>&nbsp; &nbsp; &nbsp; 请选择延迟天数：<select name='DelayTime' id='DelayTime' style='width:60px;' onchange='changeDelayDay(this," + url + ",0)'><option value=1>1天</option><option value=2>2天</option></select> &nbsp; 额外扣 <span id='DelayPoint' class='red'>2</span> 个发布点</span>", function () { changeDelayDay(document.getElementById('DelayTime'), url, 1); }, obj);
 }
 

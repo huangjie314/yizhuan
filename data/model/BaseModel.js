@@ -14,7 +14,7 @@ class BaseModel {
                     console.log("Error:" + err);
                 } else {
                     resolve(res);
-                    console.log("Res:" + res);
+                    // console.log("Res:" + res);
                 }
             });
         })
@@ -27,7 +27,7 @@ class BaseModel {
                     console.log("Error:" + err);
                     reject(err);
                 } else {
-                    console.log("Res:" + res);
+                    // console.log("Res:" + res);
                     resolve(res);
                 }
             })
@@ -41,7 +41,7 @@ class BaseModel {
                     console.log("Error:" + err);
                     reject(err);
                 } else {
-                    console.log("Res:" + res);
+                    // console.log("Res:" + res);
                     resolve(res);
                 }
             })
@@ -55,7 +55,7 @@ class BaseModel {
                     console.log("Error:" + err);
                     reject(err);
                 } else {
-                    console.log("Res:" + res);
+                    // console.log("Res:" + res);
                     resolve(res);
                 }
             })
@@ -69,7 +69,7 @@ class BaseModel {
                     console.log("Error:" + err);
                     reject(err);
                 } else {
-                    console.log("Res:" + res);
+                    // console.log("Res:" + res);
                     resolve(res);
                 }
             })
@@ -84,7 +84,7 @@ class BaseModel {
                     reject(err);
                 }
                 else {
-                    console.log("Res:" + res);
+                    // console.log("Res:" + res);
                     resolve(res);
                 }
             })

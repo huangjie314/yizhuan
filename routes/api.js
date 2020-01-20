@@ -20,11 +20,15 @@ router.use(async (ctx, next) => {
     if (verifyResult) {
         await next();
     } else {
-        if (/\/login/.test(ctx.request.url)) {
+        if (/\/login|\/forget|\/register/.test(ctx.request.url)) {
             await next();
         } else {
             //无权限
             console.log('无权限');
+            ctx.body = {
+                status: 10006,
+                message: 'token已过期'
+            }
         }
 
     }
