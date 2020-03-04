@@ -29,6 +29,8 @@ app.use(bodyParser({
 
 // Custom 401 handling if you don't want to expose koa-jwt errors to users
 app.use(function (ctx, next) {
+  // ctx.set('etag', 'true');
+  // ctx.set('Cache-Control', 'max-age=259200');
   return next().catch((err) => {
     if (401 == err.status) {
       ctx.status = 401;
@@ -77,7 +79,6 @@ app.use(static(__dirname + '/upload'));
 
 app.use(json());
 // app.use(logger());
-
 
 //引入模块
 var index = require('./routes/index.js');

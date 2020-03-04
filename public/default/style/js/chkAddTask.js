@@ -427,9 +427,9 @@ function changeCategory(obj) {
     if (value == platform_type) {
         return;
     }
-    var url = 'add.html';
+    var url = 'add';
     if (value == 1) {
-        url = 'add-18.html'
+        url = 'add-18'
     }
     window.location.href = url;
 }

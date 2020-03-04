@@ -25,6 +25,7 @@
     "koa-session": "^5.8.1",
     "koa-static": "^4.0.2",
     "koa-views": "^3.1.0",
+    "mathjs": "^6.6.0",
     "md5": "^2.2.1",
     "mongodb": "^3.0.4",
     "querystring": "^0.2.0",

@@ -7,7 +7,12 @@ const fs = require('fs');
 
 const user = require('./api/user');
 const rechange = require('./api/recharge');
+const bind = require('./api/bind');
 const auth = require('./api/auth');
+const order = require('./api/order');
+const cash = require('./api/cash');
+const exchange = require('./api/exchange');
+const userInfo = require('../data/model/UserInfo');
 
 
 //配置中间件 获取url的地址
@@ -18,6 +23,8 @@ router.use(async (ctx, next) => {
     verifyResult = tools.verifyToken(token);
 
     if (verifyResult) {
+        const result = await userInfo.find({ userId: verifyResult._id });
+        ctx.state.userInfo = result[0]._doc;
         await next();
     } else {
         if (/\/login|\/forget|\/register/.test(ctx.request.url)) {
@@ -99,6 +106,10 @@ router.post('/tools/uploadImage', async (ctx) => {
 
 router.use('/user', user);
 router.use('/recharge', rechange);
+router.use('/bind', bind);
+router.use('/order', order);
+router.use('/cash', cash);
+router.use('/exchange', exchange);
 
 
 module.exports = router.routes();

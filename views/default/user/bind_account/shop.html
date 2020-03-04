@@ -1,0 +1,227 @@
+{{include 'default/public/header.html'}}
+<link rel="stylesheet" href="/default/css/pagination.css" />
+<link rel="stylesheet" type="text/css" href="/default/scripts/jquery-lightbox/css/jquery.lightbox-0.5.css" />
+<style type="text/css">
+    .form-box dl dt {
+        width: 190px;
+        font-size: 15px;
+    }
+
+    .u-tab-content {
+        min-height: 353px;
+    }
+
+    .tips {
+        line-height: 30px;
+        padding: 15px 25px;
+        background-color: #ebf8ff;
+        border: 1px solid #c8e6ff;
+    }
+
+    .upload-box-wrap {
+        width: 250px;
+        float: left;
+    }
+
+    .webuploader-pick {
+        width: 100px;
+    }
+
+    select {
+        width: 166px;
+    }
+
+    #randomCode {
+        width: 120px;
+        height: 35px;
+        background: #ebf8ff;
+        display: inline-block;
+        text-align: center;
+        line-height: 35px;
+        border: 1px solid #c8e6ff;
+    }
+
+    .product-url_dl .Validform_right {
+        display: none;
+    }
+
+    .product-url_dl .Validform_right.check_right {
+        display: inline;
+    }
+
+    .operation {
+        cursor: pointer;
+    }
+</style>
+
+<body>
+
+
+    <!--Header-->
+    {{include 'default/public/topbar.html'}}
+    <!--/Header-->
+
+
+    <div class="section clearfix" id="avatarApp">
+        <div class="line30"></div>
+        <div class="info-wrap">
+            <!--左侧导航-->
+            {{include 'default/public/leftnav.html'}}
+            <!--/左侧导航-->
+
+            <!--右侧内容-->
+            <div class="home-box">
+
+                <!--绑定掌柜号-->
+                <div class="u-tab-head">
+                    <p>
+                        <a class="selected" href="bind_account">绑定店铺</a>
+                        <!--<a href="/user/bind_account/list.html">店铺列表</a>-->
+                    </p>
+                </div>
+                <div class="u-tab-content">
+                    <div class="title-div">
+                        <strong class="red">【亲----这里一定要用主账号提交,子账号不能发布任务!切记!!】</strong>
+                    </div>
+                    <form name="bindForm" id="bindForm" url="/api/bind/shop">
+                        <div class="form-box">
+                            <dl>
+                                <dt>电商平台类型：</dt>
+                                <dd>
+                                    <select name="ddlShopSite" id="ddlShopSite" class="select"
+                                        style="margin-right:64px">
+                                        {{each bind.platform_type}}
+                                        <option value="{{$index}}">{{$value}}</option>
+                                        {{/each}}
+                                    </select>
+                                </dd>
+                            </dl>
+
+                            <dl>
+                                <dt>旺旺账号：</dt>
+                                <dd>
+                                    <input name="txtAccount" id="txtAccount" type="text" class="input txt" value=""
+                                        datatype="*" nullmsg="请填写旺旺号" sucmsg=" " />
+                                </dd>
+                            </dl>
+
+                            <dl>
+                                <dt>店铺名称：</dt>
+                                <dd><input name="txtShopName" id="txtShopName" type="text" class="input txt" value=""
+                                        datatype="*" nullmsg="请填写店铺名称" sucmsg=" " /></dd>
+                            </dl>
+
+                            <dl>
+                                <dt>店铺后台凭证截图：</dt>
+                                <dd>
+                                    <div class="upload-box-wrap">
+                                        <input name="verify_photo6" id="verify_photo6" type="hidden" class="upload-path"
+                                            value="" datatype="*" nullmsg="请上传店铺后台截图" sucmsg=" " />
+                                        <div class="upload-box">
+                                            <div class="upload-btn webuploader-container">
+                                                <div class="webuploader-pick">上传截图</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="upload-box-wrap">
+                                        <a href="{{bind.shop_image}}" target="_blank" title="点击看大图">
+                                            <img src="{{bind.shop_image}}" height="186" alt="没有示例图，请自己截图上传" />
+                                        </a>
+                                    </div>
+                                </dd>
+                            </dl>
+
+                            <dl style="display:none">
+                                <dt>检验方式：</dt>
+                                <dd>
+                                    <span title="账号或店铺名检验方式">
+                                        <label><input type="radio" name="rblPort" value="0" disabled /> 默认</label>
+                                        &nbsp;
+                                        <label><input type="radio" name="rblPort" value="1" checked="checked" />
+                                            接口采集</label>
+                                    </span>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt></dt>
+                                <dd>
+
+                                    <input name="btnSubmit" id="btnSubmit" type="button" class="btn btn-success size16"
+                                        value=" 确定提交 " style="margin-top: 20px;" />
+
+                                </dd>
+                            </dl>
+                        </div>
+                    </form>
+                </div>
+                <div class="tips">
+                    <span class="orange size15 rough">注：绑定后账号名将无法修改，同时删除后也无法再重新添加！</span><br />
+                    提示：您所在用户组每个试用区可以绑定<span class="blue">{{bind.max_shop}}</span>个店铺号，想要绑定更多，请升级为更高级别会员！<br />
+                    建议：发布活动时可以适当选择部分增值功能，可有效增加宝贝权重和提高搜索排名！
+                </div>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="mtable" style="margin-top:20px;">
+                    <tr>
+                        <th align="center">活动区</th>
+                        <th align="center">掌柜/店铺名</th>
+                        <!--<th align="center">店铺名称</th>-->
+                        <th align="center">认证信息</th>
+                        <th align="center">绑定时间</th>
+                        <th align="center">状态</th>
+                        <th align="center">操作</th>
+                    </tr>
+                    {{if shopList.length > 0}}
+                    {{each shopList}}
+                    <tr data-id={{@$value._id}} data-type={{$value.platform_type}}>
+                        <td align="center">
+                            {{if $value.platform_type == 0}}
+                            <img src="/default/style/images/website_ico1.png" align="absmiddle" />
+                            <a href="javascript:;">淘宝天猫</a>
+                            {{else}}
+                            <img src="/default/style/images/website_ico3.png" align="absmiddle" />
+                            <a href="javascript:;">京东</a>
+                            {{/if}}
+                        </td>
+                        <td align="center">{{$value.shop_name}}</td>
+                        <td align="center">
+                            {{if $value.is_real_name == 0}}
+                            <img src="/default/style/images/shiming_2.gif" height="18" align="absmiddle"
+                                title="未通过支付宝实名认证" />
+                            {{else}}
+                            <img src="/default/style/images/ShiMing.gif" height="18" align="absmiddle"
+                                title="已通过支付宝实名认证" />
+                            <img src="/default/style/images/xiaobao.gif" height="18" align="absmiddle"
+                                title="已签署【消费者保障服务协议】" />
+                            {{/if}}
+                        </td>
+                        <td align="center">{{$value.created_at | formatDate}}</td>
+                        <td align="center">
+                            {{if $value.status == 0}}
+                            <span style="color:#999">已暂停</span> | <a class="operation" data-type="open"><span
+                                    class="orange">启用</span></a>
+                            {{else}}
+                            <span style="color:#999">已启用</span> | <a class="operation" data-type="stop">停用</a>
+                            {{/if}}
+                        <td align="center">
+                            <a class="link_btn operation" data-type="update">更新</a>
+                            &nbsp;
+                            <a class="link_btn red operation" data-type="del">删除</a>
+                        </td>
+                    </tr>
+                    {{/each}}
+                    {{else}}
+                    <tr>
+                        <td colspan="6" align="center">暂无记录...</td>
+                    </tr>
+                    {{/if}}
+                </table>
+                <!--/绑定掌柜号-->
+            </div>
+            <!--/右侧内容-->
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/default/scripts/jquery-lightbox/js/jquery.lightbox-0.5.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/default/scripts/clipboard.js/clipboard.min.js"></script>
+    <script src="/default/js/scripts/bindaccount.js"></script>
+    <!--Footer-->
+    {{include 'default/public/footer.html'}}

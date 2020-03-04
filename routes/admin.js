@@ -43,6 +43,7 @@ router.use(async (ctx, next) => {
     // }
 
     if (verifyResult) {
+        ctx.state.userInfo = verifyResult;
         await next();
     } else {  //没有登录跳转到登录页面
         if (pathname == '/admin/login' || pathname == '/admin/login/doLogin' || pathname == '/admin/login/code') {
@@ -51,6 +52,11 @@ router.use(async (ctx, next) => {
             ctx.redirect('/admin/login');
         }
     }
+
+    if (ctx.status == '404') {
+        console.log('endendend')
+    }
+
 })
 
 router.get('/', async (ctx) => {

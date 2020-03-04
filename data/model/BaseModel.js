@@ -48,9 +48,9 @@ class BaseModel {
         })
     }
 
-    find(conditions) {
+    find(conditions, projection = null, options = null) {
         return new Promise((resolve, reject) => {
-            this.model.find(conditions, function (err, res) {
+            this.model.find(conditions, projection, options, function (err, res) {
                 if (err) {
                     console.log("Error:" + err);
                     reject(err);

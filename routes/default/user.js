@@ -1,5 +1,6 @@
 const router = require('koa-router')();
-var CaptalConfig = require('../../data/model/CaptalConfig');
+const CaptalConfig = require('../../data/model/CaptalConfig');
+const rechargeModel = require('../../data/model/Recharge');
 
 
 router.get('/proinfo', async (ctx) => {
@@ -39,10 +40,51 @@ router.get('/avatar', async (ctx) => {
 
 
 router.get('/amount/recharge', async ctx => {
-    var result = await CaptalConfig.find({});
+    var result = await CaptalConfig.find();
     await ctx.render('default/user/amount/recharge', {
         title: '账户充值',
         capital: result[0]._doc
+    })
+})
+
+router.get('/amount/log', async ctx => {
+    const list = await rechargeModel.find({ userId: ctx.state.userInfo.userId });
+    await ctx.render('default/user/amount/log', {
+        title: '充值记录',
+        list: list
+    })
+})
+
+router.get('/tixian/apply', async ctx => {
+    const config = await CaptalConfig.find();
+    await ctx.render('default/user/tixian/apply', {
+        title: '余额提现',
+        capital: config.length ? config[0] : []
+    })
+})
+
+router.get('/exchange/index', async ctx => {
+    const config = await CaptalConfig.find();
+    await ctx.render('default/user/exchange/index', {
+        title: '兑换资金',
+        capital: config.length ? config[0] : []
+    })
+})
+
+router.get('/amount/list', async ctx => {
+    const list = await rechargeModel.find({ userId: ctx.state.userInfo.userId });
+    await ctx.render('default/user/amount/list', {
+        title: '资金明细',
+        item: {}
+    })
+})
+
+
+router.get('/cards/buy', async ctx => {
+    var result = await CaptalConfig.find({});
+    await ctx.render('default/user/cards/buy', {
+        title: '购买发布点',
+        buy_points: result[0]._doc.buy_points
     })
 })
 

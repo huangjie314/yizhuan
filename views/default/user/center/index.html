@@ -28,28 +28,28 @@
                                 <div class="my-big-font">
                                     <div class="my-money">
                                         <h2>账户余额</h2>
-                                        <span class="orange">￥{{userInfo.money}} 元</span>
+                                        <span class="orange">￥{{userInfo.money.toString()}} 元</span>
                                     </div>
                                     <div class="my-money">
                                         <h2>发布点</h2>
-                                        <span>{{userInfo.publishing_point}} 点</span>
+                                        <span>{{+userInfo.publishing_point}} 点</span>
                                     </div>
                                     <div class="my-money">
                                         <h2>收藏点</h2>
-                                        <span>{{userInfo.collection_point}} 点</span>
+                                        <span>{{+userInfo.collection_point}} 点</span>
                                     </div>
                                     <div class="my-money">
                                         <h2>流量点</h2>
-                                        <span>{{userInfo.flow_point}} 点</span>
+                                        <span>{{+userInfo.flow_point}} 点</span>
                                     </div>
                                     <div class="my-money">
                                         <h2>可用积分</h2>
-                                        <span>{{userInfo.integral}} 分</span>
+                                        <span>{{+userInfo.integral}} 分</span>
                                     </div>
                                 </div>
                                 <div class="my-btn">
-                                    <a href="../amount/recharge.html">账户充值</a>
-                                    <a href="../tixian/apply.html">余额提现</a>
+                                    <a href="/userCenter/amount/recharge">账户充值</a>
+                                    <a href="/userCenter/tixian/apply">余额提现</a>
 
                                     <a href="../../service.html" target="_blank">帮助中心</a>
                                     <a href="../exchange/index.html">兑换资金</a>

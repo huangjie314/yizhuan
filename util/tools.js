@@ -16,6 +16,13 @@ let tools = {
         return md5(str)
     },
 
+    parseNumber(number) {
+        if (/\.(?=\d)/.test(number.toString())) {
+            return number;
+        }
+        return number + '.00';
+    },
+
     // 访问需要认证的接口时，需要在request头附带Authorization: Bearer[token]字段。
 
     verifyToken(token) {

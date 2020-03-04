@@ -34,17 +34,15 @@ router.post('/doLogin', async (ctx) => {
     if (code.toLocaleLowerCase() == ctx.session.code.toLocaleLowerCase()) {
 
         //后台也要验证码用户名密码是否合法
-
         var result = await DB.find('admin', { "username": username, "password": tools.md5(password) });
-
         if (result.length > 0) {
-
-
             var token = tools.signToken({ username, password });
             // ctx.session.userinfo = result[0];
             ctx.cookies.set('token', token, {
                 maxAge: 60 * 1000 * 60,
-                httpOnly: true
+                path: '/admin',
+                httpOnly: true,
+                overwrite: false, // 是否允许重写
             });
             ctx.redirect(ctx.state.__HOST__ + '/admin');
         } else {

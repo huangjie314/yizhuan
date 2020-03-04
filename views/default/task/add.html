@@ -86,12 +86,8 @@
                                         <select name="ddlTaskTemplate" id="ddlTaskTemplate">
                                             <option value="0">选择任务模板</option>
                                             {{each tplList}}
-                                            <option value="{{$value.id}}">{{$value.name}}</option>
+                                            <option value="{{$value._id}}">{{$value.template_name}}</option>
                                             {{/each}}
-                                            <!-- 
-                                            <option value="1434">989刷</option>
-                                            <option value="1419">BV501模板</option>
-                                            <option value="1331">989探索模板</option> -->
                                         </select>
                                         <span class="tips"> 　
                                             你可以选择已存在的任务模板，一键快速创建任务。
@@ -135,23 +131,22 @@
                                         <strong>选择店铺掌柜名称：</strong>
                                     </td>
                                     <td id="ShopNameFlag">
-                                        <template v-if="taobaoShops.length">
-                                            <span id="rblShopName">
-                                                <template v-for="(item,idx) in taobaoShops">
-                                                    <label>
-                                                        <input name="rblShopName" :id="'rblShopName_'+idx" type="radio"
-                                                            :value="item.id" />
-                                                        {{true || item.name}}
-                                                    </label>
-                                                </template>
-                                            </span>
-                                        </template>
-                                        <template v-else>
-                                            <a id="tipsBindAccount" class="red" href="../user/bind_account.html">
-                                                请先绑定掌柜号再回来发任务
-                                                &nbsp; 点我绑定>>
-                                            </a>
-                                        </template>
+                                        {{if shopList.length}}
+                                        {{each shopList}}
+                                        <span id="rblShopName">
+                                            <label>
+                                                <input name="rblShopName" title="{{$value.shop_name}}"
+                                                    id="rblShopName_{{$index}}" type="radio"
+                                                    value="{{@$value._id}}" />{{$value.shop_name}}
+                                            </label>
+                                        </span>
+                                        {{/each}}
+                                        {{else}}
+                                        <a id="tipsBindAccount" class="red" href="/seller/bind_account">
+                                            请先绑定掌柜号再回来发任务
+                                            &nbsp; 点我绑定>>
+                                        </a>
+                                        {{/if}}
                                     </td>
                                 </tr>
                                 <tr style="display: none;">
@@ -254,7 +249,7 @@
                                     <td>
                                         <input type="text" maxlength="5" class="w80" style="background-color:#F0F0F0;"
                                             title="自动计算，不可手工输入" name="service_cost" id="service_cost"
-                                            readonly="readonly" :value="platform_service_charge" /> 元
+                                            readonly="readonly" value="{{release.platform_service_charge}}" /> 元
                                     </td>
                                 </tr>
 
@@ -1762,14 +1757,14 @@
             <div id="bottomBar" style="display: none;">
                 <div class="bottomBar-wrap">
                     <span class="d-signin">账户余额：<span class="orange user_amount">{{userInfo.money}}</span> 元
-                        <a href="../user/amount/recharge.html" target="_blank" class="blue size15">[充值]</a>
+                        <a href="/userCenter/amount/recharge" target="_blank" class="blue size15">[充值]</a>
                         <a href="javascript:;" id="update_amount" style="display:none"
                             class="link_btn pad1 red size14">更新资金</a>
                     </span>
                     <span class="d-signin">本次任务所需金额：<span id="show_total_price" class="orange">0</span> 元</span>
                     <span class="d-signin">账户发布点：<span class="orange user_point"
                             id="user_point">{{userInfo.publishing_point}}</span> 点
-                        <a href="../user/cards/buy.html" target="_blank" class="blue size15">[购买]</a>
+                        <a href="/userCenter/cards/buy" target="_blank" class="blue size15">[购买]</a>
                         <a href="javascript:;" id="update_point" style="display:none"
                             class="link_btn pad1 red size14">更新发布点</a>
                     </span>

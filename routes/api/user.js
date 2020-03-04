@@ -1,6 +1,7 @@
 
 var router = require('koa-router')();
 const tools = require('../../util/tools');
+const math = require('mathjs');
 
 const DB = require('../../util/db');
 const fs = require('fs');
@@ -326,6 +327,31 @@ router.post('/uploadMobile', async (ctx) => {
             status: 10004,
             message: '更新手机失败',
             data: {}
+        }
+    }
+})
+
+// 购买发布点卡
+router.post('/buyPoints', async (ctx) => {
+    let { point, money } = ctx.request.body;
+    const userId = ctx.session.userId;
+    const result = await UserInfo.find({ userId: userId });
+    if (+result[0].money < money) {
+        return ctx.body = {
+            status: 0,
+            message: '购买失败，您的账户余额不足！'
+        }
+    }
+    try {
+        await UserInfo.update({ userId: userId }, { "$inc": { "publishing_point": +point, 'money': -money } });
+        return ctx.body = {
+            status: 1,
+            message: '购买发布点成功!',
+        }
+    } catch (err) {
+        return ctx.body = {
+            status: 0,
+            message: '购买发布点失败'
         }
     }
 })

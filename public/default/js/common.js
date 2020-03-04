@@ -563,6 +563,16 @@ function myAlert(message, callback) {
         }
     }).showModal();
 }
+
+function myTipInfo(message, callback) {
+    var d = dialog({ content: message.toString() }).show();
+    setTimeout(function () {
+        d.close().remove();
+        if (callback) {
+            callback();
+        }
+    }, 1000);
+}
 //显示评论AJAX分页列表
 function AjaxPageList(listDiv, pageDiv, pageSize, pageCount, sendUrl, defaultAvatar) {
     //pageIndex -页面索引初始值

@@ -14,6 +14,7 @@ const user = require('./default/user');
 const userInfo = require('../data/model/UserInfo');
 // const captial = require('../data/model/CaptalConfig');
 // const re = require('../data/model/ReleaseConfig')
+// const re = require('../data/model/BindConfig')
 
 
 let verifyResult = null;
@@ -28,7 +29,6 @@ router.use(async (ctx, next) => {
     verifyResult = tools.verifyToken(token);
 
     if (verifyResult) {
-        // ctx.state.userInfo = await tools.getUserInfo(verifyResult._id);
         const result = await userInfo.find({ userId: verifyResult._id });
         ctx.state.userInfo = result[0]._doc;
         await next();

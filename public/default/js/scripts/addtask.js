@@ -76,7 +76,8 @@ $(function () {
       data: {
         platform_type: $('#ddlCategoryID').val(),
         order_type: $('#is_app_buy').val(),
-        shop_id: $('#rblShopName').val(),
+        shop_id: $('[name="rblShopName"]:checked').val(),
+        shop_name: $('[name="rblShopName"]:checked')[0].title,
         goods_url: $('#product_url').val(),
         goods_title: $('#title').val(),
         goods_image: $('#product_pic_img').attr('src'),

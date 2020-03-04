@@ -1,0 +1,141 @@
+{{include 'admin/public/header.html'}}
+
+<body>
+    <div class="navbar navbar-default" id="navbar">
+        <script type="text/javascript">
+            try { ace.settings.check('navbar', 'fixed') } catch (e) { }
+        </script>
+
+        {{include 'admin/public/nav_top.html'}}
+    </div>
+
+    <div class="main-container" id="main-container">
+        <script type="text/javascript">
+            try { ace.settings.check('main-container', 'fixed') } catch (e) { }
+        </script>
+
+        <div class="main-container-inner">
+            <a class="menu-toggler" id="menu-toggler" href="#">
+                <span class="menu-text"></span>
+            </a>
+
+            <!--左侧导航-->
+
+            {{include 'admin/public/nav_left.html'}}
+
+            <div class="main-content">
+                <div class="breadcrumbs" id="breadcrumbs">
+                    <script type="text/javascript">
+                        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+                    </script>
+
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="icon-home home-icon"></i>
+                            <a href="#">Home</a>
+                        </li>
+
+                        <li>
+                            <a href="#">Forms</a>
+                        </li>
+                        <li class="active">Form Elements</li>
+                    </ul><!-- .breadcrumb -->
+
+                    <div class="nav-search" id="nav-search">
+                        <form class="form-search">
+                            <span class="input-icon">
+                                <input type="text" placeholder="Search ..." class="nav-search-input"
+                                    id="nav-search-input" autocomplete="off" />
+                                <i class="icon-search nav-search-icon"></i>
+                            </span>
+                        </form>
+                    </div><!-- #nav-search -->
+                </div>
+
+                <div class="page-content">
+                    <div class="page-header">
+                        <h1>
+                            列表
+                            <small>
+                                <i class="icon-double-angle-right"></i>
+                                Common form elements and layouts
+                            </small>
+                        </h1>
+                    </div><!-- /.page-header -->
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <!-- PAGE CONTENT BEGINS -->
+                            <form class="form-horizontal" role="form" action="/admin/user/tixian/captal/config"
+                                method="post">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 收款银行名称
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <input type="text" id="form-field-1" placeholder="请输入收款银行名称"
+                                            class="col-xs-10 col-sm-5" name="pay_to_bank_name"
+                                            value="{{item.pay_to_bank_name}}" />
+                                    </div>
+                                </div>
+
+                                <div class="space-4"></div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 收款银行账号
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <input type="text" id="form-field-1" placeholder="请输入收款银行账号"
+                                            class="col-xs-10 col-sm-5" name="pay_to_bank_card"
+                                            value="{{item.pay_to_bank_card}}" />
+                                    </div>
+                                </div>
+
+                                <div class="space-4"></div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 收款人姓名
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <input type="text" id="form-field-1" placeholder="请输入收款人姓名"
+                                            class="col-xs-10 col-sm-5" name="pay_to_real_name"
+                                            value="{{item.pay_to_real_name}}" />
+                                    </div>
+                                </div>
+
+                                <div class="space-4"></div>
+
+
+                                <div class="clearfix form-actions">
+                                    <div class="col-md-offset-3 col-md-9">
+                                        <button class="btn btn-info" type="submit">
+                                            <i class="icon-ok bigger-110"></i>
+                                            Submit
+                                        </button>
+
+                                        &nbsp; &nbsp; &nbsp;
+                                        <button class="btn" type="reset">
+                                            <i class="icon-undo bigger-110"></i>
+                                            Reset
+                                        </button>
+                                    </div>
+                                </div>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.page-content -->
+            </div><!-- /.main-content -->
+        </div><!-- /.main-container-inner -->
+
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+            <i class="icon-double-angle-up icon-only bigger-110"></i>
+        </a>
+    </div><!-- /.main-container -->
+
+    {{include 'admin/public/footer.html'}}
+    <!-- inline scripts related to this page -->
+
+    <script type="text/javascript">
+
+    </script>
+</body>
+
+</html>

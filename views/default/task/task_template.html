@@ -1,6 +1,5 @@
 {{include 'default/public/header.html'}}
 <script type="text/javascript" src="/default/style/js/common.js"></script>
-<link rel="stylesheet" type="text/css" href="/default/css/pagination.css" />
 <link href="/default/style/css/task.css" type="text/css" rel="stylesheet" />
 
 
@@ -104,14 +103,9 @@
                     {{each tplList}}
                     <tr>
                         <td width="50" align="center">{{$index + 1}}</td>
-                        <template v-if="item.platform_type == 1">
-                            <td width="70" align="center">京东</td>
-                        </template>
-                        <template v-else>
-                            <td width="70" align="center">淘宝天猫</td>
-                        </template>
-                        <td width="110" align="center">{{$value.name}}</td>
-                        <td width="100" align="center">{{$value.shop.name}}</td>
+                        <td width="70" align="center">{{$value.platform_type == 0 ? '淘宝天猫' : '京东'}}</td>
+                        <td width="110" align="center">{{$value.template_name}}</td>
+                        <td width="100" align="center">{{$value.shop_name}}</td>
                         <td width="" align="center" style="word-wrap: break-word">{{$value.goods_url}}</td>
                         <td width="70" align="center">{{$value.order_price}} 元</td>
                         <td width="70" align="center">{{$value.order_points}} 点</td>
@@ -119,7 +113,7 @@
                             <span v-if="$value.goods_good_comment_rule==1" title="物流显示签收后好评">物流显示签收后好评</span>
                             <span v-else title="马上好评">马上好评</span>
                         </td>
-                        <td width="90" align="center">{{$value.created_at}}</td>
+                        <td width="90" align="center">{{ $value.created_at | formatDate }}</td>
                         <td width="145" align="right">
                             <a class="link_btn" :href="'task/tpldetail.html?id=' + $value.id">发布任务</a>
                             <a @click="deleteTpl($value.id);" id="rptList_btnDelete_0" class="link_btn red btnDelete"
